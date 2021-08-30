@@ -11,7 +11,7 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-  <title>归档: 2021/8 | Hexo</title>
+  <title>CTFHUB | Hexo</title>
 
   
     
@@ -399,119 +399,519 @@
 
     <!-- 内容区域 -->
     <main class="main" id="pjax-container" style="margin-top: 0;">
-      <div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;"></div>
-<div class="bg-light-floor-archive" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -3;"></div>
-<div class="lazyload archive-header" data-original="https://pic1.zhimg.com/80/v2-1414b3a4b205e19060db18a20d08723a_1440w.jpg?source=1940ef5c" >
-  <div class="archive-header-title">
-    archive
-  </div>
-  <div class="archive-header-desc">
-  
-  <span class="title" id="archive-header-desc"></span>
-  <script>
-  function typedFn() {
-    const el = '#archive-header-desc';
-    const type = 'archive';
-    let desc = '愿你如风，被人温柔以待'
-    var typed = new Typed(el, {
-      strings: [desc],
-      startDelay: 100,
-      typeSpeed: 100,
-      loop: true,
-      backSpeed: 50,
-      showCursor: true
-    });
-  }
-  typedFn();
-</script>
-  
-  </div>
-  <div class="mask-box"></div>
-</div>
-
-<div class="archive-video">
-  <video class="full-video" autoplay loop muted>
-      <source style="width: 100%;height: 100vh;" src="/">
-  </video>
-  <div class="video-header-title">
-    archive
-  </div>
-  <div class="video-header-desc">
-  
-      <span class="title" id="archive-video-header-desc"></span>
-      <script>
-  function typedFn() {
-    const el = '#archive-video-header-desc';
-    const type = 'archive';
-    let desc = '愿你如风，被人温柔以待'
-    var typed = new Typed(el, {
-      strings: [desc],
-      startDelay: 100,
-      typeSpeed: 100,
-      loop: true,
-      backSpeed: 50,
-      showCursor: true
-    });
-  }
-  typedFn();
-</script>
       
-  </div>
-  <div class="mask-box"></div>
-</div>
-
-<!-- hash算法 -->
+ <!-- prismjs 代码高亮 -->
+ 
 
 
-<div class="archive-main">
-  <section class="archive">
-    <div class="archive-content">
-      <ul class="post-archive">
-        
-        
-          
-            
-            <div class="year" data-aos="zoom-in-up">
-                <div class="bullet"></div>
-                <a href="/archives/2021">2021</a>
-            </div>
-          
-          <li class="post-item" data-aos="fade-left">
-            
-            <div class="post-img-box">
-              <a href="/2021/08/30/CTFHUB/" class="post-img lazyload" data-original="/medias/10.jpg" style="background-size: cover; 
-                background-position: center center;">
-              </a>
-            </div>
-            <div class="post-date-title">
-              <div>
-                <span class="post-date">08-30</span>
-              </div>
-              <a class="post-title" href="/2021/08/30/CTFHUB/">CTFHUB</a>
-            </div>
-          </li>
-        
-          
-          <li class="post-item" data-aos="fade-left">
-            
-            <div class="post-img-box">
-              <a href="/2021/08/09/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8E%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%88%B0RCE/" class="post-img lazyload" data-original="/medias/3.jpg" style="background-size: cover; 
-                background-position: center center;">
-              </a>
-            </div>
-            <div class="post-date-title">
-              <div>
-                <span class="post-date">08-09</span>
-              </div>
-              <a class="post-title" href="/2021/08/09/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8E%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%88%B0RCE/">渗透测试从代码审计到RCE</a>
-            </div>
-          </li>
-        
-      </ul>
+<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
+
+<!-- 文章详情页顶部图片和标题 -->
+
+
+
+
+<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="/medias/10.jpg" style="background-repeat: no-repeat; background-size: cover; 
+  background-position: center center;position: relative;">
+  <div class="post-detail-header-mask"></div>
+  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
+  
+  <div class="post-detail-header_info-box">
+    <div class="title-box">
+      <span class="title">
+        CTFHUB
+      </span>
     </div>
-  </section>
+    
+    
+      
+        <span class="post-detail-header_date">
+          <i class="fa fa-calendar"></i> 发表于：2021-08-30 |
+        </span>
+      
+
+      
+
+      
+    
+  </div>
+  
+  
+    <script src="/js/bubble/bubble.js"></script>
   
 </div>
+
+
+
+<div class="row justify-position">
+  <div class="main-content">
+    <article class="post post-detail">
+      
+      <div class="post-content">
+        <h2 id="1-目录遍历"><a href="#1-目录遍历" class="headerlink" title="1. 目录遍历"></a>1. 目录遍历</h2><p><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625798119796-8039dc09-35c7-42fb-818b-2875cfb251e0.png#align=left&display=inline&height=268&margin=%5Bobject%20Object%5D&name=image.png&originHeight=536&originWidth=1117&size=46629&status=done&style=none&width=558.5" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625798181516-f7bcc177-ca96-46e3-afea-787469cf3c1c.png#align=left&display=inline&height=60&margin=%5Bobject%20Object%5D&name=image.png&originHeight=119&originWidth=1071&size=9535&status=done&style=none&width=535.5" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"></p>
+<h2 id="2-PHPINFO"><a href="#2-PHPINFO" class="headerlink" title="2.PHPINFO"></a>2.PHPINFO</h2><p>CTRL+F寻找flag<br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625798336866-ca1431e4-5572-4363-9024-4c58a4240ab7.png#align=left&display=inline&height=342&margin=%5Bobject%20Object%5D&name=image.png&originHeight=684&originWidth=1595&size=76137&status=done&style=none&width=797.5" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"></p>
+<h2 id="3-备份文件下载"><a href="#3-备份文件下载" class="headerlink" title="3.备份文件下载"></a>3.备份文件下载</h2><h3 id="1-网站源码"><a href="#1-网站源码" class="headerlink" title="1. 网站源码"></a>1. 网站源码</h3><p>当开发人员在线上环境中对源代码进行了备份操作，并且将备份文件放在了 web 目录下，就会引起网站源码泄露。<br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625799294889-ae46ed5d-7297-4aba-8df7-dceb6717d547.png#align=left&display=inline&height=348&margin=%5Bobject%20Object%5D&name=image.png&originHeight=695&originWidth=1920&size=46948&status=done&style=none&width=960" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"><br>附上代码 ：<br>import requests</p>
+<p>url1 = “<a target="_blank" rel="noopener" href="http://challenge-5bb132e652f9ce2c.sandbox.ctfhub.com:10800/&quot;">http://challenge-5bb132e652f9ce2c.sandbox.ctfhub.com:10800/&quot;</a><br>list1 = [‘web’,’website’,’backup’,’back’,’www’,’wwwroot’,’temp’]<br>list2 = [‘tar’,’tar.gz’,’zip’,’rar’]</p>
+<p>for i in list1:<br>    for j in list2:<br>        back = str(i) + ‘.’ + str(j)<br>        url = str(url1) + ‘/‘ +back<br>        print(back + ‘   ‘, end=’’)<br>        print(requests.get(url).status_code)</p>
+<h3 id="2-bak文件"><a href="#2-bak文件" class="headerlink" title="2.bak文件"></a><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625800129124-900d6e4f-1add-48d2-a3b2-fb403a420a6e.png#align=left&display=inline&height=515&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1030&originWidth=1920&size=152870&status=done&style=none&width=960" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png">2.bak文件</h3><p>Flag in index.php source code.<br>在url后缀加上 index.php.bak得到源码<br><!DOCTYPE html></p>
+<html>
+<head>
+    <title>CTFHub 备份文件下载 - bak</title>
+</head>
+<body>
+<?php
+
+
+<p>// FLAG: ctfhub{55c7876a906ac00640808ae9}</p>
+<p>echo “Flag in index.php source code.”;<br>?&gt;</p>
+</body>
+</html>
+
+
+<h3 id="3-vim缓存"><a href="#3-vim缓存" class="headerlink" title="3. vim缓存"></a>3. vim缓存</h3><p>当开发人员在线上环境中使用 vim 编辑器，在使用过程中会留下 vim 编辑器缓存，当vim异常退出时，缓存会一直留在服务器上，引起网站源码泄露。</p>
+<p>Vim是从 vi 发展出来的一个文本编辑器。代码补完、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。<br>简单的来说， vi 是老式的字处理器，不过功能已经很齐全了，但是还是有可以进步的地方。 vim 则可以说是程序开发者的一项很好用的工具。<br>连 vim 的官方网站 (<a target="_blank" rel="noopener" href="http://www.vim.org/">http://www.vim.org</a>) 自己也说 vim 是一个程序开发工具而不是文字处理软件。<br><strong>.swp文件：</strong>非正常关闭vi/vim编辑器时会生成一个.swp文件 <br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625802324292-e967fc9a-250e-40b1-b654-d7233f263c43.png#align=left&display=inline&height=215&margin=%5Bobject%20Object%5D&name=image.png&originHeight=430&originWidth=1514&size=21724&status=done&style=none&width=757" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"><br>swp文件打开方式         .index.php.swp<br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625802884965-a09f20a0-2b65-4dca-913c-1221b1f55a5a.png#align=left&display=inline&height=248&margin=%5Bobject%20Object%5D&name=image.png&originHeight=495&originWidth=718&size=24790&status=done&style=none&width=359" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"></p>
+<h3 id="4-DS-Store"><a href="#4-DS-Store" class="headerlink" title="4. .DS_Store"></a>4. .DS_Store</h3><p>.DS_Store 是 Mac OS 保存文件夹的自定义属性的隐藏文件。通过.DS_Store可以知道这个目录里面所有文件的清单。</p>
+<p>加上后缀 .ds_store 得到文件，用记事本打开<br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625808964704-8db0c3ad-2f20-447a-b095-924f9ffe3244.png#align=left&display=inline&height=248&margin=%5Bobject%20Object%5D&name=image.png&originHeight=495&originWidth=718&size=22628&status=done&style=none&width=359" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"></p>
+<h2 id="4-Git泄露"><a href="#4-Git泄露" class="headerlink" title="4. Git泄露"></a>4. Git泄露</h2><h3 id="1-Log"><a href="#1-Log" class="headerlink" title="1. Log"></a>1. Log</h3><p>当前大量开发人员使用git进行版本控制，对站点自动部署。如果配置不当,可能会将.git文件夹直接部署到线上环境。这就引起了git泄露漏洞。<br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625809413850-b76d6f41-f629-4c68-9cb4-6aeb0c90d090.png#align=left&display=inline&height=70&margin=%5Bobject%20Object%5D&name=image.png&originHeight=140&originWidth=1248&size=12435&status=done&style=none&width=624" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"><br>用dirsearch扫描到git有泄露，其实扫不扫无所谓，已经提示是git泄露了<br>然后用到githack<br>&lt;GitHack工具clone目标源代码到本地&gt;<br>python GitHack.py <a target="_blank" rel="noopener" href="http://challenge-51f4053bce82d807.sandbox.ctfhub.com:10800/">http://challenge-51f4053bce82d807.sandbox.ctfhub.com:10800/</a>.git<br>生成一个文档<br>git log 显示从最近到最远的提交日志<br>git diff 简单来说就是查看不同，具体用法如下<br>1，git diff：是查看working tree与index的差别的<br>2，git diff –cached：是查看index与repository的差别的<br>3，git diff HEAD：是查看working tree和repository的差别的，其中，HEAD代表的是最近的一次commit的信息<br>4，git reset 可用于回退版本库<br>5，git show：用于显示各种类型的对象。<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/miracle77hp/articles/11163532.html">https://www.cnblogs.com/miracle77hp/articles/11163532.html</a>（git命令大全）<br>git show 就可以得到flag<br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625890269515-41fe2e7d-aefb-438e-a480-f96f8a99a6a9.png#align=left&display=inline&height=320&margin=%5Bobject%20Object%5D&name=image.png&originHeight=639&originWidth=1223&size=85952&status=done&style=none&width=611.5" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"><br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625890341819-72313b5e-9756-4378-88a1-e02ff07eb710.png#align=left&display=inline&height=320&margin=%5Bobject%20Object%5D&name=image.png&originHeight=639&originWidth=1223&size=72479&status=done&style=none&width=611.5" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"></p>
+<h3 id="2-Stash"><a href="#2-Stash" class="headerlink" title="2.Stash"></a>2.Stash</h3><p>1, git stash：备份当前工作区的内容，保存到git栈中，从最近的一次commit中读取相关内容<br>2，git stash list： 显示git栈中的所有工作区内容的备份<br>3，git stash pop：从git栈中获取到最近一次stash进去的内容，恢复工作区的内容。。获取之后，会删除栈中对应的stash。由于可能会stash多次，git使用栈管理，我们可以使用git stash list查看所有的stash<br>linux的ls 相当于Windows里的dir<br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625890681300-585df05f-4256-4621-8e22-4920d924d88b.png#align=left&display=inline&height=87&margin=%5Bobject%20Object%5D&name=image.png&originHeight=174&originWidth=1185&size=31503&status=done&style=none&width=592.5" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"><br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625890697605-2b613625-a855-4661-b135-175a27dbb746.png#align=left&display=inline&height=308&margin=%5Bobject%20Object%5D&name=image.png&originHeight=616&originWidth=1157&size=64423&status=done&style=none&width=578.5" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"></p>
+<h2 id="5，SVN泄露"><a href="#5，SVN泄露" class="headerlink" title="5，SVN泄露"></a>5，SVN泄露</h2><p><strong>当开发人员使用 SVN 进行版本控制，对站点自动部署。如果配置不当,可能会将.svn文件夹直接部署到线上环境。这就引起了 SVN 泄露漏洞</strong><br>SVN是subversion的缩写，是一个开放源代码的版本控制系统，通过采用分支管理系统的高效管理，简而言之就是用于多个人共同开发同一个项目，实现共享资源，实现最终集中式的管理。<br>这里需要一个工具<br><strong>dvcs-ripper</strong><br>下载地址：<a target="_blank" rel="noopener" href="https://github.com/kost/dvcs-ripper.git">https://github.com/kost/dvcs-ripper.git</a><br>./rip-svn.pl -v -u <a target="_blank" rel="noopener" href="http://challenge-a50fc5c34bf9bbb0.sandbox.ctfhub.com:10800/">http://challenge-a50fc5c34bf9bbb0.sandbox.ctfhub.com:10800/</a>.svn/</p>
+<h2 id="6，HG泄露"><a href="#6，HG泄露" class="headerlink" title="6，HG泄露"></a>6，HG泄露</h2><p><strong>当开发人员使用 Mercurial 进行版本控制，对站点自动部署。如果配置不当,可能会将.hg 文件夹直接部署到线上环境。这就引起了 hg 泄露漏洞</strong><br><strong>dvcs-ripper</strong></p>
+
+      </div>
+      <div class="post-tags-categories">
+        
+      </div>
+      
+        <div class="copyright">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+    <strong>作者:  </strong>h0me1498192242</a>
+    </li>
+    <li class="post-copyright-link">
+    <strong>文章链接:  </strong>
+    <a href="/2021/08/30/CTFHUB/" target="_blank" title="CTFHUB">http://example.com/2021/08/30/CTFHUB/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明:   </strong>
+      本网站所有文章除特别声明外,均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+      许可协议。转载请注明出处!
+    </li>
+  </ul>
+<div>
+      
+    </article>
+    <!-- 上一篇文章和下一篇文章 -->
+    
+      <!-- 文章详情页的上一页和下一页 -->
+<div class="post-nav">
+
+
+
+
+
+  
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img lazyload" data-original="/medias/3.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="/2021/08/09/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8E%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%88%B0RCE/" class="post-nav-link">
+      <div class="title">
+        下一篇: <i class="fa fa-angle-right"></i>
+        <div class="title-text">渗透测试从代码审计到RCE</div>
+      </div>
+      <!-- <div class="content">
+        @TOC
+前言一、代码审计前的准备把握大局：网站结构：浏览源码文件夹，了解该程序的大致目录入口文件：index.php,
+      </div> -->
+    </a>
+  </div>
+
+</div>
+
+    
+    
+
+    <!-- 打赏 -->
+    
+      <div id="appDonate" class="post-donate">
+  <div id="donate_board" class="donate_bar center" ref="donate">
+    <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏" @click="showDialogDrawer()"></a>
+  </div>
+  <transition name="fade">
+    <div 
+      class="donate-box-mask"
+      v-cloak 
+      v-if="visible"
+      @click="cancelDialogDrawer()"
+    >
+    </div>
+  </transition>
+  <transition name="bounce">
+    <div class="donate-box" v-cloak v-if="visible">
+      <div class="donate-box_close">
+        <i class="fa fa-times" aria-hidden="true" @click="cancelDialogDrawer" pointer></i>
+      </div>
+      <div class="donate-box_title">
+        <h4>
+          你的赏识是我前进的动力
+        </h4>
+      </div>
+      <div class="donate-box_tab">
+        <div class="Alipay" pointer :class="{'active': tabActive === 'Alipay'}" @click="changeTabActive('Alipay')">
+          支付宝
+        </div>
+        <div class="WeChatpay" pointer :class="{'active': tabActive === 'WeChatpay'}" @click="changeTabActive('WeChatpay')">
+          微信
+        </div>
+      </div>
+      <div class="donate-box_img">
+        <div class="AlipayImg" v-if="tabActive === 'Alipay'">
+          <img src="/medias/zfb.jpg" alt="支付宝打赏" />
+        </div> 
+        <div class="WeChatpayImg" v-if="tabActive === 'WeChatpay'">
+          <img src="/medias/wx.jpg" alt="微信打赏" />
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDonate',
+    data: {
+      visible: false,
+      tabActive: 'Alipay',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        // function getScroll() {
+        //   return {
+        //     left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+        //     top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+        //   };
+        // }
+        this.top = $(document).scrollTop() // or getScroll().top
+        // console.log('aa', $('.main-content'));
+        body.style.cssText = 'overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+      changeTabActive(name) {
+        this.tabActive = name;
+      }
+    },
+    created() {}
+  })
+</script>
+    
+
+    <!-- 分享 -->
+    
+      <!-- https://github.com/overtrue/share.js -->
+<!-- 文章详情页的分享 -->
+<div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+
+<script src="/js/shareJs/social-share.min.js"></script>
+</script>
+
+<style>
+  .social-share {
+    margin: 20px 0;
+  }
+</style>
+
+
+    
+    
+    <!-- 评论 -->
+    <!-- 评论 -->
+
+  <div id="myComment">
+    
+      
+<section id="comments" style="padding: 1em; margin: 15px auto;"
+	class="animated bounceInUp">
+	<div id="vcomment" class="comment"></div>
+</section>
+<style>
+	#comments {
+		background: rgba(255,255,255,0.9);
+	}
+	#veditor {
+		background-image: url('https://img.zcool.cn/community/01a253594c71cfa8012193a329a77f.gif');
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: right;
+		background-color: rgba(255, 255, 255, 0);
+		resize: vertical;
+	}
+	#veditor:focus{
+		background-position-y: 200px;
+		transition: all 0.2s ease-in-out 0s;
+	}
+	#vcomment .vcards .vcard .vh .vhead .vtag.vvisitor {
+		background-color: #42b983;
+	}
+	.v[data-class=v] .vbtn:active, .v[data-class=v] .vbtn:hover {
+		color: #42b983;
+		border-color: #42b983;
+	}
+	#vcomment .vcards .vcard .vhead .vsys i {
+		display: none;
+	}
+	/* 底部valine链接 */
+	#vcomment .vpower {
+		display: none;
+	}
+	
+	/* 底下注释是修改 名称和邮箱和网址输入框的样式 */
+	/* #vcomment .vheader {
+		display: flex;
+		justify-content: space-around;
+	}
+	
+	#vcomment .vheader .vnick {
+		width: 31%;
+		border: 2px solid #dedede;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-radius: 5px
+	}
+
+	#vcomment .vheader .vmail {
+		width: 31%;
+		border: 2px solid #dedede;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-radius: 5px
+	}
+
+	#vcomment .vheader .vlink {
+		width: 31%;
+		border: 2px solid #dedede;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-radius: 5px
+	} */
+
+	img.vimg {
+		transition: all 1s;
+		/* 头像旋转时间为 1s */
+	}
+
+	img.vimg:hover {
+		transform: rotate(360deg);
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+	}
+
+	#vcomment .vcards .vcard {
+		padding: 15px 20px 0 20px;
+		border-radius: 10px;
+		margin-bottom: 15px;
+		box-shadow: 0 0 4px 1px rgba(0, 0, 0, .12);
+		transition: all .3s
+	}
+
+	#vcomment .vcards .vcard:hover {
+		box-shadow: 0 0 8px 3px rgba(0, 0, 0, .12)
+	}
+
+	#vcomment .vcards .vcard .vh .vcard {
+		border: none;
+		box-shadow: none;
+	}
+</style>
+    
+  </div>
+
+
+  </div>
+
+  <!-- 目录 -->
+  <!-- 文章详情页右侧目录 -->
+
+  <div class="toc-aside">
+    <div class="toc-main">
+      <div class="toc-aside-title">
+        <i class="fa fa-list-ul" aria-hidden="true"></i><span>本文目录</span>
+        
+          <div class="toc-open-close">本文目录</div>
+        
+      </div>
+      <div class="toc-content">
+        <div class="toc"></div>
+      </div>
+    </div>
+  </div>
+  <!-- js在scripts目录下的的toc.ejs里面 -->
+  
+
+  <script>
+    function openBtnClickFn () {
+      let openOrCloseBtn = $('.toc-aside .toc-aside-title .toc-open-close');
+      let open = eval('' || 'true');
+      openOrCloseBtn.click(function() {
+        if (open === true) {
+          $(".toc-aside").css({'width': 0, 'padding': 0});
+          $(".toc-content").css({'width': 0});
+          $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+          $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+          open = false;
+        } else {
+          $(".toc-aside").css({'width': '300px', 'padding': '0 10px'});
+          $(".toc-content").css({'width': '300px'});
+          $(".toc-aside-title span, .toc-aside-title i").css({'display': 'inline-block'});
+          $(".main-content").css({'width': '65%', 'margin-right': '10px', 'margin-left': 'calc(35% - 350px)'});
+          open = true;
+        }
+      });
+    };
+    openBtnClickFn();
+    document.addEventListener('pjax:complete', function () {
+      openBtnClickFn();
+    })
+  </script>
+
+
+  
+
+  <!-- 图片放大 Wrap images with fancybox support -->
+  <script src="/js/wrapImage.js"></script>
+</div>
+
+<!-- 文章详情页背景图 -->
+<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;" :style="{'background-color': bgColor ? bgColor : 'transparent'}">
+    <transition-group tag="ul" :name="names">
+        <li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
+            <img :src="image" class="bg-swiper-img">
+        </li>
+    </transition-group>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#appBgSwiper',
+        data: {
+            names: '' || 'fade' || 'fade', // translate-fade fade
+            mark: 0,
+            img: [],
+            bgColor: '',
+            time: null
+        },
+        methods: {   //添加方法
+            change(i, m) {
+                if (i > m) {
+                    // this.names = 'fade';
+                } else if (i < m) {
+                    // this.names = 'fade';
+                } else {
+                    return;
+                }
+                this.mark = i;
+            },
+            prev() {
+                // this.names = 'fade';
+                this.mark--;
+                if (this.mark === -1) {
+                    this.mark = 3;
+                    return
+                }
+            },
+            next() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            autoPlay() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            play() {
+                let bgImgDelay = '' || '180000'
+                let delay = parseInt(bgImgDelay) || 180000;
+                this.time = setInterval(this.autoPlay, delay);
+            },
+            enter() {
+                clearInterval(this.time);
+            },
+            leave() {
+                this.play();
+            }
+        },
+        created() {
+            this.play()
+        },
+        beforeDestroy() {
+            clearInterval(this.time);
+        },
+        mounted() {
+            let prop = ''|| '';
+            let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://') 
+            if (isImg) {
+                let img = prop.split(',');
+                let configRoot = '/'
+                let arrImg = [];
+                img.forEach(el => {
+                    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+			        var objExp = new RegExp(Expression);
+
+                    if(objExp.test(el)) {
+                        // http or https
+                        arrImg.push(el);
+                    } else {
+                        // 非http or https开头
+                        // 本地文件
+                        let firstStr = el.charAt(0);
+                        if (firstStr == '/') {
+                            el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
+                        }
+                        el = configRoot + el;
+                        arrImg.push(el);
+                    }
+                })
+                this.img = arrImg;
+            } else {
+                this.bgColor = prop;
+            }
+        }
+    })
+</script>
+
+<style>
+    .bg-swiper-box {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .bg-swiper-img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
     </main>
 
     <!-- 页脚 -->
