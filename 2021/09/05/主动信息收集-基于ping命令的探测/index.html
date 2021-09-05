@@ -11,7 +11,7 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-  <title>kali本地网络配置-配置sshd服务并使用xshell连接 | Hexo</title>
+  <title>主动信息收集-基于ping命令的探测 | Hexo</title>
 
   
     
@@ -411,7 +411,7 @@
 
 
 
-<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="/medias/2.jpg" style="background-repeat: no-repeat; background-size: cover; 
+<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="/medias/5.jpg" style="background-repeat: no-repeat; background-size: cover; 
   background-position: center center;position: relative;">
   <div class="post-detail-header-mask"></div>
   <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
@@ -419,7 +419,7 @@
   <div class="post-detail-header_info-box">
     <div class="title-box">
       <span class="title">
-        kali本地网络配置-配置sshd服务并使用xshell连接
+        主动信息收集-基于ping命令的探测
       </span>
     </div>
     
@@ -448,13 +448,39 @@
     <article class="post post-detail">
       
       <div class="post-content">
-        <p>没有前言 😂  直接学干货<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/da8038143a2149109309d6e52e54520a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
-<h2 id="临时配置IP地址："><a href="#临时配置IP地址：" class="headerlink" title="临时配置IP地址："></a>临时配置IP地址：</h2><p>这是我kali的ip地址<br>然后给他配置一个临时的ip地址 就是 ifconfig eth0 192.168.1.53/24<br>(eth0 表示一块网卡 eth1是两块网卡  /24 表示子网掩码 255.255.255.0）<br>如果想手动配置ip地址<br>route add default gw 192.168.1.1  （添加默认路由）<br>echo nameserver 8.8.8.8 &gt; /etc/resolv.conf   （配置dns服务器）</p>
-<p>永久配置IP地址<br>vim /etc/network/interfaces<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/c5f8105636984d27a16a36fca98bf2df.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/aea0dc6354d34091b7bc9fc91b5ee73b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
-<p>vim /etc/resolv.conf #在文档最后插入DNS    地址<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/30ee38d15016457c914fee0e5f5a777b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>systemctl restart networking #重启网络服务<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/5446721a663c42dc993ca65a0c1a907c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
-<h2 id="配置sshd服务并使用xshell连接"><a href="#配置sshd服务并使用xshell连接" class="headerlink" title="配置sshd服务并使用xshell连接"></a>配置sshd服务并使用xshell连接</h2><p>允许root用户登录sshd服务<br>vim /etc/ssh/sshd_config<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/15e94a36b70e4ba0bf889164dc42e341.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
-<p>启动服务<br>/etc/init.d/ssh restart<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/03cc870270cc4d1daa6ff8f0d09bd7b2.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>允许ssh服务开机启动<br>update-rc.d ssh enable</p>
-<p><strong>xshell配置使用</strong><br>设置账号密码 不展示<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/1a260986e53e47769e0f01d0520d2a42.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/f867225c0f804a4e84476893dbdbcebb.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br><strong>然后连接</strong><br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/3e1798cc8ddb474c95d02d6ca54dea41.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/fe1b3ba2a1db4232807548b53948a811.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/0328893e95584277bfbf57c8fc1d8b34.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>如果想在win本机上传文件到kali上<br>rz</p>
+        <p>虽然目前人们都认为Google是最强劲的搜索引擎，但Shodan才是互联网最可怕的搜索引擎<br>Shodan可以说是一款黑暗谷歌<br><a target="_blank" rel="noopener" href="https://www.shodan.io/">https://www.shodan.io</a></p>
+<p><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/a9a0322991f748b3ba0291ed37690320.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
+<p>第七层应用层<br>  OSI中的最高层，为特定类型的网络应用提供了访问OSI环境的手段，应用层确定进程之间通信的性质，以满足用户的需要，应用层不仅要提供应用进程所需要的信息交换和远程操作，而且还要作为应用进程的用户代理，来完成一些为进行信息交换所需要的功能，它包括：文件传送访问和管理FTAM，虚拟终端VT，事务处理TP，远程数据库访问RDA，制造报文规范MMS，目录服务DS等协议，应用层能与应用程序界面沟通，以达到展示给用户的目的，再次常见的协议有HTTP,HTTPS,FTP,TELNET,SSH,SMTP,POP3等<br>第六层表示层<br>   主要用于处理两个通信系统中交换信息的表示方式，为上层用户解决用户信息的语法问题，它包括数据格式交换，数据加密与解密，数据压缩与终端类型的交换<br>第五层会话层<br>  在两个节点之间建立端连接，为端系统的应用程序之间提供了对话控制机制。此服务包括建立连接是以全双工还是以半双工的方式进行设置，尽管可以在层4中处理双工方式；会话层管理登录和注销过程。它具体管理两个用户和进程之间的对话，如果在某一时刻只允许一个用户执行一项特定的操作，会话层协议就会管理这些操作，如阻止两个用户同时更新数据库中的同一组数据<br>第四层传输层<br>  传输层建立了主机端口到端口的链接，传输层的作用是为上层协议（上层会会话层）提供端口到端口的可靠和透明的数据传输服务，包括处理差错控制和流量控制等问题。该层向高层屏蔽了下层数据通信的细节，使高层用户看到的知识在两个传输实体间的一条主机到主机的，可由用户控制和设定的，可靠的数据通路，我们通常说的 TCP UDP就是在这一层<br>第二层数据链路层<br>  将比特组合成字节，再将字节组合成帧，使用链路层地址（以太网使用MAC地址）来访问介质，并进行差错检测<br>第一层物理层<br>  处于OSI参考模型的最底层，物理层的主要功能是利用物理传输介质为数据链路层提供物理连接，以便透明的传送比特流，常用设备有（各种物理设备）网卡，集线器，中继器，调制解调器，网线，双绞线，同轴电缆。</p>
+<p><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/f3f579e0b6854facb8475cefb2e4bdb5.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16!%5B%E5%9C%A8%E8%BF%99%E9%87%8C%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E6%8F%8F%E8%BF%B0%5D(https://img-blog.csdnimg.cn/c8bf082d6e5e4a8b90261e938113fcd7.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/c9a20436dc6946529412c2d479f304bd.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
+<p>./arping1.sh eth0 #查看局域网中是否存在arp攻击<br>如果出现两个一样的ip地址，就i是有ARP攻击了</p>
+<p>使用Netdiscover进行被动方式探测局域中存活的机器<br>Netdiscover是一个主动/被动的ARP侦察工具，使用Netdiscover工具可以在网络上扫描IP地址，检查在线主机或搜索为它们发送的ARP请求<br>主动模式<br>主动模式顾名思义就是主动的探测发现网络内主机，但是这种方式往往会引起网络管理员的注意<br> netdiscover -i eth0 -r  192.168.68,0/24(-i表示指定网卡 -r表示指定默认网段）<br> 被动模式：<br> 被动模式的方法更加隐蔽，但是速度会比较慢，网卡被设置为混杂模式来侦听网路内的ARP数据包进行被动式探测，这种方式就需要网络内设备发送arp包才能被探测到<br> netdiscover -p (表示不发送任何的数据包 只是嗅探）</p>
+<p> HPING3<br>Hping3是一个命令行下使用的TCP/IP数据包组装/分析工具，通常web服务会用来做压力测试使用，也可以进行DOS攻击的实验，同样Hping只能每次扫描一个目标<br>对xuegod.cn进行压力测试<br>hping3 -c 1000 -d 120 -S -w 64 -p 80 –flood –rand-source xuegod.cn<br>(-c 是指发送的数量 -d每个数据包大小 单位字节 -S表示只发送syn数据包，收到收不到不管， -w指定tcp的大小，流量 -p端口 –flood 洪水式攻击 –rand-source 在局域网内任意伪造ip地址，通过路由器后，还是会还原成真实的ip</p>
+<p>FPING<br>fping -g 192.168.1.0/24 -c 1<br>fping就是ping命令的加强版，它可以对一个ip段进行ping扫描，而ping命令本身是不可以对网段进行扫描的</p>
+<p>基于Nmap的扫描方式<br>扫描192.168.68.0这个网段<br>nmap -sn 192.168.68.0/24 (-sn表示只ping扫描，不进行端口扫描）<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/2f9f7687925b4689abf5ca829fc1f44b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
+<p>使用nmap进行半连接扫描<br>nmap扫描类型主要有TCP的全连接扫描（会在被扫描机器留下记录），半连接扫描（不会留下记录）<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/cf175320f9904f3d8afb61b5fd140126.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>nmap -sS 101.200.128.35 -p 80,255 (-sS表示SYN进行半连接扫描 后面是ip地址 -p表示指定端口）</p>
+<p>使用nc扫描端口<br>nc是netcat的简写，有着网络界的瑞士军刀美誉，因为它短小精悍，功能实用，被设计为一个简单，可靠的网络工具<br>nc的作用<br>1，实现任意TCP/UDP端口的侦听，nc可以作为server以TCP或UDP方式侦听指定端口<br>2，端口的扫描，nc可以作为client发起TCP或UDP连接<br>3，机器之间传输文件<br>4，机器之间网络测速<br>nc参数<br>-nv 表示我们扫描的目标是个IP地址不做域名解析<br>-w 表示超时时间<br>-z 表示进行端口扫描<br> nc -nv -w 1-z 192.168.1.1 1-100</p>
+<p>使用scapy定制数据包进行高级扫描<br>scapy概述<br>Scapy是一个可以让用户发送，侦听和解析并伪装网络报文的PYTHON程序，这些功能可以用于制作侦测，扫描和攻击网络的工具<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/84f0b9c493354d71bfd3e790801b9e84.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
+<p>scapy定制arp协议<br>ARP().display() #查看arp函数的用法<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/1d8004c155c74c2ba6ad5c04887d8519.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>  hwtype= 0x1 硬件类型<br>  ptype= IPv4 协议类型<br>  hwlen= None 硬件地址长度（MAC）<br>  plen= None  协议地址长度（IP）<br>  op= who-has  who-has 查询<br>  hwsrc= 00:0c:29:45:a3:c6  源MAC地址<br>  psrc= 192.168.68.53  源IP地址<br>  hwdst= 00:00:00:00:00:00<br>  pdst= 0.0.0.0  向谁发送查询请求</p>
+<p>定义向192.168.68.1发送arp请求的数据包<br>sr1函数作用：sr1函数包含了发送数据包和接收数据包的功能<br>sr1(ARP(pdst=”192.168.68.1”))<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/40d6d2e7897444e5a8211a096703672f.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>scapy定制PING包<br> scapy的功能是非常强大的，我们前面只是简单的介绍了他的ARP探测方式，下面我们简单讲一下IP/ICMP的方式<br> 下面两条命令可以直接看到我们的数据包格式<br> IP().display()<br> <img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/55b03d4f78c245ba84ac09de00ffc312.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>  version= 4  版本：4，即IPv4<br>  ihl= None  首部长度<br>  tos= 0x0  服务<br>  len= None  总长度<br>  id= 1  标识<br>  flags=<br>  frag= 0  标志<br>  ttl= 64  生存时间<br>  proto= hopopt  传输控制协议  IPv6逐跳选项<br>  chksum= None  首部校验和<br>  src= 127.0.0.1  源地址<br>  dst= 127.0.0.1 目的地址<br>  \options\</p>
+<p>  ICMP().display()</p>
+<p>   type= echo-request 类型，标识ICMP报文的类型<br>  code= 0  代码<br>  chksum= None  校验和<br>  id= 0x0  标识<br>  seq= 0x0<br>  注：IP()生成 ping包的源IP和目标IP，ICMP()生ping包的类型，使用IP()和ICMP()两个函数，可以生成ping包，进行探测</p>
+<p>sr1(IP(dst=”192.168.68.1”)/ICMP(),timeout=1) #向网关发送一个数据包<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/2db24f92ef9843dcb919c80114998d93.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>scapy定制TCP协议syn请求<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/29ee9b6a9abf457da035ce154e114ccc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>查看TCP协议的基本格式<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/fb3b3d120c8f45bda131e549e0866e30.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>###[ TCP ]###<br>  sport= ftp_data  TCP源端口<br>  dport= http  TCP目的端口<br>  seq= 0  32位序号<br>  ack= 0  32位确认序号<br>  dataofs= None  4位首部长度<br>  reserved= 0 保留6位<br>  flags= S  标志域，紧急标志，有意义的应答标志，推，重置连接标志，同步序列号标志，完成发送数据标志，按照顺序排列是： URG,ACK,PSH,RST,SYN,FIN<br>  window= 8192 窗口大小<br>  chksum= None 16位校验和<br>  urgptr= 0  优先指针<br>  options= []  选项<br>向目标端口发送TCP协议 syn数据包  192.168.68.1是我的网关<br>sr1(IP(dst=”192.168.68.1”)/TCP(flags=”S”,dport=80),timeout=1)<br>flags=”S” 表示SYN数据包<br>dport=80 表示目标端口80</p>
+<p><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/5690fd8304054a0b9485349fd083b320.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
+<h2 id="僵尸扫描"><a href="#僵尸扫描" class="headerlink" title="僵尸扫描"></a>僵尸扫描</h2><p>做渗透最重要的是什么？ 思维！<br>僵尸扫描概述<br>僵尸主机：僵尸主机是指感染僵尸程序病毒，从而被黑客程序控制的计算机设备，但是僵尸扫描中的僵尸主机指的是一个闲置的操作系统（这里的闲置是指主机不会主动和任何人通信），且此系统中IP数据包中ID是递增的<br>IPID: 值的是通信过程中，IP数据包中的ID<br>僵尸扫描拥有极高的隐蔽特性，但是实施条件苛刻</p>
+<p>1，目标网络可伪造源地址进行访问<br>2，选择僵尸机，僵尸机需要在互联网上是一个闲置的操作系统，需要系统使用递增的IPID，必须XP系统<br>这里说一下DDOS攻击 控制多台机器，让多台机器同时对目的机器进行攻击<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/6f5a7a853646413da0ca1a8fa46b3301.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>对僵尸扫描来讲，你在公网或局域网上先拿到了肉机，僵尸扫描可以不拿到肉鸡权限，只要对方的IPID是自增长的就可以了<br>端口开放：<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/56f8ced230da4f34b90dfbf5dec099b0.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>端口关闭“<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/3d50f1c4c1014ec88fe390c7ca6be58b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>僵尸扫描-实战<br>实验拓补图：<br>一台XP的虚拟机为僵尸主机，IP地址为192.168.68.131  并关闭XP系统的防火墙<br>kali为目标主机，IP地址为192.168.68.1  确认sshd服务能够正常访问</p>
+<p>第一步：给僵尸主机发送的SYN/ACK数据包，将返回的数据包存入rz1<br>rz1=sr1(IP(dst=”192.168.68.131”)/TCP(dport=445,flags=”SA”))<br>命令详解：<br>rz1   表示定义了一个变量来接受我们返回的数据包<br>dst  表示我们的僵尸主机IP<br>dport=445 表示我们向僵尸主机的445端口发送数据包，XP主机的445端口一般都是开启状态<br>flags=”SA” 表示发送SYN/ACK<br>查看一下IPID<br>display()表示查看变量中的内容，我们只需要查看IP下面的ID字段即可<br>rz1.display()</p>
+<p>第二步：攻击者修改IP包头的SRC字段为僵尸主机的IP，伪装成僵尸主机给目标主机发SYN请求<br><strong>rt=sr1(IP(src=”192.168.68.131”dst=”192.168.68.53”)/TCP(dport=22),timeout=1)</strong><br>命令详解<br>rt 表示定义了一个变量来接受我们返回的数据包<br>src 表示伪造成僵尸主机的ip地址<br>dst 表示将数据包发送目标主机<br>dport 目标端口<br>timeout 超时时间<br>第三步：攻击者再次向僵尸主机发送SYN/ACK确定包，获得IPID<br><strong>rz2=sr1（IP(dst=”192.168.68.131”)/TCP(dport=445,flags=”SA”))</strong><br>rz2.display<br>查看id的变化，变化2端口打开，变化1端口关闭</p>
+<p>使用Nmap进行僵尸扫描</p>
+<p>1，扫描192.168.68.0网段中某些机器可以作为僵尸主机<br>namp 192.168.68.0/24 -p1-1024 –script=ipidseq.nse<br>Starting Nmap 7.80 ( <a target="_blank" rel="noopener" href="https://nmap.org/">https://nmap.org</a> ) at 2021-09-05 17:32 CST<br>Nmap scan report for 192.168.68.1<br>Host is up (0.00028s latency).<br>Not shown: 1021 filtered ports<br>PORT    STATE SERVICE<br>443/tcp open  https<br>902/tcp open  iss-realsecure<br>912/tcp open  apex-mesh<br>MAC Address: 00:50:56:C0:00:08 (VMware)</p>
+<p>Host script results:<br>|_ipidseq: Incremental!</p>
+<p>Nmap scan report for 192.168.68.2<br>Host is up (0.000032s latency).<br>Not shown: 1023 closed ports<br>PORT   STATE SERVICE<br>53/tcp open  domain<br>MAC Address: 00:50:56:E0:53:8D (VMware)</p>
+<p>Host script results:<br>|_ipidseq: Incremental!</p>
+<p>Nmap scan report for 192.168.68.131<br>Host is up (0.00012s latency).<br>Not shown: 1021 closed ports<br>PORT    STATE SERVICE<br>135/tcp open  msrpc<br>139/tcp open  netbios-ssn<br>445/tcp open  microsoft-ds<br>MAC Address: 00:0C:29:EC:52:86 (VMware)</p>
+<p>Host script results:<br>|_ipidseq: Incremental! 表示自增，可以作为僵尸主机</p>
+<p>Nmap scan report for 192.168.68.254<br>Host is up (0.000080s latency).<br>All 1024 scanned ports on 192.168.68.254 are filtered<br>MAC Address: 00:50:56:E2:B0:69 (VMware)</p>
+<p>Nmap scan report for 192.168.68.53<br>Host is up (0.0000020s latency).<br>Not shown: 1023 closed ports<br>PORT   STATE SERVICE<br>22/tcp open  ssh</p>
+<p>Host script results:<br>|_ipidseq: All zeros</p>
+<p>nmap 192.168.68.53 -sI 192.168.68.131 -p1-100<br>sI后面的是僵尸主机 -p1-100是扫描1-100端口</p>
 
       </div>
       <div class="post-tags-categories">
@@ -468,7 +494,7 @@
     </li>
     <li class="post-copyright-link">
     <strong>文章链接:  </strong>
-    <a href="/2021/09/05/kali本地网络配置-配置sshd服务并使用xshell连接/" target="_blank" title="kali本地网络配置-配置sshd服务并使用xshell连接">http://example.com/2021/09/05/kali本地网络配置-配置sshd服务并使用xshell连接/</a>
+    <a href="/2021/09/05/主动信息收集-基于ping命令的探测/" target="_blank" title="主动信息收集-基于ping命令的探测">http://example.com/2021/09/05/主动信息收集-基于ping命令的探测/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明:   </strong>
@@ -486,38 +512,21 @@
 
 
 
-  
-  <div class="post-nav-prev post-nav-item">
-    <div class="post-nav-img lazyload" data-original="/medias/5.jpg" style="background-size: cover; 
-      background-position: center center;">
-    </div>
-    <a href="/2021/09/05/%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E5%9F%BA%E4%BA%8Eping%E5%91%BD%E4%BB%A4%E7%9A%84%E6%8E%A2%E6%B5%8B/" class="post-nav-link">
-      <div class="title">
-        <i class="fa fa-angle-left"></i> 上一篇:
-        <div class="title-text">主动信息收集-基于ping命令的探测</div>
-      </div>
-      
-      <!-- <div class="content">
-        虽然目前人们都认为Google是最强劲的搜索引擎，但Shodan才是互联网最可怕的搜索引擎Shodan可以说是一款黑暗谷
-      </div> -->
-    </a>
-  </div>
-
 
 
   
   <div class="post-nav-next post-nav-item">
-    <div class="post-nav-img lazyload" data-original="/medias/15.jpg" style="background-size: cover; 
+    <div class="post-nav-img lazyload" data-original="/medias/2.jpg" style="background-size: cover; 
       background-position: center center;">
     </div>
-    <a href="/2021/09/05/%E6%96%87%E4%BB%B6%E4%BB%BB%E6%84%8F%E8%AF%BB%E5%8F%96%E5%92%8C%E5%BC%BA%E7%A2%B0%E6%92%9E/" class="post-nav-link">
+    <a href="/2021/09/05/kali%E6%9C%AC%E5%9C%B0%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE-%E9%85%8D%E7%BD%AEsshd%E6%9C%8D%E5%8A%A1%E5%B9%B6%E4%BD%BF%E7%94%A8xshell%E8%BF%9E%E6%8E%A5/" class="post-nav-link">
       <div class="title">
         下一篇: <i class="fa fa-angle-right"></i>
-        <div class="title-text">文件任意读取和强碰撞</div>
+        <div class="title-text">kali本地网络配置-配置sshd服务并使用xshell连接</div>
       </div>
       <!-- <div class="content">
-        @TOC
-一、babypython[国赛总决赛复现]考点：硬链接读取任意文件、伪造session这个题当时打开是一个文件
+        没有前言 😂  直接学干货
+临时配置IP地址：这是我kali的ip地址然后给他配置一个临时的ip地址 就是 ifcon
       </div> -->
     </a>
   </div>
