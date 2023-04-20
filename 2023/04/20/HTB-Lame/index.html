@@ -313,7 +313,7 @@
 </li>
 <li><p>-sV: 指定让Nmap进行服务版本扫描</p>
 </li>
-<li><p>-p <port ranges>: 扫描指定的端口</p>
+<li><p>-p <port ranges>: 扫描指定的端口</port></p>
 </li>
 <li><p>-sS&#x2F;sT&#x2F;sA&#x2F;sW&#x2F;sM:指定使用TCP SYN&#x2F;Connect()&#x2F;ACK&#x2F;Window&#x2F;Maimonscans的方式来对目标主机进行扫描 </p>
 </li>
@@ -422,7 +422,7 @@
 <p>search vsftpd 2.3.4 用这个命令查找所有有用的有效载荷<br><img src="https://img-blog.csdnimg.cn/9dd4e0c1250040fab9065052e5cd6348.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>我们使用这个攻击模块<br>use exploit/unix/ftp/vsftpd_234_backdoor<br>启动漏洞利用，查看显示的可用选项<br><img src="https://img-blog.csdnimg.cn/b2913797d0f745698a64848b98fe8f31.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>可以看到远程主机(RHOSTS)尚未设置，我们将设置远程主机和目标，因为这两个信息试运行漏洞利用所必需的<br>我们现在设置远程主机<br>set RHOSTS 10.10.10.3<br><img src="https://img-blog.csdnimg.cn/85d30a343f884eb487ef337314206292.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>将目标设置为0<br><img src="https://img-blog.csdnimg.cn/a31f5768205e422696eccc467d520a17.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>run进行攻击<br><img src="https://img-blog.csdnimg.cn/d36a41c954474ae9b889f9f5e8203f98.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>但是发现没有创建会话，该漏洞已按照漏洞描述中的说明进行了修补<br>此模块利用添加到 VSFTPD 下载存档中的恶意后门。根据可用的最新信息，此后门在 2011 年 6 月 30 日至 2011 年 7 月 1 日期间被引入 vsftpd-2.3.4.tar.gz 存档。该后门已于 2011 年 7 月 3 日被移除。</p>
 <h3 id="第三步：samba"><a href="#第三步：samba" class="headerlink" title="第三步：samba"></a>第三步：samba</h3><p>我们需要找其他方法了，第二布不行了<br>nmap -sV -sT -sC 10.10.10.3<br><img src="https://img-blog.csdnimg.cn/bb6eaef985f64f88addf136557e4a042.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>searchsploit Samba 3.0.20<br><img src="https://img-blog.csdnimg.cn/36c37d46e3bd4c20a32f76df4f0b395e.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>启动msfconsole<br>searchsploit Samba 3.0.20<br><img src="https://img-blog.csdnimg.cn/770aa3e3f9134872948f4a2d531db241.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>启动攻击模块  显示可用选项 </p>
 <p><img src="https://img-blog.csdnimg.cn/db0d9550011247b391c9bbe3382cad55.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>设置远程主机<br>set RHOSTS 10.10.10.3<br>run 启动攻击模块<br><img src="https://img-blog.csdnimg.cn/3ffd1558b9bc4ef6bffb7b44bd62c842.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
-
+</script></p></li></ol>
                 
               </div>
             

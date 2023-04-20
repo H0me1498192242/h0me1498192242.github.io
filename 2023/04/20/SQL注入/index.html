@@ -289,7 +289,7 @@
             
               <div class="markdown-body">
                 
-                <h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a><strong>SQL注入</strong></h2><h1 id=""><a href="#" class="headerlink" title=""></a></h1><h3 id="1-了解SQL注入"><a href="#1-了解SQL注入" class="headerlink" title="1.了解SQL注入"></a><strong>1.了解SQL注入</strong></h3><p><strong>1.1SQL注入定义</strong><br>SQL是操作数据库数据的结构化查询语言，网页的应用数据和后台数据库中的数据进行交互时会采用SQL。而SQL注入是将Web页面的原URL、表单域或数据包输入的参数，修改拼接成SQL语句，传递给Web服务器，进而传给数据库服务器以执行数据库命令。如Web应用程序的开发人员对用户所输入的数据或cookie等内容不进行过滤或验证(即存在注入点)就直接传输给数据库，就可能导致拼接的SQL被执行，获取对数据库的信息以及提权，发生SQL注入攻击。 </p>
+                <h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a><strong>SQL注入</strong></h2><h1 id><a href="#" class="headerlink" title></a></h1><h3 id="1-了解SQL注入"><a href="#1-了解SQL注入" class="headerlink" title="1.了解SQL注入"></a><strong>1.了解SQL注入</strong></h3><p><strong>1.1SQL注入定义</strong><br>SQL是操作数据库数据的结构化查询语言，网页的应用数据和后台数据库中的数据进行交互时会采用SQL。而SQL注入是将Web页面的原URL、表单域或数据包输入的参数，修改拼接成SQL语句，传递给Web服务器，进而传给数据库服务器以执行数据库命令。如Web应用程序的开发人员对用户所输入的数据或cookie等内容不进行过滤或验证(即存在注入点)就直接传输给数据库，就可能导致拼接的SQL被执行，获取对数据库的信息以及提权，发生SQL注入攻击。 </p>
 <p><strong>1.2SQL注入原理</strong><br>SQL注入攻击指的是通过构建特殊的输入作为参数传入Web应用程序，而这些输入大都是SQL语法里的一些组合，通过执行SQL语句进而执行攻击者所要的操作，其主要原因是程序没有细致地过滤用户输入的数据，致使非法数据侵入系统。</p>
 <h3 id="2-SQL注入过程"><a href="#2-SQL注入过程" class="headerlink" title="2.SQL注入过程"></a>2.SQL注入过程</h3><p><strong>2.1.SQL注释风格</strong></p>
 <p>“#”： 注释从 “#” 到行尾<br>“– “ ：注释从 “– ”序列到行位，需要注意的是使用此注释时，后面需要跟上空格<br>&#x2F;**&#x2F;：注释从 &#x2F;* 到 *&#x2F; 之间的字符</p>
