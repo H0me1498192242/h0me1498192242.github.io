@@ -1,0 +1,722 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言：本人H0ne在此立誓，线代要是挂科 吃席吧 吃我的 这个学期课太多了，自闭了  能不能考好，就看这几天了。麻了 把线代的复习笔记记录到这里 方便复习，也为了今后有人复习自取。不废话了，学吧    第一课：性质：某行（列）加上或减去另一行（列）的几倍，行列式不变这里就是转换，将下角的所有都变为0.第一行的作用是使后面所有行的首位变为0，第二行的作用是使后面行的第二位数字变为0.四阶，五阶都是这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于我学习线代的那些事">
+<meta property="og:url" content="http://example.com/2023/04/20/%E5%85%B3%E4%BA%8E%E6%88%91%E5%AD%A6%E4%B9%A0%E7%BA%BF%E4%BB%A3%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="前言：本人H0ne在此立誓，线代要是挂科 吃席吧 吃我的 这个学期课太多了，自闭了  能不能考好，就看这几天了。麻了 把线代的复习笔记记录到这里 方便复习，也为了今后有人复习自取。不废话了，学吧    第一课：性质：某行（列）加上或减去另一行（列）的几倍，行列式不变这里就是转换，将下角的所有都变为0.第一行的作用是使后面所有行的首位变为0，第二行的作用是使后面行的第二位数字变为0.四阶，五阶都是这">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/de5a211819654c788fc7c22d8025e2d7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/62d039bf25a040b7adbf175b5d0b26be.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f9542ac7b63f4777afd7cb7f4cffd77c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/cd37056654194abfb3535475f4423cfc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a9fb269bdbcc47d3becb543b4b5acab7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7d5780200bbe4c4497d57ff32219d861.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/83124e0e25cf4be19d5d13b7bda991eb.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ed83a511d4734683975e3d27aa2f5b3c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/00e02ef5b1814cf79923c7c6d6a9b40a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f969b2c85b294f358904bc941e6ee4d5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_15,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/71bdc50c76ce450e952ae105c94d4c69.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9abe1c8847754384a3862b5acbdca5a7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8c201ea0fc4d468aa5dbf3b04f499297.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/61cae67fdf344bb69cb6b2195d80f6f5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/0822d4f3f46e40c19d4d730ed1ebf679.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e9f1a605fe634355bf372ecda27d109d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3e50db80f5274d4f90509759c58e55b3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5a68e4127a704d7aaa5622df03535ff2.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/0f77363ee8f4478f99f8778b3bcf396b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f2e09bae89f246d9a43d277484099fb5.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/908cea910842477da20a199e06fb4103.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/dab338296032457087f746807c5ff5fa.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/c04d9eaab5ff4872825f312cf5f04311.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1302bd6a4ba54205ae97aed2a8d6b0ec.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e126f8a2fec04653818f50695c4e472e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3e8bc93933b94f0cb2a5bbfc7ce4209e.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9d79ff170fdf40ff92455e4d87542ca1.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/53263c039ed44b4ca38edcdd988038f0.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/c10efdbb1d1c448faf2b3a7fa8311000.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/6921f846dd8a4a18a10583945807a616.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8204de0ee5ec498f9d0220cb68cf4605.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/534b6c752b02428fbbf73f7739b091e7.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a7e02feb50e148e9859972e7a0dd62c0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8ccb5e09ea4e405eaa87579f94f94d6a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f397cbeee5bc462fa81ca58348b70d0c.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8a55e16f18194796996b4851cfe3f498.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/dff872ddaeb04c16b64f90ded0e5352c.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3e59ca663b9f4dde8e04477d0adbe3cf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/88f678b7c705424f9dae24274779ddcc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3943d643c4ed42fa80c65426c7f68bdf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8a2e391fb399492fbec820e199bb026d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/fd4a448e8030453f8ed5b2f64f2a0737.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b6a792cf6452445b8b71de405688e27a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/849c0c594ba04cb2973d2b4f24dfe89a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/6470b161ef5b492097e20da6bac380c0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/4be4cd8841564ec6a7430688f8a4aa73.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f5911b47c3fc4d81bcc86c9e24f0ebb7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/6ade930e9b684ea198a275f01f49410f.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a88358ba4ce044b093f1e2c02084a4f1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1b0ad25bd4ce48d5ab5de15de6afaf42.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/fea17be39e3b486ab2a096dba7ff6f81.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/4750ce618d4b469d901f78ec64b48371.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2d97db6b759e4fa9906bfe74f4a475a3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d9291d87223d4f149c1dda1de03fac16.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b48f949058974dcbbf4f6f2917c679d0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8b9c06ff8e694ee098bec7e68c1972d9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/95ed15273ef04bf581b7ecbadbf19b6a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/4f3b1319de40410c98efd00b55b8f8cf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2a6dfb5782334a738a9c021a85b1b9d2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/aaab7f84167b4e7ebf258ea2280efa2d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/45bcfa2e13174bc2b63df3bf7137376f.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1e2449e475574dcabae8f722cadde6bf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/44244badf8a64d71ae0646e90879ce03.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/39398d0e47aa452f937af20bcdb51ee6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/47bb36cdafa24141b537af20e578c068.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/048b0c63b8784a2aaadd18df4ecf2669.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/03e118bef47a4959bb5e985223871aa2.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5869bcf2c61f4b06802548c090bf0d65.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/dd7312be022847da9810764e5af33e8e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/4890f62bb1e6401f97c790fa2904146e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/45badfb050974c24bdc5adc347068b2d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/34a7fd974d96432bbbaf4b22f512a450.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2a7b7658735c4ff1921ddc2c72410060.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2d0287a5cd8b48879dd878dacfaedd4a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/42ffdc42254f4ddbab9eeb58dfcf2c84.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f267faf36015439b8ca5fb0074293ca4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/acaba550bc16407ea56c9c7ac6e714ab.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3448b56a9bf24dc5b4abfe3e5cc4062f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/dfceaad2e4e04d679fec25f54585adc5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/4067d73d656845e4aa37465a4b65d820.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/032212fc084b492e98d23e1460741377.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="article:published_time" content="2023-04-20T15:33:27.680Z">
+<meta property="article:modified_time" content="2021-12-23T10:58:32.000Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/de5a211819654c788fc7c22d8025e2d7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+  
+  
+  
+  <title>关于我学习线代的那些事 - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="关于我学习线代的那些事"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">关于我学习线代的那些事</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>本人H0ne在此立誓，线代要是挂科 吃席吧 吃我的 这个学期课太多了，自闭了  能不能考好，就看这几天了。麻了 把线代的复习笔记记录到这里 方便复习，也为了今后有人复习自取。不废话了，学吧   <img src="https://img-blog.csdnimg.cn/de5a211819654c788fc7c22d8025e2d7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"></p>
+<h2 id="第一课："><a href="#第一课：" class="headerlink" title="第一课："></a>第一课：</h2><p><strong>性质：某行（列）加上或减去另一行（列）的几倍，行列式不变</strong><br>这里就是转换，将下角的所有都变为0.<br><img src="https://img-blog.csdnimg.cn/62d039bf25a040b7adbf175b5d0b26be.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>第一行的作用是使后面所有行的首位变为0，第二行的作用是使后面行的第二位数字变为0.四阶，五阶都是这样<br><img src="https://img-blog.csdnimg.cn/f9542ac7b63f4777afd7cb7f4cffd77c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>性质：某行（列）乘K，等于K乘此行列式</strong><br><img src="https://img-blog.csdnimg.cn/cd37056654194abfb3535475f4423cfc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/a9fb269bdbcc47d3becb543b4b5acab7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>互换两行（列），行列式变好。</strong><br><img src="https://img-blog.csdnimg.cn/7d5780200bbe4c4497d57ff32219d861.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="第二课："><a href="#第二课：" class="headerlink" title="第二课："></a>第二课：</h2><p>第二课主要是记住公式。。。  公式有点多 有点难记<br>第一个公式：<br><img src="https://img-blog.csdnimg.cn/83124e0e25cf4be19d5d13b7bda991eb.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>这个性质的特殊之处就在于对角线的数相同，左右两边的数相同</p>
+<p><img src="https://img-blog.csdnimg.cn/ed83a511d4734683975e3d27aa2f5b3c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>第二个公式：<br>这个性质的特殊之处是在于每一列都是次方形式增加才可用<br><img src="https://img-blog.csdnimg.cn/00e02ef5b1814cf79923c7c6d6a9b40a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"></p>
+<p>第三个公式：<br>两行（列）相同或成比例时，行列式为0.<br><img src="https://img-blog.csdnimg.cn/f969b2c85b294f358904bc941e6ee4d5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_15,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>某行（列）为两项相加减时，行列式可拆成两个行列式相加减<br><img src="https://img-blog.csdnimg.cn/71bdc50c76ce450e952ae105c94d4c69.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>例题：<br><img src="https://img-blog.csdnimg.cn/9abe1c8847754384a3862b5acbdca5a7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>第四个：<br>求余子式，代数余子式<br>a23指的式二行三列 a12指的是一行二列<br>余子式：M    其实求的就是M23  而求M23就是抹掉二行三列的所有数字，剩下的数字求出行列式的答案就是<br>代数余子式：A  余子式的求法就是-1的行+列次方乘M23<br><img src="https://img-blog.csdnimg.cn/8c201ea0fc4d468aa5dbf3b04f499297.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>第五个公式：<br>a11指的是第一行第一列的元素，A11指的是-1的行加列次方乘M。<br><img src="https://img-blog.csdnimg.cn/61cae67fdf344bb69cb6b2195d80f6f5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>第六个公式：<br>多个A或M相加减的解题方法<br><img src="https://img-blog.csdnimg.cn/0822d4f3f46e40c19d4d730ed1ebf679.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>多个A：<br>       将求的前面的系数替换为代数式里面的位置 然后求解 就是答案<br>       多个M：<img src="https://img-blog.csdnimg.cn/e9f1a605fe634355bf372ecda27d109d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>多个M相加减的话，首先是将M转换为A，然后通过M来计算  照上步<br>第七个公式：<br>给一个方程组，判断其解的情况<br>齐次方式：方程组除了X和0没有其他常数项<br>非齐次方程：方程组除了X和0还有其他常数项<br><img src="https://img-blog.csdnimg.cn/3e50db80f5274d4f90509759c58e55b3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>D的求法：将方程式前面的系数取出来，然后进行计算<br><img src="https://img-blog.csdnimg.cn/5a68e4127a704d7aaa5622df03535ff2.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>然后根据D的取值等于0或者不等于0来判断解的个数<br><img src="https://img-blog.csdnimg.cn/0f77363ee8f4478f99f8778b3bcf396b.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br><img src="https://img-blog.csdnimg.cn/f2e09bae89f246d9a43d277484099fb5.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"></p>
+<h2 id="第三课："><a href="#第三课：" class="headerlink" title="第三课："></a>第三课：</h2><p>矩阵加减：<br><img src="https://img-blog.csdnimg.cn/908cea910842477da20a199e06fb4103.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>矩阵相乘：<br>前行乘后列<br><img src="https://img-blog.csdnimg.cn/dab338296032457087f746807c5ff5fa.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>例题：<br><img src="https://img-blog.csdnimg.cn/c04d9eaab5ff4872825f312cf5f04311.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>矩阵相乘的六种情况<br>1.0矩阵 任何矩阵和0相乘都是0<br><img src="https://img-blog.csdnimg.cn/1302bd6a4ba54205ae97aed2a8d6b0ec.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>2   E矩阵就是对角线全是1 两边全是1 而E矩阵是几阶取决于与他相加的是几阶矩阵，<br>任何矩阵乘E矩阵都是它本身<br><img src="https://img-blog.csdnimg.cn/e126f8a2fec04653818f50695c4e472e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>3 AB与BA未必相等<br>所以一定要搞好先后顺序<br><img src="https://img-blog.csdnimg.cn/3e8bc93933b94f0cb2a5bbfc7ce4209e.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>4 AX&#x3D;AY 不能推出X&#x3D;Y<br><img src="https://img-blog.csdnimg.cn/9d79ff170fdf40ff92455e4d87542ca1.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>5   AB的K次方与A的k次方乘B的k次方不一定相等<br><img src="https://img-blog.csdnimg.cn/53263c039ed44b4ca38edcdd988038f0.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>6 合并后不一定相等<br><img src="https://img-blog.csdnimg.cn/c10efdbb1d1c448faf2b3a7fa8311000.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br><img src="https://img-blog.csdnimg.cn/6921f846dd8a4a18a10583945807a616.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>矩阵取绝对值<br><img src="https://img-blog.csdnimg.cn/8204de0ee5ec498f9d0220cb68cf4605.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"></p>
+<h2 id="第四课："><a href="#第四课：" class="headerlink" title="第四课："></a>第四课：</h2><p>T是将行变成列，<br><img src="https://img-blog.csdnimg.cn/534b6c752b02428fbbf73f7739b091e7.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br><img src="https://img-blog.csdnimg.cn/a7e02feb50e148e9859972e7a0dd62c0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>技巧1：先用行乘列 会简单一些	<br><img src="https://img-blog.csdnimg.cn/8ccb5e09ea4e405eaa87579f94f94d6a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>技巧二：<br><img src="https://img-blog.csdnimg.cn/f397cbeee5bc462fa81ca58348b70d0c.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>技巧三：<br><img src="https://img-blog.csdnimg.cn/8a55e16f18194796996b4851cfe3f498.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>证明矩阵可逆<br><img src="https://img-blog.csdnimg.cn/dff872ddaeb04c16b64f90ded0e5352c.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br><img src="https://img-blog.csdnimg.cn/3e59ca663b9f4dde8e04477d0adbe3cf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br><img src="https://img-blog.csdnimg.cn/88f678b7c705424f9dae24274779ddcc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>求逆矩阵：<br><img src="https://img-blog.csdnimg.cn/3943d643c4ed42fa80c65426c7f68bdf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br><img src="https://img-blog.csdnimg.cn/8a2e391fb399492fbec820e199bb026d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br><img src="https://img-blog.csdnimg.cn/fd4a448e8030453f8ed5b2f64f2a0737.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br><img src="https://img-blog.csdnimg.cn/b6a792cf6452445b8b71de405688e27a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>求矩阵的秩<br><img src="https://img-blog.csdnimg.cn/849c0c594ba04cb2973d2b4f24dfe89a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>对矩阵进行行变换，使下行左端的0比上行多，直到下面行全为0为止<br>最后求出的化简结果，有几行的非0行，则秩就是几<br><img src="https://img-blog.csdnimg.cn/6470b161ef5b492097e20da6bac380c0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"></p>
+<h2 id="第五课："><a href="#第五课：" class="headerlink" title="第五课："></a>第五课：</h2><p>判断某向量是否可由某向量组线性表示<br><img src="https://img-blog.csdnimg.cn/4be4cd8841564ec6a7430688f8a4aa73.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br><img src="https://img-blog.csdnimg.cn/f5911b47c3fc4d81bcc86c9e24f0ebb7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>判断某个向量组是否线性相关<br><img src="https://img-blog.csdnimg.cn/6ade930e9b684ea198a275f01f49410f.png" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br><img src="https://img-blog.csdnimg.cn/a88358ba4ce044b093f1e2c02084a4f1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>线性相关的话 ，则下面的四个式子绝对有一个是成立的<br><img src="https://img-blog.csdnimg.cn/1b0ad25bd4ce48d5ab5de15de6afaf42.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>已知三维向量空间的一组基底，求某一向量在此基底下的坐标<br><img src="https://img-blog.csdnimg.cn/fea17be39e3b486ab2a096dba7ff6f81.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"><br>求几个行向量的极大无关组<br><img src="https://img-blog.csdnimg.cn/4750ce618d4b469d901f78ec64b48371.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"></p>
+<h2 id="第六课："><a href="#第六课：" class="headerlink" title="第六课："></a>第六课：</h2><p><strong>判断方程组解的情况</strong><br>先将方程组列出来，然后求方程的秩，将秩跟未知数的个数进行比较<br>分为齐次和非齐次<br>齐次：<br><img src="https://img-blog.csdnimg.cn/2d97db6b759e4fa9906bfe74f4a475a3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>非齐次：<br><img src="https://img-blog.csdnimg.cn/d9291d87223d4f149c1dda1de03fac16.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/b48f949058974dcbbf4f6f2917c679d0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p> <strong>解方程组：</strong><br>将方程组的秩求出来，然后将矩阵变为方程组的形式未知数减秩的个数就是未知数要设的个数，<br><img src="https://img-blog.csdnimg.cn/8b9c06ff8e694ee098bec7e68c1972d9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/95ed15273ef04bf581b7ecbadbf19b6a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>求方程组的通解，特解，基础解系</strong><br>解出方程组后，带k的就是方程组的通解，然后随便套入一个未知数就是特解，下面的什么1，2，3就是基础解系<br><img src="https://img-blog.csdnimg.cn/4f3b1319de40410c98efd00b55b8f8cf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>已知某方程组的多个特解，求某齐次方程组的通解</strong><br><img src="https://img-blog.csdnimg.cn/2a6dfb5782334a738a9c021a85b1b9d2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/aaab7f84167b4e7ebf258ea2280efa2d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/45bcfa2e13174bc2b63df3bf7137376f.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>已知某方程组的多个特解，求某非齐次方程组的通解</strong><br>第一步：<br><img src="https://img-blog.csdnimg.cn/1e2449e475574dcabae8f722cadde6bf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>第二步：<br><img src="https://img-blog.csdnimg.cn/44244badf8a64d71ae0646e90879ce03.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>第三步：<br><img src="https://img-blog.csdnimg.cn/39398d0e47aa452f937af20bcdb51ee6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>第四步：<br><img src="https://img-blog.csdnimg.cn/47bb36cdafa24141b537af20e578c068.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>判断解集合中线性无关的解向量个数</strong><br>分为齐次和非齐次<br><img src="https://img-blog.csdnimg.cn/048b0c63b8784a2aaadd18df4ecf2669.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="第七课："><a href="#第七课：" class="headerlink" title="第七课："></a>第七课：</h2><p><strong>规范正交化</strong><br>中括号：<br>[a1.a2] 就是两个向量相乘后相加<br><img src="https://img-blog.csdnimg.cn/03e118bef47a4959bb5e985223871aa2.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>双数线：<br>就是所有数字的平方和取根号<br><img src="https://img-blog.csdnimg.cn/5869bcf2c61f4b06802548c090bf0d65.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/dd7312be022847da9810764e5af33e8e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>求矩阵的特征值</strong><br>方程的拉姆达个数与方阵的阶数相等 ，然后方程是几个平方就是几个拉姆达<br><img src="https://img-blog.csdnimg.cn/4890f62bb1e6401f97c790fa2904146e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/45badfb050974c24bdc5adc347068b2d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>求矩阵的特征向量</strong><br><img src="https://img-blog.csdnimg.cn/34a7fd974d96432bbbaf4b22f512a450.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2a7b7658735c4ff1921ddc2c72410060.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>判断方阵是否与对角阵相似&#x2F;是否满足P-1次方AP&#x3D;A</strong><br><img src="https://img-blog.csdnimg.cn/2d0287a5cd8b48879dd878dacfaedd4a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/42ffdc42254f4ddbab9eeb58dfcf2c84.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>求方阵对应的对角阵A及可逆变换矩阵P</strong><br><img src="https://img-blog.csdnimg.cn/f267faf36015439b8ca5fb0074293ca4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>进行规范正交化<br><img src="https://img-blog.csdnimg.cn/acaba550bc16407ea56c9c7ac6e714ab.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/3448b56a9bf24dc5b4abfe3e5cc4062f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/dfceaad2e4e04d679fec25f54585adc5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>已知P的-1次方AP&#x3D;A，求关于A的复杂式子</strong><br><img src="https://img-blog.csdnimg.cn/4067d73d656845e4aa37465a4b65d820.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>第八课考试不考，所以就不记录复习了。<br>线代很难，最近还要多刷题   冲冲冲 ！<br>在此先摆个烂<br><img src="https://img-blog.csdnimg.cn/032212fc084b492e98d23e1460741377.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="请添加图片描述"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>关于我学习线代的那些事</div>
+      <div>http://example.com/2023/04/20/关于我学习线代的那些事/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86%20%E6%B5%81%E5%AA%92%E4%BD%93%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/" title="海康威视 流媒体管理服务器任意文件读取">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">海康威视 流媒体管理服务器任意文件读取</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/%E5%AF%B9Apache%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AD%A6%E4%B9%A0/" title="对Apache的一些学习">
+                        <span class="hidden-mobile">对Apache的一些学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

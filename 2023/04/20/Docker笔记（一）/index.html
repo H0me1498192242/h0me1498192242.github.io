@@ -1,0 +1,720 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="快期末了 冲冲冲   Docker的基本组成镜像（image):docker镜像就好比是一个模板，可以通过这个模板来创建容器服务，tomcat镜像&#x3D;&#x3D;》run&#x3D;&#x3D;》tomcat01容器（提供服务器）通过这个镜像可以创建多个容器（最终服务运行或者项目运行就是在容器中的）容器（container）：Docker利用容器技术，独立运行一个或者一个组应用，通过镜像来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker笔记（一）">
+<meta property="og:url" content="http://example.com/2023/04/20/Docker%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="快期末了 冲冲冲   Docker的基本组成镜像（image):docker镜像就好比是一个模板，可以通过这个模板来创建容器服务，tomcat镜像&#x3D;&#x3D;》run&#x3D;&#x3D;》tomcat01容器（提供服务器）通过这个镜像可以创建多个容器（最终服务运行或者项目运行就是在容器中的）容器（container）：Docker利用容器技术，独立运行一个或者一个组应用，通过镜像来">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/99aaf798606b4d7fac7a487294ea3d24.jpg">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/346717f9fcc340c897f71dd1e5d2a540.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/848076218dcd44d69fa9210c17908018.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/49a6da7ae7fd456bafa44c98e9fb9c3a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/de8306a0d6ec46b38a20990c401b5ad6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ecf456ce11df479a8ba8caa17495acc1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/51ebc94f434344a8a0bb51d775dfb80f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/6a3b47b5095d425daca23a3056981bec.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/0eafcd91b1a54e59bc356c3c99b72ecb.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f7879dbd30044dfe9d8c06f8cdd2acd4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9bc2c79269334a769fe6741cf3742c36.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/fcf26818a5124441ba9d0e95e94458bd.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d6a9c6ae5c094a56a3d72c9073572c50.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/03c69187fe774ce2b6177608ca97c575.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/bccc9c526dd24389aa4f2edfc9447eaf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/6d4ba5a21c2e4881b0b899477a48af69.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/322b9e9523c64482b07ef770e4314eaf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e72a431d61f2444f8b299adc39da154a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a770f03fb4f24d149d44f9743b983a24.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a0d21f19d3274605b40d67cd9f7a1c1d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/492385929dbb47fc85fcefdd2d5fb86b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/74fe7ad0298e48e79c4c1538122ebd9c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/67c1d1cecf2f42efbd582668212a4ee4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="article:published_time" content="2023-04-20T15:33:27.619Z">
+<meta property="article:modified_time" content="2021-12-11T03:22:12.000Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/99aaf798606b4d7fac7a487294ea3d24.jpg">
+  
+  
+  
+  <title>Docker笔记（一） - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Docker笔记（一）"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          131 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Docker笔记（一）</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>快期末了 冲冲冲<br>  <img src="https://img-blog.csdnimg.cn/99aaf798606b4d7fac7a487294ea3d24.jpg" srcset="/img/loading.gif" lazyload alt="请添加图片描述"></p>
+<h2 id="Docker的基本组成"><a href="#Docker的基本组成" class="headerlink" title="Docker的基本组成"></a>Docker的基本组成</h2><p><img src="https://img-blog.csdnimg.cn/346717f9fcc340c897f71dd1e5d2a540.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>镜像（image):</strong><br>docker镜像就好比是一个模板，可以通过这个模板来创建容器服务，tomcat镜像&#x3D;&#x3D;》run&#x3D;&#x3D;》tomcat01容器（提供服务器）通过这个镜像可以创建多个容器（最终服务运行或者项目运行就是在容器中的）<br><strong>容器（container）：</strong><br>Docker利用容器技术，独立运行一个或者一个组应用，通过镜像来创建的<br>启动，停止，删除，基本命令<br>目前就可以把这个容器理解为就是一个简易的Linux系统<br><strong>仓库（repository）：</strong><br>仓库就是存放镜像的地方<br>仓库分为公有仓库和私有仓库<br>docker hub（默认是国外的）<br>阿里云…都有容器服务器（配置镜像加速！）</p>
+<p>安装docker就没什么可说的</p>
+<h2 id="配置阿里云镜像加速"><a href="#配置阿里云镜像加速" class="headerlink" title="配置阿里云镜像加速"></a>配置阿里云镜像加速</h2><p>在阿里云的容器镜像服务里找到镜像加速器</p>
+<p><img src="https://img-blog.csdnimg.cn/848076218dcd44d69fa9210c17908018.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>配置使用</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo mkdir -p <span class="hljs-regexp">/etc/</span>docker<br>sudo tee <span class="hljs-regexp">/etc/</span>docker/daemon.json &lt;&lt;-<span class="hljs-string">&#x27;EOF&#x27;</span><br>&#123;<br>  <span class="hljs-string">&quot;registry-mirrors&quot;</span>: [<span class="hljs-string">&quot;https://06h2d44b.mirror.aliyuncs.com&quot;</span>]<br>&#125;<br>EOF<br>sudo systemctl daemon-reload<br>sudo systemctl restart docker<br></code></pre></td></tr></table></figure>
+
+<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p><img src="https://img-blog.csdnimg.cn/49a6da7ae7fd456bafa44c98e9fb9c3a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/de8306a0d6ec46b38a20990c401b5ad6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>底层原理</strong><br>docker是一个client-server结构的系统，docker的守护进程运行在主机上，通过socket从客户端访问<br>dockerserver接收到docker-client的指令，就会执行这个命令</p>
+<p><img src="https://img-blog.csdnimg.cn/ecf456ce11df479a8ba8caa17495acc1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>docker为什么比vm快</strong><br>docker有着比虚拟机更少的抽象性<br>docker利用的是宿主机的内核  vm需要是 Guest OS<br><img src="https://img-blog.csdnimg.cn/51ebc94f434344a8a0bb51d775dfb80f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>所以说，新建一个容器的时候，docker不需要想虚拟机一样重新加载一个操作系统内核，避免引导，虚拟机是加载Guest OS，分钟级别的，而docker是利用宿主机的操作系统，省略了这个复杂的过程，秒级</p>
+<p><img src="https://img-blog.csdnimg.cn/6a3b47b5095d425daca23a3056981bec.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="Docker常用命令"><a href="#Docker常用命令" class="headerlink" title="Docker常用命令"></a>Docker常用命令</h2><p><strong>帮助命令</strong><br>docker version #docker的版本信息<br>docker info #显示docker的系统信息<br>docker 命令 –help #帮助命令</p>
+<p><strong>镜像命令</strong><br>docker images 查看所有本地的主机上的镜像<br>docker search 搜索镜像<br>docker pull 下载镜像<br>docker rmi  删除镜像</p>
+<p><strong>容器命令</strong><br>说明：我们有了镜像才可以创建容器，linux<br>下载一个centos进行学习<br>docker pull centos<br>新建容器去启动<br>docker -run【可选参数】 image<br>参数说明</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-comment">--name=“Name&quot; 容器名字 tomcat01 tomcat02 用来区分容器</span><br>-d 后台方式运行<br>-<span class="hljs-keyword">it</span> 使用交互方式运行，进入容器查看内容<br>-p 指定容器的端口，-p <span class="hljs-number">8080</span>：<span class="hljs-number">8080</span><br>启动并进入容器<br>docker <span class="hljs-built_in">run</span> -<span class="hljs-keyword">it</span> centos /bin/bash<br><br>[root@VM<span class="hljs-number">-0</span><span class="hljs-number">-12</span>-centos ~]<span class="hljs-comment"># docker run -it centos /bin/bash</span><br>[root@<span class="hljs-number">8</span>b850e860726 /]<span class="hljs-comment"># ls #查看容器内的centos，基础版本，很多命令是不完善的</span><br>bin  etc   lib    lost+found  mnt  proc  <span class="hljs-built_in">run</span>   srv  tmp  var<br>dev  home  lib64  media       opt  root  sbin  sys  usr<br><span class="hljs-keyword">exit</span>   从容器中退回主机<br>列出所有的运行的容器<br>docker os 命令<br><span class="hljs-comment">#列出当前正在运行的容器</span><br>-a 列出当前正在运行的容器+带出历史运行过的容器<br>-n=? 显示最近创建的容器<br>-q 只显示容器的编号<br>推出容器<br><span class="hljs-keyword">exit</span> 直接容器停止并推出<br>ctrl+P+Q 容器不停止推出<br>删除容器<br>docker rm 容器<span class="hljs-built_in">id</span>  删除指定的容器<br>docker rm -f $(docker ps -aq) 删除所有容器<br>docker ps -a -q|xargs docker rm 删除所有容器<br>启动和停止容器的操作 <br>docker start 容器<span class="hljs-built_in">id</span>   启动容器<br>docker restart 容器<span class="hljs-built_in">id</span> 重启容器<br>dockers stop 容器<span class="hljs-built_in">id</span> 停止当前正在进行的容器<br>docker kill 容器<span class="hljs-built_in">id</span> 强制停止当前容器<br></code></pre></td></tr></table></figure>
+
+<h2 id="其他常用命令"><a href="#其他常用命令" class="headerlink" title="其他常用命令"></a>其他常用命令</h2><p><strong>后台启动容器</strong><br>命令 docker run -d 容器名<br>例：docker run -d centos<br>问题docker ps 发现 centos 停止了<br>常见的坑 docker 容器使用后台运行，就必须要有一个前台进程，docker发现没有应用，就会自动停止<br>nginx 容器启动后，发现自己没有提供服务，就会立刻停止，就是没有程序了<br><strong>查看日志</strong><br>docker logs -f -t –tail 容器，没有日志<br>自己编写一个shell脚本<br>[root@VM-0-12-centos ~]# docker run -d centos &#x2F;bin&#x2F;sh -c “while true; do echo kuangshen; sleep 1;done”<br>a51474554baa3b42e3cc1498d0f1c330f543ff5fa2891f8d4f57595f6ce85dea<br><strong>显示日志</strong><br>–tf 显示日志<br>–tail number 要显示日志条数<br>docker logs -tf –tail 10 dce7b86171bf<br><strong>查看容器中进程信息 ps</strong><br>docker top 容器id<br><strong>查看镜像的元数据</strong><br>docker inspect 容器id<br><strong>进入当前正在运行的容器</strong><br>我们通常容器都是是哦他那个后台方式运行的，需要进入容器，修改一些配置<br>docker exec -it  容器id  bashShell<br>方式二<br>docker attach 容器id</p>
+<p>docker exec  进入容器后开启一个新的终端，可以在里面操作<br>docker attach 进入容器正在执行的终端，不会启动新的进程<br><strong>从容器内拷贝文件到主机上</strong><br>docker cp 容器id :容器内路径 目的的主机路径</p>
+<h2 id="部署Nginx"><a href="#部署Nginx" class="headerlink" title="部署Nginx"></a>部署Nginx</h2><p>下载镜像 pull<br>运行测试  docker images<br>-d 后台运行<br>–name 给容器命名<br>-p 宿主机端口，容器内部端口<br>docker run -d –name nginx01 -p 3344:80 nginx<br><img src="https://img-blog.csdnimg.cn/0eafcd91b1a54e59bc356c3c99b72ecb.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>curl localhost:3344<br>[root@VM-0-12-centos ~]# curl localhost:3344</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Welcome to nginx!<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css"><span class="hljs-selector-tag">html</span> &#123; <span class="hljs-attribute">color</span>-scheme: light dark; &#125;</span><br><span class="language-css"><span class="hljs-selector-tag">body</span> &#123; <span class="hljs-attribute">width</span>: <span class="hljs-number">35em</span>; <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span> auto;</span><br><span class="language-css"><span class="hljs-attribute">font-family</span>: Tahoma, Verdana, Arial, sans-serif; &#125;</span><br><span class="language-css"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Welcome to nginx!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>If you see this page, the nginx web server is successfully installed and<br>working. Further configuration is required.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>For online documentation and support please refer to<br><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;http://nginx.org/&quot;</span>&gt;</span>nginx.org<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>.<span class="hljs-tag">&lt;<span class="hljs-name">br</span>/&gt;</span><br>Commercial support is available at<br><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;http://nginx.com/&quot;</span>&gt;</span>nginx.com<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">em</span>&gt;</span>Thank you for using nginx.<span class="hljs-tag">&lt;/<span class="hljs-name">em</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>端口映射</strong><br><img src="https://img-blog.csdnimg.cn/f7879dbd30044dfe9d8c06f8cdd2acd4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="部署tomcat"><a href="#部署tomcat" class="headerlink" title="部署tomcat"></a>部署tomcat</h2><p>官方的使用<br>docker run -it –rm tamcat:9.0<br>我们之前的启动都是后台，停止了容器之后，容器还是可以查到， docker run -it –rm一般用来测试，用完就删除<br>docker pull tomcat 下载再启动<br>启动运行<br>docker run -d -p 3355:8080 –name tomcat01 tomcat<br>[root@VM-0-12-centos ~]# docker run -d -p 3355:8080 –name tomcat01 tomcat<br>1f09496c3088828cda9cc1b2d6bec32a8c5a90a6cd469d64d0c7740f57539e01</p>
+<p>进入容器<br>docker exec -it toncat01 &#x2F;bin&#x2F;bash<br>发现问题 linux命令少了 没有webapps  阿里云镜像的原因，默认是最小的镜像，所有不必要的都删除掉<br>保证最小可运行的环境</p>
+<h2 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h2><p><strong>portainer</strong>:<br>docker图形化界面管理工具 提供一个后台面板供我们操作<br>docker run -d -p 8088:9000 \</p>
+<p>–restart &#x3D;always -v &#x2F;var&#x2F;run&#x2F;docker.sock:&#x2F;var&#x2F;run&#x2F;docker.sock –privileged&#x3D;true portainer&#x2F;portainer<br><img src="https://img-blog.csdnimg.cn/9bc2c79269334a769fe6741cf3742c36.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>访问测试:<a target="_blank" rel="noopener" href="http://ip:8088/">http://ip:8088/</a></p>
+<h2 id="docker镜像讲解"><a href="#docker镜像讲解" class="headerlink" title="docker镜像讲解"></a>docker镜像讲解</h2><p>镜像是什么<br>镜像是一种轻量级，可执行的独立软件包，用来打包软件运行环境和基于运行环境开发的软件，它包含运行某个软件所需的所有内容，包括代码，运行时，库，环境变量和配置文件<br>所有的应用，直接打包docker镜像，就可以直接跑起来<br>如何得到镜像：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs">从远程仓库下载<br>朋友拷贝<br>自己制作一个镜像dockerfile<br></code></pre></td></tr></table></figure>
+
+<p><strong>docker镜像加载原理</strong></p>
+<p>UnionFS(联合文件系统)<br>Union文件系统(UnionFS) 是一种分层、轻量级并且高性能的文件系统，他支持对文件系统的修改作为一次提交来层层的叠加，</p>
+<p>同时可以将不同目录挂载到同一个虚拟文件系统下（unite several directories into a single virtual filesystem）。Union文件系统是Docker镜像的基础。镜像可以通过分层来进行集成，基于基础镜像（没有父镜像），可以制作各种具体的应用镜像。</p>
+<p>特性：一次同时加载多个文件系统，但从外面看起来，只能看到一个文件系统你那个，联合加载会把各层文件系统叠加起来，这样最终的文件系统会包含所有底层文件和目录。</p>
+<p>三、Docker 镜像加载原理</p>
+<p>　　docker 的镜像实际上由一层一层的文件系统组成，这种层级的文件系统UnionFS。</p>
+<p>bootfs(boot file system) 主要包含bootloader和kernel，bootloader 主要是引导加载kernel，Linux刚启动时会加载bootfs文件系统，在Docker镜像的最底层是bootfs。这一层与我们典型的Linux&#x2F;Unix系统是一样的，包含boot加载器和内核。当boot加载完成之后整个内核就存在内存中了，此时内存的使用权已由bootfs转交给内核，此时系统也会卸载bootfs。</p>
+<p>　　roorfs （root file system），在bootfs之上。包含的就是典型Linux系统中的 &#x2F;dev ，&#x2F;proc，&#x2F;bin ，&#x2F;etx 等标准的目录和文件。rootfs就是各种不同的操作系统发行版。比如Ubuntu，Centos等等。</p>
+<p>　　对于一个精简的OS，rootfs可以很小，只需要包括最基本的命令、工具和程序库就可以了，因为底层直接用Host（宿主机）的kernel，自己只需要提供rootfs就行了，由此可见对于不同的Linux发行版，bootfs基本是一致的，rootfs会有差别，因此不同的发行版可以公用bootfs。
+　　</p>
+<h2 id="分层理解"><a href="#分层理解" class="headerlink" title="分层理解"></a>分层理解</h2><p>我们可以去下载一个镜像，注意观察下载的日志输出，可以看到是一层一层在下载</p>
+<p>[root@VM-0-12-centos ~]# docker pull redis<br>Using default tag: latest<br>latest: Pulling from library&#x2F;redis<br>e5ae68f74026: Already exists<br>37c4354629da: Pull complete<br>b065b1b1fa0f: Pull complete<br>6954d19bb2e5: Pull complete<br>6333f8baaf7c: Pull complete<br>f9772c8a44e7: Pull complete<br>Digest: sha256:2f502d27c3e9b54295f1c591b3970340d02f8a5824402c8179dcd20d4076b796<br>Status: Downloaded newer image for redis:latest<br>docker.io&#x2F;library&#x2F;redis:latest<br>最大的好处在于资源共享，比如有多个镜像都从相同的base镜像构建而来，呢么宿主机只需要再磁盘上保留一份base镜像，同时内存中也只需要加载一份base镜像，这样就可以为所有的容器服务了，而且镜像的每一次都可以被共享<br>查看镜像分层的方式可以通过 docker image inspect命令</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@VM</span><span class="hljs-number">-0</span><span class="hljs-number">-12</span>-centos ~]<span class="hljs-meta"># docker image inspect redis:latest</span><br>[<br>    &#123;<br>        <span class="hljs-string">&quot;Id&quot;</span>: <span class="hljs-string">&quot;sha256:aea9b698d7d1d2fb22fe74868e27e767334b2cc629a8c6f9db8cc1747ba299fd&quot;</span>,<br>        <span class="hljs-string">&quot;RepoTags&quot;</span>: [<br>            <span class="hljs-string">&quot;redis:latest&quot;</span><br>        ],<br>        <span class="hljs-string">&quot;RepoDigests&quot;</span>: [<br>            <span class="hljs-string">&quot;redis@sha256:2f502d27c3e9b54295f1c591b3970340d02f8a5824402c8179dcd20d4076b796&quot;</span><br>        ],<br>        <span class="hljs-string">&quot;Parent&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>        <span class="hljs-string">&quot;Comment&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>        <span class="hljs-string">&quot;Created&quot;</span>: <span class="hljs-string">&quot;2021-12-03T03:39:27.036869939Z&quot;</span>,<br>        <span class="hljs-string">&quot;Container&quot;</span>: <span class="hljs-string">&quot;5a7860a86d8bf094066ab13418f0af0e950079918a8694f71fb476117dd833cd&quot;</span>,<br>        <span class="hljs-string">&quot;ContainerConfig&quot;</span>: &#123;<br>            <span class="hljs-string">&quot;Hostname&quot;</span>: <span class="hljs-string">&quot;5a7860a86d8b&quot;</span>,<br>            <span class="hljs-string">&quot;Domainname&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>            <span class="hljs-string">&quot;User&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>            <span class="hljs-string">&quot;AttachStdin&quot;</span>: <span class="hljs-literal">false</span>,<br>            <span class="hljs-string">&quot;AttachStdout&quot;</span>: <span class="hljs-literal">false</span>,<br>            <span class="hljs-string">&quot;AttachStderr&quot;</span>: <span class="hljs-literal">false</span>,<br>            <span class="hljs-string">&quot;ExposedPorts&quot;</span>: &#123;<br>                <span class="hljs-string">&quot;6379/tcp&quot;</span>: &#123;&#125;<br>            &#125;,<br>            <span class="hljs-string">&quot;Tty&quot;</span>: <span class="hljs-literal">false</span>,<br>            <span class="hljs-string">&quot;OpenStdin&quot;</span>: <span class="hljs-literal">false</span>,<br>            <span class="hljs-string">&quot;StdinOnce&quot;</span>: <span class="hljs-literal">false</span>,<br>            <span class="hljs-string">&quot;Env&quot;</span>: [<br>                <span class="hljs-string">&quot;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;</span>,<br>                <span class="hljs-string">&quot;GOSU_VERSION=1.12&quot;</span>,<br>                <span class="hljs-string">&quot;REDIS_VERSION=6.2.6&quot;</span>,<br>                <span class="hljs-string">&quot;REDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-6.2.6.tar.gz&quot;</span>,<br>                <span class="hljs-string">&quot;REDIS_DOWNLOAD_SHA=5b2b8b7a50111ef395bf1c1d5be11e6e167ac018125055daa8b5c2317ae131ab&quot;</span><br>            ],<br>            <span class="hljs-string">&quot;Cmd&quot;</span>: [<br>                <span class="hljs-string">&quot;/bin/sh&quot;</span>,<br>                <span class="hljs-string">&quot;-c&quot;</span>,<br>                <span class="hljs-string">&quot;#(nop) &quot;</span>,<br>                <span class="hljs-string">&quot;CMD [\&quot;</span>redis-server\<span class="hljs-string">&quot;]&quot;</span><br>            ],<br>            <span class="hljs-string">&quot;Image&quot;</span>: <span class="hljs-string">&quot;sha256:a756c4b25935f6d34ff0b4a3888c3ad24f52b50aae3ee055c0a2abce64bf1516&quot;</span>,<br>            <span class="hljs-string">&quot;Volumes&quot;</span>: &#123;<br>                <span class="hljs-string">&quot;/data&quot;</span>: &#123;&#125;<br>            &#125;,<br>            <span class="hljs-string">&quot;WorkingDir&quot;</span>: <span class="hljs-string">&quot;/data&quot;</span>,<br>            <span class="hljs-string">&quot;Entrypoint&quot;</span>: [<br>                <span class="hljs-string">&quot;docker-entrypoint.sh&quot;</span><br>            ],<br>            <span class="hljs-string">&quot;OnBuild&quot;</span>: <span class="hljs-literal">null</span>,<br>            <span class="hljs-string">&quot;Labels&quot;</span>: &#123;&#125;<br>        &#125;,<br>        <span class="hljs-string">&quot;DockerVersion&quot;</span>: <span class="hljs-string">&quot;20.10.7&quot;</span>,<br>        <span class="hljs-string">&quot;Author&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>        <span class="hljs-string">&quot;Config&quot;</span>: &#123;<br>            <span class="hljs-string">&quot;Hostname&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>            <span class="hljs-string">&quot;Domainname&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>            <span class="hljs-string">&quot;User&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>            <span class="hljs-string">&quot;AttachStdin&quot;</span>: <span class="hljs-literal">false</span>,<br>            <span class="hljs-string">&quot;AttachStdout&quot;</span>: <span class="hljs-literal">false</span>,<br>            <span class="hljs-string">&quot;AttachStderr&quot;</span>: <span class="hljs-literal">false</span>,<br>            <span class="hljs-string">&quot;ExposedPorts&quot;</span>: &#123;<br>                <span class="hljs-string">&quot;6379/tcp&quot;</span>: &#123;&#125;<br>            &#125;,<br>            <span class="hljs-string">&quot;Tty&quot;</span>: <span class="hljs-literal">false</span>,<br>            <span class="hljs-string">&quot;OpenStdin&quot;</span>: <span class="hljs-literal">false</span>,<br>            <span class="hljs-string">&quot;StdinOnce&quot;</span>: <span class="hljs-literal">false</span>,<br>            <span class="hljs-string">&quot;Env&quot;</span>: [<br>                <span class="hljs-string">&quot;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;</span>,<br>                <span class="hljs-string">&quot;GOSU_VERSION=1.12&quot;</span>,<br>                <span class="hljs-string">&quot;REDIS_VERSION=6.2.6&quot;</span>,<br>                <span class="hljs-string">&quot;REDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-6.2.6.tar.gz&quot;</span>,<br>                <span class="hljs-string">&quot;REDIS_DOWNLOAD_SHA=5b2b8b7a50111ef395bf1c1d5be11e6e167ac018125055daa8b5c2317ae131ab&quot;</span><br>            ],<br>            <span class="hljs-string">&quot;Cmd&quot;</span>: [<br>                <span class="hljs-string">&quot;redis-server&quot;</span><br>            ],<br>            <span class="hljs-string">&quot;Image&quot;</span>: <span class="hljs-string">&quot;sha256:a756c4b25935f6d34ff0b4a3888c3ad24f52b50aae3ee055c0a2abce64bf1516&quot;</span>,<br>            <span class="hljs-string">&quot;Volumes&quot;</span>: &#123;<br>                <span class="hljs-string">&quot;/data&quot;</span>: &#123;&#125;<br>            &#125;,<br>            <span class="hljs-string">&quot;WorkingDir&quot;</span>: <span class="hljs-string">&quot;/data&quot;</span>,<br>            <span class="hljs-string">&quot;Entrypoint&quot;</span>: [<br>                <span class="hljs-string">&quot;docker-entrypoint.sh&quot;</span><br>            ],<br>            <span class="hljs-string">&quot;OnBuild&quot;</span>: <span class="hljs-literal">null</span>,<br>            <span class="hljs-string">&quot;Labels&quot;</span>: <span class="hljs-literal">null</span><br>        &#125;,<br>        <span class="hljs-string">&quot;Architecture&quot;</span>: <span class="hljs-string">&quot;amd64&quot;</span>,<br>        <span class="hljs-string">&quot;Os&quot;</span>: <span class="hljs-string">&quot;linux&quot;</span>,<br>        <span class="hljs-string">&quot;Size&quot;</span>: <span class="hljs-number">112713153</span>,<br>        <span class="hljs-string">&quot;VirtualSize&quot;</span>: <span class="hljs-number">112713153</span>,<br>        <span class="hljs-string">&quot;GraphDriver&quot;</span>: &#123;<br>            <span class="hljs-string">&quot;Data&quot;</span>: &#123;<br>                <span class="hljs-string">&quot;LowerDir&quot;</span>: <span class="hljs-string">&quot;/var/lib/docker/overlay2/beccec3d04237a459aa1cc3a3477986c5ce59a2d2ac53b4aabe54d438e6259e6/diff:/var/lib/docker/overlay2/c4fcd770163f6167616eeff3d757be0f37324112ec968caa9711b73b4382b4bd/diff:/var/lib/docker/overlay2/5b481c4a07646af08996dfdbe2e2ef1bdc7f8bba78bfba4d405f49ef870cf7c5/diff:/var/lib/docker/overlay2/d305a9da6c3cbd0acdee8046eb0c6e12379cbee164981f3d04bd5a25f6f8d8e5/diff:/var/lib/docker/overlay2/af4eb785602e33c866fb4e351afa6479e85b3b88cbab914796a18083eb0d2a97/diff&quot;</span>,<br>                <span class="hljs-string">&quot;MergedDir&quot;</span>: <span class="hljs-string">&quot;/var/lib/docker/overlay2/72f062fcf6008157df783f578104e2183116a9eb5f82ff6233e73a318276d6e1/merged&quot;</span>,<br>                <span class="hljs-string">&quot;UpperDir&quot;</span>: <span class="hljs-string">&quot;/var/lib/docker/overlay2/72f062fcf6008157df783f578104e2183116a9eb5f82ff6233e73a318276d6e1/diff&quot;</span>,<br>                <span class="hljs-string">&quot;WorkDir&quot;</span>: <span class="hljs-string">&quot;/var/lib/docker/overlay2/72f062fcf6008157df783f578104e2183116a9eb5f82ff6233e73a318276d6e1/work&quot;</span><br>            &#125;,<br>            <span class="hljs-string">&quot;Name&quot;</span>: <span class="hljs-string">&quot;overlay2&quot;</span><br>        &#125;,<br>        <span class="hljs-string">&quot;RootFS&quot;</span>: &#123;<br>            <span class="hljs-string">&quot;Type&quot;</span>: <span class="hljs-string">&quot;layers&quot;</span>,<br>            <span class="hljs-string">&quot;Layers&quot;</span>: [<br>                <span class="hljs-string">&quot;sha256:9321ff862abbe8e1532076e5fdc932371eff562334ac86984a836d77dfb717f5&quot;</span>,<br>                <span class="hljs-string">&quot;sha256:aa2858ea5edc9c0981901a1b63b49a8f4a6e7099b4304b49e680ffdcc6b71b3e&quot;</span>,<br>                <span class="hljs-string">&quot;sha256:93079bf13a6d5fe7c4bd9f00cb96183f9d1db9968c4bd15b395df2f3867bf8e5&quot;</span>,<br>                <span class="hljs-string">&quot;sha256:9ca504b88e256aa6f6c04ec65aeeed6b926661ea30a0b97f829fbe230155241a&quot;</span>,<br>                <span class="hljs-string">&quot;sha256:9468a3f0498bd5cc298ce25ea6ce9c6adf14aa2ce152856b5f389510a9bb9e01&quot;</span>,<br>                <span class="hljs-string">&quot;sha256:b7851a62867d82784052d7662862adc0b47b2bddcddc89ae78307f75ba1b29ae&quot;</span><br>            ]<br>        &#125;,<br>        <span class="hljs-string">&quot;Metadata&quot;</span>: &#123;<br>            <span class="hljs-string">&quot;LastTagTime&quot;</span>: <span class="hljs-string">&quot;0001-01-01T00:00:00Z&quot;</span><br>        &#125;<br>    &#125;<br>]<br></code></pre></td></tr></table></figure>
+
+<p><strong>理解：</strong><br>所有的docker镜像都起始于一个基础镜像层，当进行修改或增加新的内容时，就会在当前镜像层之上，创建新的镜像层<br>举一个简单的例子，假如基于Ubuntu linux 16.04创建一个新的镜像，这就是新镜像的第一层，如果在该镜像中添加python包，就会在基础镜像层之上创建第二个镜像层，如果继续添加一个安全补丁，就会创建第三个镜像层<br>该镜像当前已经包含3个镜像层<br><img src="https://img-blog.csdnimg.cn/fcf26818a5124441ba9d0e95e94458bd.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>在添加额外的镜像层的同时，镜像始终保持最当前所有镜像的组合，理解这一点十分重要，下图，每个镜像层包含三个文件，而镜像包含了来自两个镜像层的6个文件<br><img src="https://img-blog.csdnimg.cn/d6a9c6ae5c094a56a3d72c9073572c50.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><strong>特点</strong><br>docker镜像都是只读的，当容器启动时，一个新的可写层被加载到镜像的顶部！<br>这一层就是我们通常说的容器层，容器之下的都叫镜像层<br><img src="https://img-blog.csdnimg.cn/03c69187fe774ce2b6177608ca97c575.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="commit镜像"><a href="#commit镜像" class="headerlink" title="commit镜像"></a>commit镜像</h2><p>docker commit 提交容器成为一个新的副本<br>命令和git原理类似<br>docker commit -m&#x3D;”提交的描述信息” -a&#x3D;”作者” 容器id 目标镜像名：【tag】</p>
+<h2 id="容器数据卷"><a href="#容器数据卷" class="headerlink" title="容器数据卷"></a>容器数据卷</h2><p><strong>什么是容器数据卷</strong><br>需求：数据可以持久化<br>MYSQL数据可以存储在本地<br>容器之间可以有一个数据共享的技术，docker容器中产生的数据，同步到本地<br>这就是卷技术！目录的挂载，将我们容器内的目录，挂载到linux上面<br><img src="https://img-blog.csdnimg.cn/bccc9c526dd24389aa4f2edfc9447eaf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>总结一句话：容器的持久化和同步操作！容器之间也可以数据共享<br><strong>使用数据卷</strong><br>方式一：直接使用命令来挂载 -v<br>docker run -it -v 主机目录 容器内目录<br>#测试<br>docker run -it -v &#x2F;home&#x2F;ceshi:&#x2F;home centos &#x2F;bin&#x2F;bash</p>
+<h2 id="安装Mysql"><a href="#安装Mysql" class="headerlink" title="安装Mysql"></a>安装Mysql</h2><p>获取镜像<br>docker pull mysql:5.7<br>运行容器 需要做数据挂载 安装启动mysql，需要配置密码<br>docker run –name some-mysql -e MYSQL_ROOT_PASSWORD&#x3D;my-secret-pw -d mysql:tag<br>-d 后台运行<br>-p 端口映射<br>-v 卷挂载<br>-e 环境配置<br>–name 容器名字<br>docker run -d -p 3310:3386 -v &#x2F;home&#x2F;mysql&#x2F;conf:&#x2F;etc&#x2F;conf.d -v &#x2F;home&#x2F;mysql&#x2F;data:&#x2F;var&#x2F;lib&#x2F;mysql -e MYSQL_ROOT_PASSWORD&#x3D;123456 –name mysql01 mysql:5.7</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs makefile">[root@VM-0-12-centos ~]<span class="hljs-comment"># docker run -d -p 3310:3386 -v /home/mysql/conf:/etc/conf.d -v /home/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 --name mysql01 mysql:5.7</span><br>Unable to find image &#x27;mysql:5.7&#x27; locally<br><span class="hljs-section">5.7: Pulling from library/mysql</span><br><span class="hljs-section">ffbb094f4f9e: Pull complete</span><br><span class="hljs-section">df186527fc46: Pull complete</span><br><span class="hljs-section">fa362a6aa7bd: Pull complete</span><br><span class="hljs-section">5af7cb1a200e: Pull complete</span><br><span class="hljs-section">949da226cc6d: Pull complete</span><br><span class="hljs-section">bce007079ee9: Pull complete</span><br><span class="hljs-section">eab9f076e5a3: Pull complete</span><br><span class="hljs-section">c7b24c3f27af: Pull complete</span><br><span class="hljs-section">6fc26ff6705a: Pull complete</span><br><span class="hljs-section">bec5cdb5e7f7: Pull complete</span><br><span class="hljs-section">6c1cb25f7525: Pull complete</span><br><span class="hljs-section">Digest: sha256:d1cc87a3bd5dc07defc837bc9084f748a130606ff41923f46dec1986e0dc828d</span><br><span class="hljs-section">Status: Downloaded newer image for mysql:5.7</span><br>65a9ef69f2c100320db3dda52836f022da651374552b0d745f00bfa36ac69930<br></code></pre></td></tr></table></figure>
+
+<h2 id="具名和匿名挂载"><a href="#具名和匿名挂载" class="headerlink" title="具名和匿名挂载"></a>具名和匿名挂载</h2><p>匿名挂载<br>-v 容器内路径<br>docker run -d -P –name nginx -v &#x2F;ect&#x2F;nginx nginx<br>查看所有volume的情况<br>docker volume ls </p>
+<p>[root@VM-0-12-centos ~]# docker volume ls<br>DRIVER    VOLUME NAME<br>local     004cc575bff70be39abcbffe74414c459c15d6997955e25bc08aa377f116346b<br>local     42a960cf78ef8bf9c3734b2b57ec1070734e2f2bcbefdf55e68520379c14c41f</p>
+<p>这里发现，这种就是匿名挂载，我们在-v只写了容器内的路径，没有写容器外的路径<br><strong>具名挂载</strong><br>docker run -d -P –name nginx02 -v H0ne:&#x2F;etc&#x2F;nginx nginx<br>通过 -v 卷名：容器内的路径<br>[root@VM-0-12-centos ~]# docker run -d -P –name nginx02 -v H0ne:&#x2F;etc&#x2F;nginx nginx<br>ff5478d2d1e185c2338cf131177d000b9d171e91e65ff0bf44dbceb12e390ce6</p>
+<p>[root@VM-0-12-centos ~]# docker volume ls<br>DRIVER    VOLUME NAME<br>local     004cc575bff70be39abcbffe74414c459c15d6997955e25bc08aa377f116346b<br>local     42a960cf78ef8bf9c3734b2b57ec1070734e2f2bcbefdf55e68520379c14c41f<br>local     H0ne<br>查看一下这个卷<br>docker  volume inspect H0ne</p>
+<p>[root@VM-0-12-centos ~]# docker  volume inspect H0ne<br>[<br>    {<br>        “CreatedAt”: “2021-12-11T10:13:37+08:00”,<br>        “Driver”: “local”,<br>        “Labels”: null,<br>        “Mountpoint”: “&#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes&#x2F;H0ne&#x2F;_data”,<br>        “Name”: “H0ne”,<br>        “Options”: null,<br>        “Scope”: “local”<br>    }<br>]<br> 所有的docker容器内的卷，没有指定目录的情况下都是在&#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes&#x2F;xxxx&#x2F;_data<br> 我们通过具名挂载可以方便的找到我们的一个卷 大多数情况在使用的具名挂载<br> <figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ldif">如何确定是具名挂载还是匿名挂载，还是指定路径挂载！<br><span class="hljs-literal">-</span>v 容器内路径 <span class="hljs-comment">#匿名挂载</span><br><span class="hljs-literal">-</span>v 卷名：容器内路径 <span class="hljs-comment">#具名挂载</span><br><span class="hljs-literal">-</span>v /宿主机路径: :容器内路径 <span class="hljs-comment">#指定路径挂载！</span><br></code></pre></td></tr></table></figure><br> 拓展：<br> <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs typescript">通过-v 容器内的路径 ro rw改变读写权限<br>ro <span class="hljs-keyword">readonly</span>  只读<br>rw readwrite 可读可写<br>一旦这个设置了容器权限，容器对我们挂载出来的内容就有限定了<br>docker run -d -P --name nginx02 -v juming-<span class="hljs-attr">nginx</span>:<span class="hljs-regexp">/etc/</span><span class="hljs-attr">nginx</span>:ro nginx<br>docker run -d -P --name nginx02 -v juming-<span class="hljs-attr">nginx</span>:<span class="hljs-regexp">/etc/</span><span class="hljs-attr">nginx</span>:rw nginx<br>ro 只要看到ro就说明这个路径只能通过宿主机来操作，容器内部是无法操作！<br></code></pre></td></tr></table></figure></p>
+<h2 id="初识dockerfile"><a href="#初识dockerfile" class="headerlink" title="初识dockerfile"></a>初识dockerfile</h2><p>dockerfile就是用来构建docker镜像的构建文件！命令脚本！<br>通过这个脚本可以生成镜像，镜像是一层一层的，<br>脚本的一个个命令，每个命令都是一层</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile">创建一个dockerfile文件，名字可以随机，简易是dockerfile<br>文件中的内容 指令（大写） 参数<br>[root@VM-<span class="hljs-number">0</span>-<span class="hljs-number">12</span>-centos home]<span class="hljs-comment"># mkdir docker-test-volume</span><br>[root@VM-<span class="hljs-number">0</span>-<span class="hljs-number">12</span>-centos home]<span class="hljs-comment"># ls</span><br>ceshi  docker-test-<span class="hljs-keyword">volume</span><span class="language-bash">  mysql  www</span><br>[root@VM-<span class="hljs-number">0</span>-<span class="hljs-number">12</span>-centos home]<span class="hljs-comment"># pwd</span><br>/home<br>[root@VM-<span class="hljs-number">0</span>-<span class="hljs-number">12</span>-centos home]<span class="hljs-comment"># cd docker-test-volume</span><br>[root@VM-<span class="hljs-number">0</span>-<span class="hljs-number">12</span>-centos docker-test-<span class="hljs-keyword">volume</span><span class="language-bash">]<span class="hljs-comment"># ls</span></span><br>[root@VM-<span class="hljs-number">0</span>-<span class="hljs-number">12</span>-centos docker-test-<span class="hljs-keyword">volume</span><span class="language-bash">]<span class="hljs-comment"># pwd</span></span><br>/home/docker-test-<span class="hljs-keyword">volume</span><span class="language-bash"></span><br><span class="language-bash">[root@VM-0-12-centos docker-test-volume]<span class="hljs-comment"># vim dockerfile1</span></span><br>[root@VM-<span class="hljs-number">0</span>-<span class="hljs-number">12</span>-centos docker-test-<span class="hljs-keyword">volume</span><span class="language-bash">]<span class="hljs-comment"># cat dockerfile1</span></span><br><span class="hljs-keyword">FROM</span> centos<br><span class="hljs-keyword">VOLUME</span><span class="language-bash"> [<span class="hljs-string">&quot;volume01&quot;</span>,<span class="hljs-string">&quot;volume02&quot;</span>]</span><br><br><span class="hljs-keyword">CMD</span><span class="language-bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;----end-----&quot;</span></span><br><span class="hljs-keyword">CMD</span><span class="language-bash"> /bin/bash</span><br><br> 这里的每个命令，就是镜像的一层<br></code></pre></td></tr></table></figure>
+<p> docker build -f &#x2F;home&#x2F;docker-test-volume&#x2F;dockerfile1 -t kuangshen&#x2F;centos:1.0 .<br> <img src="https://img-blog.csdnimg.cn/6d4ba5a21c2e4881b0b899477a48af69.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p> 启动自己写的容器<br> <img src="https://img-blog.csdnimg.cn/322b9e9523c64482b07ef770e4314eaf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br> docker run -it f3d872475f2b  &#x2F;bin&#x2F;bash<br> <img src="https://img-blog.csdnimg.cn/e72a431d61f2444f8b299adc39da154a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>发现两个好玩的<br><img src="https://img-blog.csdnimg.cn/a770f03fb4f24d149d44f9743b983a24.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>这两个目录就是我们生成镜像时自动挂载的目录<br> 这个卷和外部一定有一个同步的目录！<br> 查看一下卷挂载路径<br> docker inspect +容器id</p>
+<p> <img src="https://img-blog.csdnimg.cn/a0d21f19d3274605b40d67cd9f7a1c1d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>[root@VM-0-12-centos data]# cd &#x2F;&#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes&#x2F;5211c168e8c5cfa2321fdb48d2ed9a30c6296c56e0edae632846a260e938ad0e&#x2F;_data<br>[root@VM-0-12-centos _data]# ls<br>container.txt<br>这种方式我们未来使用的十分多 我们通过会构建自己爹镜像<br>假设构建镜像时候没有挂载卷，要手动镜像挂载 -v 卷名:容器内路径 ！</p>
+<h2 id="数据卷容器"><a href="#数据卷容器" class="headerlink" title="数据卷容器"></a>数据卷容器</h2><p>多个mysql同步数据<br><img src="https://img-blog.csdnimg.cn/492385929dbb47fc85fcefdd2d5fb86b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>测试可以删除docker01,查看一下docker02和docker03是否还可以访问这个文件<br>测试依旧可以访问<br><img src="https://img-blog.csdnimg.cn/74fe7ad0298e48e79c4c1538122ebd9c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>多个mysql实现数据共享</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros">docker <span class="hljs-built_in">run</span> -d -p 3310:3306 -v /etc/mysql/conf-d -v /var/lib/mysql -e <span class="hljs-attribute">MYSQL_ROOT_PASSWORD</span>=123456 --name mysql01 mysql:5.7<br><br>docker <span class="hljs-built_in">run</span> -d -p 3310:3306 -e <span class="hljs-attribute">MYSQL_ROOT_PASSWORD</span>=123456 --name mysql02 --volumes-form mysql01 mysql:5.7<br>这个时候 可以实现两个容器数据同步<br></code></pre></td></tr></table></figure>
+<p>结论<br>容器之间配置信息的传递，数据卷容器的生命周期一直持续到没有容器使用为止<br>但是一旦你持续化到了本地，这个时候，本地的数据是不会删除的！</p>
+<h2 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h2><p>dockerfile是用来构建docker镜像的文件 命令参数脚本<br>构建步骤：<br>编写一个dockerfile文件<br>docker build 构建成为一个镜像<br>docker run 运行镜像<br>docker push 发布镜像 (dockerhub ,阿里云镜像仓库！）<br><strong>dockerfile构建过程</strong><br>每个保留关键字（指令）都必须是大写字母<br>执行从上到下顺序执行<br>#表示注释<br>每一个指令都会创建提交一个新的镜像层，并提交！<br><img src="https://img-blog.csdnimg.cn/67c1d1cecf2f42efbd582668212a4ee4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>dockerfile是面向开发的，我们以后要开发项目，做镜像，就需要编写dockerfile文件，这个文件十分简单<br>docker镜像逐渐成为企业交付的标准，必须掌握！<br>步骤：开发，部署，运维 缺一不可<br>dockerfile：构建文件，定义了一切的步骤，源代码<br>dockerimages：通过dockerfile构建生成的镜像，最终发布和运行的产品<br>docker容器：容器就是镜像运行起来提供服务器</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Docker笔记（一）</div>
+      <div>http://example.com/2023/04/20/Docker笔记（一）/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/Flask-session%E7%94%A8%E6%B3%95/" title="Flask-session用法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Flask-session用法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/Docker%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" title="Docker笔记（二）">
+                        <span class="hidden-mobile">Docker笔记（二）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

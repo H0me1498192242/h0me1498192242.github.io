@@ -1,0 +1,713 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、python的开发工具1、自带的IDLE2、常用的第三方开发工具：PyCharm、Visual Studio 2017、Eclipse+PyDev3、开源的Python包管理器：Anaconda、Miniconda自带IDLE的常用快捷键：  二、python语法1.保留字与标识符Python 3.6版有33个保留字(关键字)，Python 3.7版本中正式引入两个新的关键字async与awa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python基础语法">
+<meta property="og:url" content="http://example.com/2023/04/20/Python%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="一、python的开发工具1、自带的IDLE2、常用的第三方开发工具：PyCharm、Visual Studio 2017、Eclipse+PyDev3、开源的Python包管理器：Anaconda、Miniconda自带IDLE的常用快捷键：  二、python语法1.保留字与标识符Python 3.6版有33个保留字(关键字)，Python 3.7版本中正式引入两个新的关键字async与awa">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021053020561773.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531102523860.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531103319670.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531103038533.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531104757243.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021053110492675.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531105042995.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021053110514722.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531105204771.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531105222881.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531105422803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531115757134.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531115809749.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531115849359.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531115858524.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021053111592312.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531144822500.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531145132333.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531145354108.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210531151639444.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2023-04-20T15:33:27.652Z">
+<meta property="article:modified_time" content="2023-04-20T15:16:08.442Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/2021053020561773.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+  
+  
+  
+  <title>Python基础语法 - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python基础语法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          42 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Python基础语法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、python的开发工具"><a href="#一、python的开发工具" class="headerlink" title="一、python的开发工具"></a>一、python的开发工具</h2><p>1、自带的IDLE<br>2、常用的第三方开发工具：PyCharm、Visual Studio 2017、Eclipse+PyDev<br>3、开源的Python包管理器：Anaconda、Miniconda<br>自带IDLE的常用快捷键：</p>
+<p><img src="https://img-blog.csdnimg.cn/2021053020561773.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="二、python语法"><a href="#二、python语法" class="headerlink" title="二、python语法"></a>二、python语法</h2><h3 id="1-保留字与标识符"><a href="#1-保留字与标识符" class="headerlink" title="1.保留字与标识符"></a><strong>1.保留字与标识符</strong></h3><p>Python 3.6版有33个保留字(关键字)，Python 3.7版本中正式引入两个新的关键字async与await，共35个关键字。保留字是区分字母大小写的。<br><img src="https://img-blog.csdnimg.cn/20210531102523860.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> keyword<br><span class="hljs-built_in">print</span>(keyword.kwlist)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">--- Python <span class="hljs-number">3.6</span> Console Output ---<br>[<span class="hljs-string">&#x27;False&#x27;</span>, <span class="hljs-string">&#x27;None&#x27;</span>, <span class="hljs-string">&#x27;True&#x27;</span>, <span class="hljs-string">&#x27;and&#x27;</span>, <span class="hljs-string">&#x27;as&#x27;</span>, <span class="hljs-string">&#x27;assert&#x27;</span>,                   <br><span class="hljs-string">&#x27;break&#x27;</span>, <span class="hljs-string">&#x27;class&#x27;</span>, <span class="hljs-string">&#x27;continue&#x27;</span>, <span class="hljs-string">&#x27;def&#x27;</span>, <span class="hljs-string">&#x27;del&#x27;</span>, <span class="hljs-string">&#x27;elif&#x27;</span>, <br><span class="hljs-string">&#x27;else&#x27;</span>, <span class="hljs-string">&#x27;except&#x27;</span>, <span class="hljs-string">&#x27;finally&#x27;</span>, <span class="hljs-string">&#x27;for&#x27;</span>, <span class="hljs-string">&#x27;from&#x27;</span>, <span class="hljs-string">&#x27;global&#x27;</span>, <br><span class="hljs-string">&#x27;if&#x27;</span>, <span class="hljs-string">&#x27;import&#x27;</span>, <span class="hljs-string">&#x27;in&#x27;</span>, <span class="hljs-string">&#x27;is&#x27;</span>, <span class="hljs-string">&#x27;lambda&#x27;</span>, <span class="hljs-string">&#x27;nonlocal&#x27;</span>, <br><span class="hljs-string">&#x27;not&#x27;</span>, <span class="hljs-string">&#x27;or&#x27;</span>, <span class="hljs-string">&#x27;pass&#x27;</span>, <span class="hljs-string">&#x27;raise&#x27;</span>, <span class="hljs-string">&#x27;return&#x27;</span>, <span class="hljs-string">&#x27;try&#x27;</span>, <br><span class="hljs-string">&#x27;while&#x27;</span>, <span class="hljs-string">&#x27;with&#x27;</span>, <span class="hljs-string">&#x27;yield&#x27;</span>]<br><br>--- Python <span class="hljs-number">3.7</span> Console Output --- <br>[<span class="hljs-string">&#x27;False&#x27;</span>, <span class="hljs-string">&#x27;None&#x27;</span>, <span class="hljs-string">&#x27;True&#x27;</span>, <span class="hljs-string">&#x27;and&#x27;</span>, <span class="hljs-string">&#x27;as&#x27;</span>, <span class="hljs-string">&#x27;assert&#x27;</span>, <span class="hljs-string">&#x27;async&#x27;</span>, <span class="hljs-string">&#x27;await&#x27;</span>, <br><span class="hljs-string">&#x27;break&#x27;</span>, <span class="hljs-string">&#x27;class&#x27;</span>, <span class="hljs-string">&#x27;continue&#x27;</span>, <span class="hljs-string">&#x27;def&#x27;</span>, <span class="hljs-string">&#x27;del&#x27;</span>, <span class="hljs-string">&#x27;elif&#x27;</span>, <br><span class="hljs-string">&#x27;else&#x27;</span>, <span class="hljs-string">&#x27;except&#x27;</span>, <span class="hljs-string">&#x27;finally&#x27;</span>, <span class="hljs-string">&#x27;for&#x27;</span>, <span class="hljs-string">&#x27;from&#x27;</span>, <span class="hljs-string">&#x27;global&#x27;</span>, <br><span class="hljs-string">&#x27;if&#x27;</span>, <span class="hljs-string">&#x27;import&#x27;</span>, <span class="hljs-string">&#x27;in&#x27;</span>, <span class="hljs-string">&#x27;is&#x27;</span>, <span class="hljs-string">&#x27;lambda&#x27;</span>, <span class="hljs-string">&#x27;nonlocal&#x27;</span>, <br><span class="hljs-string">&#x27;not&#x27;</span>, <span class="hljs-string">&#x27;or&#x27;</span>, <span class="hljs-string">&#x27;pass&#x27;</span>, <span class="hljs-string">&#x27;raise&#x27;</span>, <span class="hljs-string">&#x27;return&#x27;</span>, <span class="hljs-string">&#x27;try&#x27;</span>, <br><span class="hljs-string">&#x27;while&#x27;</span>, <span class="hljs-string">&#x27;with&#x27;</span>, <span class="hljs-string">&#x27;yield&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<p> <strong>2.标识符</strong><br>_标识符 保护变量<br><strong>标识符 类的私有成员<br><strong>标识符</strong> 专用标识(如：__init</strong>()构造函数)</p>
+<p><strong>3、变量</strong><br>变量可以是任意的数据类型，在程序中用一个变量名表示<br>变量名必须是大小写英文，数字和下划线（_）的组合，且不能以数字开头，<br>赋值（	比如a&#x3D;“ABC”）时，python编译器干了两件事<br>在内存中创建一个‘ABC’的字符串<br>在内存中创建一个名为a的变量，并把它指向“ABC”</p>
+<p><strong>4,格式化输出文字</strong><br><img src="https://img-blog.csdnimg.cn/20210531103319670.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>这里就是用%d来占位，然后后面的让age赋值给d</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">age=<span class="hljs-number">18</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;我的年龄是：%d&quot;</span>%age)<br></code></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20210531103038533.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>如果要用多个格式化文字，这里以string类型示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;我的名字是%s，我的国籍是%s&quot;</span>%(<span class="hljs-string">&quot;小张&quot;</span>,<span class="hljs-string">&quot;中国&quot;</span>))<br></code></pre></td></tr></table></figure>
+<h3 id="2、语句"><a href="#2、语句" class="headerlink" title="2、语句"></a>2、语句</h3><p><strong>1，输入</strong></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">password = <span class="hljs-selector-tag">input</span>(<span class="hljs-string">&quot;请输入密码：&quot;</span>)<br><span class="hljs-function"><span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-string">&#x27;你刚才输入的密码是：&#x27;</span>,password)</span></span><br></code></pre></td></tr></table></figure>
+<p><strong>2,运算符和表达式</strong><br>算术运算符<br><img src="https://img-blog.csdnimg.cn/20210531104757243.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>比较运算符<br>假设a&#x3D;10 b&#x3D;20<br><img src="https://img-blog.csdnimg.cn/2021053110492675.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload><br>赋值运算符<br>假设a&#x3D;10 b&#x3D;20<br><img src="https://img-blog.csdnimg.cn/20210531105042995.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>位运算符<br><img src="https://img-blog.csdnimg.cn/2021053110514722.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>逻辑运算符<br><img src="https://img-blog.csdnimg.cn/20210531105204771.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>成员运算符<br><img src="https://img-blog.csdnimg.cn/20210531105222881.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>运算符优先级<br><img src="https://img-blog.csdnimg.cn/20210531105422803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><strong>2，判断语句和循环语句</strong><br>1，条件判断语句<br>计算机之所以能做很多自动化的任务，因为他可以自己做条件判断<br>python指定任何非0和非空值为true，0或者None为False<br>python编程中if语句用于控制程序的执行，基本形式为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> true:<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;true&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;False&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>2,循环语句<br>for循环<br>python的循环有两种，一种是for…in循环，可以依次把list或tuple中的元素迭代出来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>)<br><span class="hljs-built_in">print</span>(i)<br>输出： <span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-number">10</span>,<span class="hljs-number">3</span>):<br><span class="hljs-built_in">print</span>(i)<br>输出：<span class="hljs-number">0</span> <span class="hljs-number">3</span> <span class="hljs-number">6</span> <span class="hljs-number">9</span><br>从<span class="hljs-number">0</span>开始，到<span class="hljs-number">10</span>结束，步进值为<span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<p>while循环</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">i=<span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> i &lt; <span class="hljs-number">5</span>:<br>       <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;当前是第%d次执行循环&quot;</span>%(i+<span class="hljs-number">1</span>))<br>       <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;i=%d&quot;</span>%i)<br>       i += <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs abnf">当前是第<span class="hljs-number">1</span>次执行循环<br><span class="hljs-attribute">i</span><span class="hljs-operator">=</span><span class="hljs-number">0</span><br>当前是第<span class="hljs-number">2</span>次执行循环<br><span class="hljs-attribute">i</span><span class="hljs-operator">=</span><span class="hljs-number">1</span><br>当前是第<span class="hljs-number">3</span>次执行循环<br><span class="hljs-attribute">i</span><span class="hljs-operator">=</span><span class="hljs-number">2</span><br>当前是第<span class="hljs-number">4</span>次执行循环<br><span class="hljs-attribute">i</span><span class="hljs-operator">=</span><span class="hljs-number">3</span><br>当前是第<span class="hljs-number">5</span>次执行循环<br><span class="hljs-attribute">i</span><span class="hljs-operator">=</span><span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
+<p><strong>3，字符串，列表，元组，字典</strong><br>3.1字符串<br>string（字符串）<br>python中的字符串可以使用单引号，双引号和三引号（三个单引号或三个双引号）括起来，使用反斜杠\转义特殊字符<br>python3源码文件默认以UTF-8编码，所有字符串都是Unicode字符串<br>支持字符串拼接，截取等多种运算</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">str</span> = <span class="hljs-string">&quot;chengdu&quot;</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">str</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">str</span>[<span class="hljs-number">0</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">str</span>[<span class="hljs-number">0</span>:<span class="hljs-number">5</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">str</span>[<span class="hljs-number">1</span>:<span class="hljs-number">7</span>:<span class="hljs-number">2</span>])  <span class="hljs-comment">#[起始位置：结束位置：步进值]</span><br></code></pre></td></tr></table></figure>
+<p>使用反斜杠，可以实现转义字符的功能<br>在字符串前面加r，表示直接显示原始字符串，不进行转义</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;hello\nworld&quot;</span>) <span class="hljs-comment">#输出:  hello</span><br>                              world<br><span class="hljs-built_in">print</span>(<span class="hljs-string">r&quot;hello\nworld&quot;</span>) <span class="hljs-comment">#输出hello\nworld</span><br></code></pre></td></tr></table></figure>
+<p>字符串常见操作：<br><img src="https://img-blog.csdnimg.cn/20210531115757134.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20210531115809749.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20210531115849359.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20210531115858524.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2021053111592312.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>列表<br>list（列表）<br>列表可以完成大多数集合类的数据结构实现，列表中元素的类型可以不相同，它支持数字，字符串，甚至可以包含列表（所谓嵌套）<br>列表是写在方括号[]之间，用逗号分隔开的元素列表<br>列表索引值以0为开始值，-1为从末尾的开始位置<br>列表可以使用+操作符进行拼接，使用*表示重复</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">namelist = [<span class="hljs-string">&quot;小张&quot;</span>,<span class="hljs-string">&quot;小明&quot;</span>,<span class="hljs-string">&quot;小李&quot;</span>]<br><span class="hljs-built_in">print</span>(namelist[<span class="hljs-number">0</span>])<br><span class="hljs-built_in">print</span>(namelist[<span class="hljs-number">1</span>])<br><span class="hljs-built_in">print</span>(namelist[<span class="hljs-number">2</span>]) <span class="hljs-comment">#输出结果：小张 小明  小李</span><br></code></pre></td></tr></table></figure>
+<p>元组<br>Tuple（元组）<br>tuple与list类似，不同之处在于tuple的元素<strong>不能修改</strong>，tuple写在小括号里，元素之间用逗号隔开<br>元组的元素不可变，但可以包含可变对象，如list<br>注意：定义一个只有1个元素的tuple，必须加逗号	<br>元组的增<br>tup &#x3D; tup1+tup2<br>元组的删<br>tup1 &#x3D; (12,13,15)<br>del tup1<br>删除的是整个元组变量，</p>
+<p>字典：<br>dict（字典）<br>字典是无序的对象集合，使用建-值（key-value）存储，具有极快的查找速度，<br>键（key）必须使用不可变类型<br>同一个字典中，键（key）必须是唯一的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">info = &#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;吴彦祖&quot;</span>:<span class="hljs-string">&quot;age&quot;</span>:<span class="hljs-number">18</span>&#125;  <span class="hljs-comment">#字典的定义</span><br><span class="hljs-built_in">print</span>(info[<span class="hljs-string">&quot;name&quot;</span>]) <span class="hljs-comment">#字典的访问</span><br><span class="hljs-built_in">print</span>(info[<span class="hljs-string">&quot;age&quot;</span>]) <span class="hljs-comment">#字典的访问</span><br></code></pre></td></tr></table></figure>
+<p>字典的增：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">info = &#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;吴彦祖&quot;</span>,<span class="hljs-string">&quot;age&quot;</span>:<span class="hljs-number">18</span>&#125;<br>newID = <span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;请输入新的学号&quot;</span>)<br>info[<span class="hljs-string">&quot;id&quot;</span>] =  newID<br><span class="hljs-built_in">print</span>(info[<span class="hljs-string">&quot;id&quot;</span>])<br></code></pre></td></tr></table></figure>
+<p>字典的删：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">info = &#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;吴彦祖&quot;</span>,<span class="hljs-string">&quot;age&quot;</span>:<span class="hljs-number">18</span>&#125;<br><span class="hljs-keyword">del</span> info [<span class="hljs-string">&quot;name&quot;</span>] <span class="hljs-comment">#删除的是键，删除后，再次访问键值，会报错</span><br></code></pre></td></tr></table></figure>
+<p>字典的改：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">info = &#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;吴彦祖&quot;</span>:<span class="hljs-string">&quot;age&quot;</span>:<span class="hljs-number">18</span>&#125;<br>info[<span class="hljs-string">&quot;age&quot;</span>] = <span class="hljs-number">20</span><br><span class="hljs-built_in">print</span>(info[<span class="hljs-string">&quot;age&quot;</span>])<br></code></pre></td></tr></table></figure>
+<p>字典的查</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">info = &#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;吴彦祖&quot;</span>:<span class="hljs-string">&quot;age&quot;</span>:<span class="hljs-number">18</span>&#125;<br><span class="hljs-built_in">print</span>(info.keys()) <span class="hljs-comment">#得到所有的键</span><br><span class="hljs-built_in">print</span>(info.values())<span class="hljs-comment">#得到所有的值</span><br><span class="hljs-built_in">print</span>(info.items())<span class="hljs-comment">#得到所有的项，每个键值对是一个元组</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20210531144822500.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>set(集合）<br>set和dict类似，也是一组key的集合，但不存储value，由于key不能重复，所以，在set中，没有重复的key<br>set是无序的，重复元素在set中自动被过滤<br>set 可以看成数学意义上的无序和无重复元素的集合，因此，两个set可以做数学意义上的交集（&amp;），并集（|），差集（ - ）等操作<br><img src="https://img-blog.csdnimg.cn/20210531145132333.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20210531145354108.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><strong>4，函数：</strong><br>函数的概念：<br>如果在开发程序时，需要某块代码多次，但是为了提高编写的效率以及代码的重用，所以把具有独立功能的代码块组织为一个小模块，这就是函数<br>定义函数的格式</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crystal"><span class="hljs-function"><span class="hljs-keyword">def</span> 函数名（）</span><br><span class="hljs-function">      代码</span><br></code></pre></td></tr></table></figure>
+<p>全局变量和局部变量</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">test1</span>(): <br>       a=<span class="hljs-number">300</span> <span class="hljs-comment">#局部变量,不同的函数可以定义相同的名字，彼此无关</span><br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;test1------修改前 a = %d“%a）</span><br><span class="hljs-string"></span><br><span class="hljs-string">a=100 #全局变量</span><br><span class="hljs-string">def test1()</span><br><span class="hljs-string">    print(a)</span><br><span class="hljs-string">def test2()</span><br><span class="hljs-string">    print(a)</span><br></code></pre></td></tr></table></figure>
+<p>5，<strong>文件操作：</strong><br>打开文件<br>在python中，使用open函数，可以打开一个已经存在的文件，或者创建一个新文件<br>open(文件名，访问模式)<br>示例</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">f = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;test.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>)<br>f.<span class="hljs-built_in">close</span>()<br></code></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20210531151639444.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>文件的重命名<br>rename(需要修改的文件名，新的文件名)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br>os.rename(<span class="hljs-string">&quot;毕业论文.txt&quot;</span>,<span class="hljs-string">&quot;毕业论文-最终版.txt&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>删除文件<br>os模块中的remove()可以完成对文件的删除操作<br>remove(待删除的文件名)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br>os.remove(:<span class="hljs-string">&quot;毕业论文.txt&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>创建文件夹</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br>os.mkdir(:张三<span class="hljs-string">&quot;)</span><br></code></pre></td></tr></table></figure>
+<p>获取当前目录</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br>os.getcwd()<br></code></pre></td></tr></table></figure>
+<p>改变默认目录</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br>os.chdir(<span class="hljs-string">&quot;../&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>获取目录列表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br>os.listdir(<span class="hljs-string">&quot;./&quot;</span>) <br></code></pre></td></tr></table></figure>
+<p>删除文件夹</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os <br>os.rmdir(<span class="hljs-string">&quot;张三&quot;</span>)<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python基础语法</div>
+      <div>http://example.com/2023/04/20/Python基础语法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/Python%E7%88%AC%E8%99%AB/" title="Python爬虫">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python爬虫</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/PHP%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" title="PHP序列化和反序列化">
+                        <span class="hidden-mobile">PHP序列化和反序列化</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,772 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="nmap常用命令  nmap -iflist : 查看本地主机的接口信息和路由信息   -A ：选项用于使用进攻性方式扫描   3.-T4：指定扫描过程使用的时序，总有6个级别（0-5）,级别越高,扫描速度越快,但也容易被防火墙或IDS检测并屏蔽掉,在网络通讯状况较好的情况下推荐使用T4  -oX test.xml：将扫描结果生成 test.xml 文件，如果中断，则结果打不开   -oA tes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB-Lame">
+<meta property="og:url" content="http://example.com/2023/04/20/HTB-Lame/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="nmap常用命令  nmap -iflist : 查看本地主机的接口信息和路由信息   -A ：选项用于使用进攻性方式扫描   3.-T4：指定扫描过程使用的时序，总有6个级别（0-5）,级别越高,扫描速度越快,但也容易被防火墙或IDS检测并屏蔽掉,在网络通讯状况较好的情况下推荐使用T4  -oX test.xml：将扫描结果生成 test.xml 文件，如果中断，则结果打不开   -oA tes">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/68ea6bd04c694b69adffd60f012203aa.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9f22a761f65d46c49dd1477e3f8216d1.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9dd4e0c1250040fab9065052e5cd6348.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b2913797d0f745698a64848b98fe8f31.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/85d30a343f884eb487ef337314206292.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a31f5768205e422696eccc467d520a17.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d36a41c954474ae9b889f9f5e8203f98.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/bb6eaef985f64f88addf136557e4a042.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/36c37d46e3bd4c20a32f76df4f0b395e.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/770aa3e3f9134872948f4a2d531db241.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/db0d9550011247b391c9bbe3382cad55.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3ffd1558b9bc4ef6bffb7b44bd62c842.png">
+<meta property="article:published_time" content="2023-04-20T15:33:27.627Z">
+<meta property="article:modified_time" content="2023-04-20T15:20:13.057Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/68ea6bd04c694b69adffd60f012203aa.png">
+  
+  
+  
+  <title>HTB-Lame - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB-Lame"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HTB-Lame</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>nmap常用命令</p>
+<ol>
+<li><p>nmap -iflist : 查看本地主机的接口信息和路由信息 </p>
+</li>
+<li><p>-A ：选项用于使用进攻性方式扫描</p>
+</li>
+</ol>
+<p>3.-T4：指定扫描过程使用的时序，总有6个级别（0-5）,级别越高,扫描速度越快,但也容易被防火墙或IDS检测并屏蔽掉,在网络通讯状况较好的情况下推荐使用T4</p>
+<ol start="4">
+<li><p>-oX test.xml：将扫描结果生成 test.xml 文件，如果中断，则结果打不开 </p>
+</li>
+<li><p>-oA test.xml:  将扫描结果生成 test.xml 文件，中断后，结果也可保存 </p>
+</li>
+<li><p>-oG test.txt:  将扫描结果生成 test.txt 文件 </p>
+</li>
+<li><p>-sn : 只进行主机发现，不进行端口扫描 </p>
+</li>
+<li><p>-O : 指定Nmap进行系统版本扫描 </p>
+</li>
+<li><p>-sV: 指定让Nmap进行服务版本扫描</p>
+</li>
+<li><p>-p <port ranges>: 扫描指定的端口</p>
+</li>
+<li><p>-sS&#x2F;sT&#x2F;sA&#x2F;sW&#x2F;sM:指定使用TCP SYN&#x2F;Connect()&#x2F;ACK&#x2F;Window&#x2F;Maimonscans的方式来对目标主机进行扫描 </p>
+</li>
+<li><p>-sU: 指定使用UDP扫描方式确定目标主机的UDP端口状况 </p>
+</li>
+<li><p>-script <script name> : 指定扫描脚本 </p>
+</li>
+<li><p>-Pn ：不进行ping扫描 </p>
+</li>
+<li><p>-sP :  用ping扫描判断主机是否存活，只有主机存活，nmap才会继续扫描，一般最好不加，因为有的主机会禁止ping </p>
+</li>
+<li><p>-PI :  设置这个选项，让nmap使用真正的ping(ICMP echo请求)来扫描目标主机是否正在运行。 </p>
+</li>
+<li><p>-iL 1.txt : 批量扫描1.txt中的目标地址 </p>
+</li>
+<li><p>nmap -sF -T4 192.168.1.0  探测防火墙状态</p>
+</li>
+<li><p>-sL: List Scan 列表扫描，仅将指定的目标的IP列举出来，不进行主机发现 </p>
+</li>
+<li><p>-sY/sZ: 使用SCTP INIT/COOKIE-ECHO来扫描SCTP协议端口的开放的情况</p>
+</li>
+<li><p>-sO: 使用IP protocol 扫描确定目标机支持的协议类型 </p>
+</li>
+<li><p>-PO : 使用IP协议包探测对方主机是否开启</p>
+</li>
+<li><p>-PE/PP/PM : 使用ICMP echo、 ICMP timestamp、ICMP netmask 请求包发现主机 </p>
+</li>
+<li><p>-PS/PA/PU/PY : 使用TCP SYN/TCP ACK或SCTP INIT/ECHO方式进行发现 </p>
+</li>
+<li><p>nmap 192.168.1.0/24 -excludefile f:/1.txt  #扫描除给定文件中的地址以外的其他地址</p>
+</li>
+<li><p>-sN/sF/sX: 指定使用TCP Null, FIN, and Xmas scans秘密扫描方式来协助探测对方的TCP端口状态 </p>
+</li>
+<li><p>-e eth0：指定使用eth0网卡进行探测 </p>
+</li>
+<li><p>-f : --mtu <val>: 指定使用分片、指定数据包的 MTU</p>
+</li>
+<li><p>-b <FTP relay host>: 使用FTP bounce scan扫描方式 </p>
+</li>
+<li><p>-g：指定发送的端口号</p>
+</li>
+<li><p>-r: 不进行端口随机打乱的操作（如无该参数，nmap会将要扫描的端口以随机顺序方式扫描，以让nmap的扫描不易被对方防火墙检测到） </p>
+</li>
+<li><p>-v 表示显示冗余信息，在扫描过程中显示扫描的细节，从而让用户了解当前的扫描状态 </p>
+</li>
+<li><p>-n : 表示不进行DNS解析； </p>
+</li>
+<li><p>-D <decoy1,decoy2[,ME],...>: 用一组 IP 地址掩盖真实地址，其中 ME 填入自己的 IP 地址 </p>
+</li>
+<li><p>-R ：表示总是进行DNS解析。</p>
+</li>
+<li><p>-F : 快速模式，仅扫描TOP 100的端口</p>
+</li>
+<li><p>-S <IP_Address>: 伪装成其他 IP 地址 </p>
+</li>
+<li><p>--ttl <val>: 设置 time-to-live 时间</p>
+</li>
+<li><p>--badsum: 使用错误的 checksum 来发送数据包（正常情况下，该类数据包被抛弃，如果收到回复，说明回复来自防火墙或 IDS/IPS） </p>
+</li>
+<li><p>--dns-servers  : 指定DNS服务器</p>
+</li>
+<li><p>--system-dns : 指定使用系统的DNS服务器   </p>
+</li>
+<li><p>--traceroute : 追踪每个路由节点</p>
+</li>
+<li><p>--scanflags <flags>: 定制TCP包的flags </p>
+</li>
+<li><p>--top-ports <number> :扫描开放概率最高的number个端口 </p>
+</li>
+<li><p>--port-ratio <ratio>: 扫描指定频率以上的端口。与上述--top-ports类似，这里以概率作为参数 </p>
+</li>
+<li><p>--version-trace: 显示出详细的版本侦测过程信息 </p>
+</li>
+<li><p>--osscan-limit: 限制Nmap只对确定的主机的进行OS探测（至少需确知该主机分别有一个open和closed的端口）</p>
+</li>
+<li><p>--osscan-guess: 大胆猜测对方的主机的系统类型。由此准确性会下降不少，但会尽可能多为用户提供潜在的操作系统 </p>
+</li>
+<li><p>--data-length <num>: 填充随机数据让数据包长度达到 Num </p>
+</li>
+<li><p>--ip-options <options>: 使用指定的 IP 选项来发送数据包</p>
+</li>
+<li><p>--spoof-mac<mac address/prefix/vendor name> : 伪装 MAC 地址 </p>
+</li>
+<li><p>--version-intensity <level>: 指定版本侦测强度（0-9），默认为7。数值越高，探测出的服务越准确，但是运行时间会比较长。 </p>
+</li>
+<li><p>--version-light: 指定使用轻量侦测方式(intensity 2) </p>
+</li>
+<li><p>--version-all: 尝试使用所有的probes进行侦测 (intensity 9) </p>
+</li>
+<li><p>--version-trace: 显示出详细的版本侦测过程信息 </p>
+</li>
+<li><p>nmap 192.168.1.0/24 -exclude 192.168.1.10扫描除192.168.1.0外的该网段的其他地址</p>
+</li>
+</ol>
+<p>nmap -sT 192.168.52.141 扫描tcp端口<br>-sU 扫描udp端口</p>
+<h3 id="nmap脚本扫描"><a href="#nmap脚本扫描" class="headerlink" title="nmap脚本扫描"></a>nmap脚本扫描</h3><p>Nmap允许用户自己编写脚本进行自动化扫描操作,或者扩展Nmap现有的功能脚本，脚本默认放置目录为: /usr/share/nmap/scripts，里面大概近600个不同分类不同功能的内置脚本。Nmap的脚本功能主要分为以下几类：</p>
+<p>auth:负责处理鉴权证书(绕开鉴权)的脚本<br>broadcast:在局域网内探查更多服务开启状况,如dhcp/dns/sqlserver等服务<br>brute:提供暴力**方式,针对常见的应用如http/snmp等<br>default:使用-sC或- A选项拦描时候默认的脚本,提供基本脚本扫描能力<br>discovery:对网络进行更多的信息,如SMB枚举、SNMP查询等<br>dos:用于进行拒绝服务攻击<br>exploit:利用已知的漏洞入侵系统<br>external:利用第三方的数据库或资源,例如进行whois解析<br>fuzzer:模糊测试的脚本,发送异常的包到目标机,探测出潜在漏洞<br>intrusive:入侵性的脚本,此类脚本可能弓|发对方的IDS/IPS的记录或屏蔽<br>malware:探测目标机是否感染了病毒、开启了后门等信息<br>safe:此类与intrusive相反,属于安全性脚本<br>version:负责增强服务与版本扫描( Version Detection )功能的脚本<br>vuln:负责检查目标机是否有常见的漏洞( Vulnerability ) , 如是否有MS08_ 067</p>
+<p>1.默认脚本扫描，主要扫描各种应用服务的信息。</p>
+<p>nmap --script=default 192.168.52.141</p>
+<p>2.扫描是否存在常见漏洞.</p>
+<p>nmap --script=vuln 192.168.52.141</p>
+<h2 id="Lame"><a href="#Lame" class="headerlink" title="Lame"></a>Lame</h2><h3 id="第一步：扫描网络"><a href="#第一步：扫描网络" class="headerlink" title="第一步：扫描网络```"></a>第一步：扫描网络```</h3><p>nmap -sV -O -F --version-light 10.10.10.3<br>-sV：探测开放端口以确定服务/版本信息<br>-O：启用操作系统检测<br>-F：快速模式-扫描比默认扫描更少的端口<br>--version-light：限制最可能的探测（强渡2）</p>
+<p>看到四个开放的端口：<br>PORT    STATE SERVICE     VERSION<br>21/tcp  open  ftp         vsftpd 2.3.4  （文件传输协议FTP控制命令）<br>22/tcp  open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)  （安全外壳SSH，安全登录，文件传输（scp，sftp）和端口转发<br>139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)（NetBIOS会话服务）<br>445/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP) （Miscrosoft-DS（目录服务）SMB文件共享）</p>
+<h3 id="第二步：易受攻击的FTP"><a href="#第二步：易受攻击的FTP" class="headerlink" title="第二步：易受攻击的FTP"></a>第二步：易受攻击的FTP</h3><p>searchsploit检查vsftpd2.3.4上是否存在任何已知漏洞，searchsploit是exploit database的命令行搜索工具</p>
+<p>searchsploit vsftpd 2.3.4<br><img src="https://img-blog.csdnimg.cn/68ea6bd04c694b69adffd60f012203aa.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>我们将使用metasploit，这是一个渗透测试框架，是攻击者和防御者的必备工具<br>用msfconsole命令启动框架<br><img src="https://img-blog.csdnimg.cn/9f22a761f65d46c49dd1477e3f8216d1.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>search vsftpd 2.3.4 用这个命令查找所有有用的有效载荷<br><img src="https://img-blog.csdnimg.cn/9dd4e0c1250040fab9065052e5cd6348.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>我们使用这个攻击模块<br>use exploit/unix/ftp/vsftpd_234_backdoor<br>启动漏洞利用，查看显示的可用选项<br><img src="https://img-blog.csdnimg.cn/b2913797d0f745698a64848b98fe8f31.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>可以看到远程主机(RHOSTS)尚未设置，我们将设置远程主机和目标，因为这两个信息试运行漏洞利用所必需的<br>我们现在设置远程主机<br>set RHOSTS 10.10.10.3<br><img src="https://img-blog.csdnimg.cn/85d30a343f884eb487ef337314206292.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>将目标设置为0<br><img src="https://img-blog.csdnimg.cn/a31f5768205e422696eccc467d520a17.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>run进行攻击<br><img src="https://img-blog.csdnimg.cn/d36a41c954474ae9b889f9f5e8203f98.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>但是发现没有创建会话，该漏洞已按照漏洞描述中的说明进行了修补<br>此模块利用添加到 VSFTPD 下载存档中的恶意后门。根据可用的最新信息，此后门在 2011 年 6 月 30 日至 2011 年 7 月 1 日期间被引入 vsftpd-2.3.4.tar.gz 存档。该后门已于 2011 年 7 月 3 日被移除。</p>
+<h3 id="第三步：samba"><a href="#第三步：samba" class="headerlink" title="第三步：samba"></a>第三步：samba</h3><p>我们需要找其他方法了，第二布不行了<br>nmap -sV -sT -sC 10.10.10.3<br><img src="https://img-blog.csdnimg.cn/bb6eaef985f64f88addf136557e4a042.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>searchsploit Samba 3.0.20<br><img src="https://img-blog.csdnimg.cn/36c37d46e3bd4c20a32f76df4f0b395e.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>启动msfconsole<br>searchsploit Samba 3.0.20<br><img src="https://img-blog.csdnimg.cn/770aa3e3f9134872948f4a2d531db241.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>启动攻击模块  显示可用选项 </p>
+<p><img src="https://img-blog.csdnimg.cn/db0d9550011247b391c9bbe3382cad55.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>设置远程主机<br>set RHOSTS 10.10.10.3<br>run 启动攻击模块<br><img src="https://img-blog.csdnimg.cn/3ffd1558b9bc4ef6bffb7b44bd62c842.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB-Lame</div>
+      <div>http://example.com/2023/04/20/HTB-Lame/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/HTB-SSTI/" title="HTB-SSTI">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB-SSTI</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/HTB-Devel/" title="HTB-Devel">
+                        <span class="hidden-mobile">HTB-Devel</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

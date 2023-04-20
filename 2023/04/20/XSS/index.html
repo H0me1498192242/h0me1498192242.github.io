@@ -1,0 +1,695 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="XSS前言:  XSS是用来干什么的,首先咱们得弄清楚这个问题,所谓XSS,就是跨站脚本攻击。它指的是恶意攻击者往Web页面里插入恶意html代码，当用户浏览该页之时，嵌入其中Web里面的html代码会被执行，从而达到恶意用户的特殊目的,知道这些后,咱么就开始详细说说XSS的三种分类 1.反射性xss 经过后端，不经过数据库   浏览器 -&gt; 后端 -&gt; 浏览器。 需要攻击者提前构造一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS">
+<meta property="og:url" content="http://example.com/2023/04/20/XSS/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="XSS前言:  XSS是用来干什么的,首先咱们得弄清楚这个问题,所谓XSS,就是跨站脚本攻击。它指的是恶意攻击者往Web页面里插入恶意html代码，当用户浏览该页之时，嵌入其中Web里面的html代码会被执行，从而达到恶意用户的特殊目的,知道这些后,咱么就开始详细说说XSS的三种分类 1.反射性xss 经过后端，不经过数据库   浏览器 -&gt; 后端 -&gt; 浏览器。 需要攻击者提前构造一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328135321547.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328150142471.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328150431772.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328151102499.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328151811148.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328151758269.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328154249870.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328154614761.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328154846536.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328155651768.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328155712477.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328160944415.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328161314212.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328161338148.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328163441860.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021032816361250.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328164138136.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328164249723.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210328164548336.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401190548346.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401190601191.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401191342371.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401191723306.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021040119173573.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401192045780.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401193344619.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401193415240.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401193549146.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401194216884.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401195225423.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401195241421.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401203309843.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401203633641.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210401210300501.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210402104150885.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210402104751928.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210402110829513.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210402110932995.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210402110939876.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210402111102403.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210402112604453.png">
+<meta property="article:published_time" content="2023-04-20T15:33:27.672Z">
+<meta property="article:modified_time" content="2023-04-20T15:12:14.426Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210328135321547.png">
+  
+  
+  
+  <title>XSS - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="XSS"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          20 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">XSS</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言:"></a>前言:</h3><p>  XSS是用来干什么的,首先咱们得弄清楚这个问题,所谓XSS,就是跨站脚本攻击。它指的是恶意攻击者往Web页面里插入恶意html代码，当用户浏览该页之时，嵌入其中Web里面的html代码会被执行，从而达到恶意用户的特殊目的,知道这些后,咱么就开始详细说说XSS的三种分类</p>
+<h3 id="1-反射性xss"><a href="#1-反射性xss" class="headerlink" title="1.反射性xss"></a>1.反射性xss</h3><p> <strong>经过后端，不经过数据库   浏览器 -&gt; 后端 -&gt; 浏览器。 需要攻击者提前构造一个恶意链接，来诱使客户点击</strong>*<img src="https://img-blog.csdnimg.cn/20210328135321547.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p> 开始我看到这句话,我也不太理解,啥是后端,后端跟数据库是啥关系,所以就得查资料呗<br> <strong>前端</strong>:<br> 对于web前端来说，通常是指网站的前台部分，包括网站的表现层和结构层：Web页面的结构、Web的外观视觉表现以及Web层面的交互实现。<br> <strong>后端:</strong><br> 后端是在后台工作的，控制着前端的内容，主要负责程序设计架构思想，管理数据库等。后端更多的是与数据库进行交互以处理相应的业务逻辑，需要考虑的是如何实现功能、数据的存取、平台的稳定性与性能等，涉及动态语言如PHP、ASP、JSP等。</p>
+<h3 id="2-存储型xss"><a href="#2-存储型xss" class="headerlink" title="2.存储型xss"></a>2.存储型xss</h3><p><strong>经过后端，经过数据库</strong>(这就需要数据库中配有相应的表) <strong>浏览器 -&gt; 后端 -&gt; 数据库 -&gt; 后端 -&gt; 浏览器。</strong><br>  这种类型的XSS，危害比前一种大得多。比如一个攻击者在论坛的楼层中包含了一段JavaScript代码，并且服务器没有正确进行过滤输出，那就会造成浏览这个页面的用户执行这段JavaScript代码。<br>  用户输入的内容是没有过滤的，但是不直接显示在页面中，因为插入到了数据库,但当我们访问show.php查询这个值的时候，代码就会被执行。</p>
+<h3 id="3-DOM型XSS"><a href="#3-DOM型XSS" class="headerlink" title="3.DOM型XSS"></a><strong>3.DOM型XSS</strong></h3><p>DOM-XSS 的数据流向是：URL–&gt;浏览器<br>这种类型则是利用非法输入来闭合对应的html标签。<br>比如，有这样的一个a标签：<a href='$var'></a><br>乍看问题不大，可是当$ var的内容变为 ’ οnclick&#x3D;’alert(&#x2F;xss&#x2F;) &#x2F;&#x2F;，这段代码就会被执行。</p>
+<p>**总结: 在易用上，存储型XSS &gt; DOM - XSS &gt; 反射型 XSS。</p>
+<h3 id="4-XSS闯关记录"><a href="#4-XSS闯关记录" class="headerlink" title="4 .XSS闯关记录"></a>4 .XSS闯关记录</h3><h4 id="第一关"><a href="#第一关" class="headerlink" title="第一关"></a>第一关</h4><p><img src="https://img-blog.csdnimg.cn/20210328150142471.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现name值赋予1,下面就直接出现了1,再看源代码<br><img src="https://img-blog.csdnimg.cn/20210328150431772.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>意思就是name赋值啥,就都会记录到这里,然后再输出到界面,这不就是反射性XSS么  浏览器 -&gt; 后端 -&gt; 浏览器<br>下面我们输入 <img src="https://img-blog.csdnimg.cn/20210328151102499.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br> 这是 js 脚本语言，alert，就是弹出一个提示框,在浏览器中的效果是弹窗, 弹窗内容是 ‘xss’; </p>
+<h4 id="第二关"><a href="#第二关" class="headerlink" title="第二关"></a>第二关</h4><p>开始的话,老规矩,在这里输入一个2<br><img src="https://img-blog.csdnimg.cn/20210328151811148.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>提示说没有找到和2相关的结果<br><img src="https://img-blog.csdnimg.cn/20210328151758269.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>看源代码,找到了Keyword	<img src="https://img-blog.csdnimg.cn/20210328154249870.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>注意咱们只输入了一个2,但是2的右边是”&gt;,想一下,如果我们输入一个2”&gt;,<br>呢么源码不就变成了 2”&gt;”&gt;了么  所以我们输入 </p>
+<p><img src="https://img-blog.csdnimg.cn/20210328154614761.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>让后面的&lt;” 与多出来的”&gt;构成闭合, 这句语句就是成功的</p>
+<h4 id="第三关"><a href="#第三关" class="headerlink" title="第三关"></a>第三关</h4><p>老规矩 输入一个3 ,然后查看源代码 找到Keyword<br><img src="https://img-blog.csdnimg.cn/20210328154846536.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>发现其实跟第二关大差不差,就是双引号变单引号了而已,于是输入后发现<br><img src="https://img-blog.csdnimg.cn/20210328155651768.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>查看源代码<br><img src="https://img-blog.csdnimg.cn/20210328155712477.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现有点乱码的感觉,咱们输入的东西被注释掉了,所以咱们就换一个思路,用onfucus或者onclick (单机鼠标) 输入后,点击一下鼠标,就会执行<br><strong>3’ onclick&#x3D;alert(&#x2F;xss&#x2F;) &#x2F;&#x2F;</strong> (&#x2F;&#x2F;是注释符,他不是注释掉后面的一段话,就仅仅只是注释后面的第一个符号或字母)</p>
+<h4 id="第四关"><a href="#第四关" class="headerlink" title="第四关"></a>第四关</h4><p>老规矩 输入4查看源代码找到Keyword<br><img src="https://img-blog.csdnimg.cn/20210328160944415.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现是双引号闭合,咱们先试试老方法 用script语句<br><img src="https://img-blog.csdnimg.cn/20210328161314212.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现报错 看源代码<br><img src="https://img-blog.csdnimg.cn/20210328161338148.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现咱们的&lt; 括号被没了 所以咱们还是跟第三关一样 用onclick吧<br>   4” onclick&#x3D;alert(&#x2F;xss&#x2F;)&#x2F;&#x2F;</p>
+<h4 id="第五关"><a href="#第五关" class="headerlink" title="第五关"></a>第五关</h4><p>咱们老规矩,就先输入5 查看源代码,然后就直接使用5” onclick&#x3D;alert(&#x2F;xss&#x2F;)&#x2F;&#x2F;<br><img src="https://img-blog.csdnimg.cn/20210328163441860.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现咱们的o 与 n之间多出了一个_<br>所以咱们就该换一种输入方法了 就是<br><img src="https://img-blog.csdnimg.cn/2021032816361250.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述">输入这个<br><img src="https://img-blog.csdnimg.cn/20210328164138136.png" srcset="/img/loading.gif" lazyload alt="5&quot;&gt;&lt;a href=&quot;javascript:alert(/xss/) &quot;&gt;"></p>
+<p>然后<br><img src="https://img-blog.csdnimg.cn/20210328164249723.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20210328164548336.png" srcset="/img/loading.gif" lazyload alt="&lt;a href = &quot;xxx&quot;&gt;&lt;/a&gt;"><br>是在本窗口打开“xxx”网站页面<br><strong>点击后面的蓝色部分,就是执行这个alert语句进行弹窗</strong></p>
+<h4 id="第六关"><a href="#第六关" class="headerlink" title="第六关:"></a>第六关:</h4><p>咱们先输入</p>
+<p><img src="https://img-blog.csdnimg.cn/20210401190548346.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>然后<img src="https://img-blog.csdnimg.cn/20210401190601191.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>发现r与i之间出现了一个下划线,所以咱们就试试大写绕过呗<img src="https://img-blog.csdnimg.cn/20210401191342371.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>就是</p>
+<p><img src="https://img-blog.csdnimg.cn/20210401191723306.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2021040119173573.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>也可以使用url编码绕过,让iurl编码变成%69进行绕过,换一种函数也可以<br><img src="https://img-blog.csdnimg.cn/20210401192045780.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>用javascript函数,然后后面的内容就以网站的形式访问</p>
+<h4 id="第七关"><a href="#第七关" class="headerlink" title="第七关:"></a>第七关:</h4><p>当输入<img src="https://img-blog.csdnimg.cn/20210401193344619.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现没有回应,查看源代码<br><img src="https://img-blog.csdnimg.cn/20210401193415240.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现script被过滤掉了,所以就是双写呗,咱们看看后台的源代码<br><img src="https://img-blog.csdnimg.cn/20210401193549146.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现这些全被替换为了空,并且大小写不能用,所以咱们就是双写绕过<br><img src="https://img-blog.csdnimg.cn/20210401194216884.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h4 id="第八关"><a href="#第八关" class="headerlink" title="第八关:"></a>第八关:</h4><p>咱们输入<img src="https://img-blog.csdnimg.cn/20210401195225423.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>查看源代码<img src="https://img-blog.csdnimg.cn/20210401195241421.png" srcset="/img/loading.gif" lazyload><br>发现”  &lt; &gt; 都被过滤掉了,所以咱们换一种方法绕过<br><img src="https://img-blog.csdnimg.cn/20210401203309843.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>这里有a href标签,咱们就在这里面写咱们的代码,javascript:alert(&#x2F;xss&#x2F;)<br>发现<br><img src="https://img-blog.csdnimg.cn/20210401203633641.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>咋呢美女就试试大写绕过和url绕过,发现大写不行,我用的是十进制转换(就是字符转换成ASCII码的形式)<img src="https://img-blog.csdnimg.cn/20210401210300501.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h4 id="第九关"><a href="#第九关" class="headerlink" title="第九关:"></a>第九关:</h4><p>  这次在上一题的基础上加入了strpos()函数，查找如果url中找到’http’那么会返回找到位置的位数，自然不会返回0也就不会等于false，那么就可以绕过限制了，只要输入的带有http的字符串，那么可以向输入框加进去就可以绕过了</p>
+<p><img src="https://img-blog.csdnimg.cn/20210402104150885.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>所以咱们在第八题的基础上,构造出http<br><img src="https://img-blog.csdnimg.cn/20210402104751928.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>如果想要转换为16进制编码的形式的话 比如&amp;#115十进制  就可以变成&amp;#x73</p>
+<h4 id="第十关"><a href="#第十关" class="headerlink" title="第十关:"></a>第十关:</h4><p>发现输入无论啥东西都不回显,查看源代码<br><img src="https://img-blog.csdnimg.cn/20210402110829513.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现link history sort都被隐藏了<br>然后试着向他们传参<br><img src="https://img-blog.csdnimg.cn/20210402110932995.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20210402110939876.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>然后查看源代码<br><img src="https://img-blog.csdnimg.cn/20210402111102403.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现t_sort输出了,然后构造函数<br><img src="https://img-blog.csdnimg.cn/20210402112604453.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>后边加上type&#x3D;text 的目的是为了令输入框显示出来，可以触发“onclick”这一事件，</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>XSS</div>
+      <div>http://example.com/2023/04/20/XSS/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/%E5%B8%B8%E8%A7%81%E7%9A%84%E6%8F%90%E6%9D%83%E6%96%B9%E6%B3%95/" title="常见的提权方法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">常见的提权方法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/XFF%E7%9A%84%E4%BC%AA%E9%80%A0%E4%BB%A5%E5%8F%8ANginx%E6%9E%B6%E6%9E%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BA%86%E8%A7%A3/" title="XFF的伪造以及Nginx架构的基本了解">
+                        <span class="hidden-mobile">XFF的伪造以及Nginx架构的基本了解</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

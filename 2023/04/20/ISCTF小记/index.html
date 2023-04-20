@@ -1,0 +1,750 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="作为一名纯web手 这次打misc打的贼欢  还有密码学   😂👴不得不佩服user_688选手 超时空的解题思路 虽然👴不是逆向手，但是最起码👴知道od还没有64位的吧 。。。 腾讯会议让你说你的解题思路，你给👴说没环境 搞不出来 👴笑了  👴作为此次大赛管理  都不知道说你啥  你说你图个啥! 👴最近的状态一直不好 已经持续三个月了 这是最近写的还是比较正经的一篇博客了现在的情">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ISCTF小记">
+<meta property="og:url" content="http://example.com/2023/04/20/ISCTF%E5%B0%8F%E8%AE%B0/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="作为一名纯web手 这次打misc打的贼欢  还有密码学   😂👴不得不佩服user_688选手 超时空的解题思路 虽然👴不是逆向手，但是最起码👴知道od还没有64位的吧 。。。 腾讯会议让你说你的解题思路，你给👴说没环境 搞不出来 👴笑了  👴作为此次大赛管理  都不知道说你啥  你说你图个啥! 👴最近的状态一直不好 已经持续三个月了 这是最近写的还是比较正经的一篇博客了现在的情">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1d4db89793f74864a858e54b16b0e28f.jpg">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/80c727c83e4d4192ba78b5a17d0cd812.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5dec704406a3431abc1e82647afa4875.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/529b8b9b5285411f8e1c3195d373ae7e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b9f001c24c674b18a437be1747a24e77.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/591a464ffc7147cfa683f4130c5bf1f8.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/cedc1d302cd74e17a18cb9d44be9dcbc.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/113d72daffaa454f9085b8d8dc5b1af4.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/49bc5bad0de74ff8ba26346847131944.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/deea99ec9bf44d09b5d5688b64ee0e38.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/4a0e541e208d4b6c8b38adb2c453906b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/0644b6e831c6424ea4cb849cbe991e59.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/c804f6cc3318479992a1c18665401fa3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/11bf08a92e054e5d93f6f2acaa8eec48.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/394aca89f5e5496da5bc3b94134f400e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/6c23091eda26442babec58abbf463d34.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5122e24096b34dae862327102a4776e3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f3379e6b20d7402695c3316517d2c80b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/118c7881500d42749140ae36de034ab6.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/299faa673a8140eda3ed759d1ce53bf6.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ad5eb8853ded497287d855189ae8d31e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a54093e6c9f84d91bb6ff6581e873200.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/30035152316f4473b471ef510396b990.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/15abf4dff6374dbfb1210fb025ccdd36.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1432c32c03114b5787c60b20ef3f5274.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f7a973fd1ab249c19745cde5f411a23c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/abcbbd01dff144e7a9560f073eb86de0.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d0be8205c8ec43e0b2ce70c1c1f25e9c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e465bc3f06fa43be9691ff93192f0d8d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b4a19aabf9624cf9b585d85f39db1fcb.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8be55367a6d84bd4a1a36eff5c9135e2.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9811f5bd374a490c878c5bd5ce06cf8f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/475ac6ed3e6449b9aa1512090c03b4ac.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f8e713cfc30c4087ad26a37e5f6ad2a8.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/24ad9c1cb4e64324a3cd7b1ff609606d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/37c6f3a6c0c343e6aa39ea0d8d1c062e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/956879b2f27c4931a99fb9da25df851f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5e591031eaf049d68c4f003437d2deae.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8a33df96f1eb4af4960fc4fc7d908f3f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1a4cb27fe26344529a8f508852b71791.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7206a840f594407db4dc2834f42ca2d4.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/626ee7635a094231b33aae2af297fc47.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ed8ab47f81be40358d2e6832c2201bfe.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/63782189415d43b5a5646c0b442b86a5.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9533b461c1e94b619732105ca69f6be7.gif">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/11cb1a3a15ed4bee93d0833a792d4bf0.jpg">
+<meta property="article:published_time" content="2023-04-20T15:33:27.632Z">
+<meta property="article:modified_time" content="2021-10-25T12:03:42.000Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/1d4db89793f74864a858e54b16b0e28f.jpg">
+  
+  
+  
+  <title>ISCTF小记 - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ISCTF小记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          61 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ISCTF小记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>作为一名纯web手 这次打misc打的贼欢  还有密码学   😂<br>👴不得不佩服user_688选手 超时空的解题思路 虽然👴不是逆向手，但是最起码👴知道od还没有64位的吧 。。。 腾讯会议让你说你的解题思路，你给👴说没环境 搞不出来 👴笑了  👴作为此次大赛管理  都不知道说你啥  你说你图个啥!</p>
+<p>👴最近的状态一直不好 已经持续三个月了 这是最近写的还是比较正经的一篇博客了<br>现在的情绪其实也不是特别好   还在慢慢恢复状态 感谢我身边团队的成员 每天陪着我  在此叩谢！   等我彻底状态恢复了 👴必请你们吃饭 在此尤为感谢《shangu》<br><img src="https://img-blog.csdnimg.cn/1d4db89793f74864a858e54b16b0e28f.jpg" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>这篇博客记录一下这三天本校区的比赛情况 也把一些题目的wp放出来 《仅供参考》<br><img src="https://img-blog.csdnimg.cn/80c727c83e4d4192ba78b5a17d0cd812.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h3 id="EasyRSA"><a href="#EasyRSA" class="headerlink" title="EasyRSA"></a>EasyRSA</h3><p><img src="https://img-blog.csdnimg.cn/5dec704406a3431abc1e82647afa4875.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt=" "></p>
+<p>import gmpy2<br>p &#x3D; 2514358789<br>q &#x3D; 10728308687033142242263042720863820844383964098739391476856378846439202568058060175330323889963293720874263174254928466703829537388987357384056877938482683<br>e &#x3D; 65537<br>c &#x3D; 315735919869150018576402634669391642063072477484651483959788107202150947070700204372199105578908451883154065265282422586327528997995926456407090743845400167829246564070907438540016782921324316795681<br>n &#x3D;p<em>q<br>fn&#x3D;(p-1)</em>(q-1)<br>d&#x3D; gmpy2.invert(e, fn)<br>h&#x3D;hex(gmpy2.powmod(c,d,n))[2:]<br>if len(h) %2&#x3D;&#x3D;1:<br>    h&#x3D; ‘0’+h<br>s &#x3D;h.decode(‘hex’)<br>print(s)</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p><img src="https://img-blog.csdnimg.cn/529b8b9b5285411f8e1c3195d373ae7e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h1 id="-1"><a href="#-1" class="headerlink" title=""></a></h1><p>随机数预测，<br>基于逆向extract_number函数,前624个数<br>所以只要能够还原state，就可以实现预测625。</p>
+<p>**</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> Random<br> <br>o = <span class="hljs-number">9999999999999999999999999999999999999999999999999999999999999</span><br><span class="hljs-comment"># right shift inverse</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">inverse_right</span>(<span class="hljs-params">res, shift</span>):<br>    tmp = res<br>    bits=<span class="hljs-built_in">len</span>(<span class="hljs-built_in">bin</span>(res)[<span class="hljs-number">2</span>:])<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(bits // shift):<br>        tmp = res ^ tmp &gt;&gt; shift<br>    <span class="hljs-keyword">return</span> tmp<br>  <br><span class="hljs-comment"># right shift with mask inverse</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">inverse_right_mask</span>(<span class="hljs-params">res, shift, mask</span>):<br>    tmp = res<br>    bits=<span class="hljs-built_in">len</span>(<span class="hljs-built_in">bin</span>(res)[<span class="hljs-number">2</span>:])<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(bits // shift):<br>        tmp = res ^ tmp &gt;&gt; shift &amp; mask<br>    <span class="hljs-keyword">return</span> tmp<br> <br><span class="hljs-comment"># left shift inverse</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">inverse_left</span>(<span class="hljs-params">res, shift</span>):<br>    tmp = res<br>    bits=<span class="hljs-built_in">len</span>(<span class="hljs-built_in">bin</span>(res)[<span class="hljs-number">2</span>:])<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(bits // shift):<br>        tmp = res ^ tmp &lt;&lt; shift<br>    <span class="hljs-keyword">return</span> tmp<br> <br><span class="hljs-comment"># left shift with mask inverse</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">inverse_left_mask</span>(<span class="hljs-params">res, shift, mask</span>):<br>    tmp = res<br>    bits=<span class="hljs-built_in">len</span>(<span class="hljs-built_in">bin</span>(res)[<span class="hljs-number">2</span>:])<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(bits // shift):<br>        tmp = res ^ tmp &lt;&lt; shift &amp; mask<br>    <span class="hljs-keyword">return</span> tmp<br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">recover</span>(<span class="hljs-params">y</span>):<br>    y = inverse_right(y,<span class="hljs-number">18</span>)<br>    y = inverse_left_mask(y,<span class="hljs-number">15</span>,<span class="hljs-number">4022730752</span>)<br>    y = inverse_left_mask(y,<span class="hljs-number">7</span>,<span class="hljs-number">2636928640</span>)<br>    y = inverse_right(y,<span class="hljs-number">11</span>)<br>    <span class="hljs-keyword">return</span> y<br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">clone_mt</span>(<span class="hljs-params">record</span>):<br>    state = [recover(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> record]<br>    gen = Random()<br>    gen.setstate((<span class="hljs-number">3</span>,<span class="hljs-built_in">tuple</span>(state+[<span class="hljs-number">0</span>]),<span class="hljs-literal">None</span>))<br>    <span class="hljs-keyword">return</span> gen<br> <br>f = <span class="hljs-built_in">open</span>(<span class="hljs-string">r&quot;预测.txt&quot;</span>,<span class="hljs-string">&#x27;r&#x27;</span>).readlines()<br>prng = []<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> f:<br>    prng.append(<span class="hljs-built_in">int</span>(i.strip(<span class="hljs-string">&quot;\n&quot;</span>)))<br> <br>g = clone_mt(prng[:<span class="hljs-number">624</span>])<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">700</span>):<br>    g.getrandbits(<span class="hljs-number">32</span>)<br> <br>key = g.getrandbits(<span class="hljs-number">32</span>)<br><span class="hljs-built_in">print</span>(key)<br></code></pre></td></tr></table></figure>
+
+<p>得到秘钥key：<br><img src="https://img-blog.csdnimg.cn/b9f001c24c674b18a437be1747a24e77.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>看了下剩下的加密部分就是简单的aes找个在线网站解一下：<br><img src="https://img-blog.csdnimg.cn/591a464ffc7147cfa683f4130c5bf1f8.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>get flag ：ISCTF{AE5_AnD_ranD0m}</p>
+<h2 id="-2"><a href="#-2" class="headerlink" title=""></a></h2><h1 id="-3"><a href="#-3" class="headerlink" title=""></a></h1><p>近邻算法，思路就是分类给出的data，对应字母。<br><img src="https://img-blog.csdnimg.cn/cedc1d302cd74e17a18cb9d44be9dcbc.png" srcset="/img/loading.gif" lazyload><br>这里就是要分类的和k值。<br>有思路以后去找找脚本，百度找了一圈，发现有个一模一样：<br><img src="https://img-blog.csdnimg.cn/113d72daffaa454f9085b8d8dc5b1af4.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>把需要用的复制出来，直接替换数据就可以用，最终脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> operator<br> <br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">create_data_set</span>():<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    函数作用：创建数据集和标签</span><br><span class="hljs-string">    set_group:数据集</span><br><span class="hljs-string">    set_labels:数据集对应的标签</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    set_group = np.array([<br>                        [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>],[<span class="hljs-number">0</span>, <span class="hljs-number">0.5</span>],[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>],<br>                        [<span class="hljs-number">1.0</span>, <span class="hljs-number">1.1</span>], [<span class="hljs-number">1.0</span>, <span class="hljs-number">1.5</span>],[<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>],<br>                        [<span class="hljs-number">2.0</span>,<span class="hljs-number">2.0</span>],[<span class="hljs-number">2.0</span>,<span class="hljs-number">2.5</span>],[<span class="hljs-number">2.0</span>,<span class="hljs-number">3.0</span>],<br>                        [<span class="hljs-number">3.0</span>,<span class="hljs-number">3.0</span>],[<span class="hljs-number">3.0</span>,<span class="hljs-number">3.5</span>],[<span class="hljs-number">3.0</span>,<span class="hljs-number">4.0</span>],<br>                        [<span class="hljs-number">4.0</span>,<span class="hljs-number">4.0</span>],[<span class="hljs-number">4.0</span>,<span class="hljs-number">4.5</span>],[<span class="hljs-number">4.0</span>,<span class="hljs-number">5.0</span>],<br>                        [<span class="hljs-number">5.0</span>,<span class="hljs-number">5.0</span>],[<span class="hljs-number">5.0</span>,<span class="hljs-number">5.5</span>],[<span class="hljs-number">5.0</span>,<span class="hljs-number">6.0</span>],<br>                        [<span class="hljs-number">6.0</span>,<span class="hljs-number">6.0</span>],[<span class="hljs-number">6.0</span>,<span class="hljs-number">6.5</span>],[<span class="hljs-number">6.0</span>,<span class="hljs-number">7.0</span>],<br>                        [<span class="hljs-number">7.0</span>,<span class="hljs-number">7.0</span>],[<span class="hljs-number">7.0</span>,<span class="hljs-number">7.5</span>],[<span class="hljs-number">7.0</span>,<span class="hljs-number">8.0</span>],<br>                        [<span class="hljs-number">8.0</span>,<span class="hljs-number">8.0</span>],[<span class="hljs-number">8.0</span>,<span class="hljs-number">8.5</span>],[<span class="hljs-number">8.0</span>,<span class="hljs-number">9.0</span>],<br>                        [<span class="hljs-number">9.0</span>,<span class="hljs-number">9.0</span>],[<span class="hljs-number">9.0</span>,<span class="hljs-number">9.5</span>],[<span class="hljs-number">9.0</span>,<span class="hljs-number">10.0</span>],<br>                        [<span class="hljs-number">10.0</span>,<span class="hljs-number">10.0</span>],[<span class="hljs-number">10.0</span>,<span class="hljs-number">10.5</span>],[<span class="hljs-number">10.0</span>,<span class="hljs-number">11.0</span>],<br>                        [<span class="hljs-number">11.0</span>,<span class="hljs-number">11.0</span>],[<span class="hljs-number">11.0</span>,<span class="hljs-number">11.5</span>],[<span class="hljs-number">11.0</span>,<span class="hljs-number">12.0</span>],<br>                        [<span class="hljs-number">12.0</span>,<span class="hljs-number">12.0</span>],[<span class="hljs-number">12.0</span>,<span class="hljs-number">12.5</span>],[<span class="hljs-number">12.0</span>,<span class="hljs-number">13.0</span>],<br>                        [<span class="hljs-number">13.0</span>,<span class="hljs-number">13.0</span>],[<span class="hljs-number">13.0</span>,<span class="hljs-number">13.5</span>],[<span class="hljs-number">13.0</span>,<span class="hljs-number">14.0</span>],<br>                        [<span class="hljs-number">14.0</span>,<span class="hljs-number">14.0</span>],[<span class="hljs-number">14.0</span>,<span class="hljs-number">14.5</span>],[<span class="hljs-number">14.0</span>,<span class="hljs-number">15.0</span>],<br>                        [<span class="hljs-number">15.0</span>,<span class="hljs-number">15.0</span>],[<span class="hljs-number">15.0</span>,<span class="hljs-number">15.5</span>],[<span class="hljs-number">15.0</span>,<span class="hljs-number">16.0</span>],<br>                        [<span class="hljs-number">16.0</span>,<span class="hljs-number">16.0</span>],[<span class="hljs-number">16.0</span>,<span class="hljs-number">16.5</span>],[<span class="hljs-number">16.0</span>,<span class="hljs-number">17.0</span>],<br>                        [<span class="hljs-number">17.0</span>,<span class="hljs-number">17.0</span>],[<span class="hljs-number">17.0</span>,<span class="hljs-number">17.5</span>],[<span class="hljs-number">17.0</span>,<span class="hljs-number">18.0</span>],<br>                        [<span class="hljs-number">18.0</span>,<span class="hljs-number">18.0</span>],[<span class="hljs-number">18.0</span>,<span class="hljs-number">18.5</span>],[<span class="hljs-number">18.0</span>,<span class="hljs-number">19.0</span>],<br>                        [<span class="hljs-number">19.0</span>,<span class="hljs-number">19.0</span>],[<span class="hljs-number">19.0</span>,<span class="hljs-number">19.5</span>],[<span class="hljs-number">19.0</span>,<span class="hljs-number">20.0</span>],<br>                        [<span class="hljs-number">20.0</span>,<span class="hljs-number">20.0</span>],[<span class="hljs-number">20.0</span>,<span class="hljs-number">20.5</span>],[<span class="hljs-number">20.0</span>,<span class="hljs-number">21.0</span>],<br>                        [<span class="hljs-number">21.0</span>,<span class="hljs-number">21.0</span>],[<span class="hljs-number">21.0</span>,<span class="hljs-number">21.5</span>],[<span class="hljs-number">21.0</span>,<span class="hljs-number">22.0</span>],<br>                        [<span class="hljs-number">22.0</span>,<span class="hljs-number">22.0</span>]])<br>    set_labels = [<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;D&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>, <span class="hljs-string">&#x27;E&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>, <span class="hljs-string">&#x27;F&#x27;</span>, <span class="hljs-string">&#x27;f&#x27;</span>, <span class="hljs-string">&#x27;G&#x27;</span>, <span class="hljs-string">&#x27;g&#x27;</span>, <span class="hljs-string">&#x27;H&#x27;</span>, <span class="hljs-string">&#x27;h&#x27;</span>, <span class="hljs-string">&#x27;I&#x27;</span>, <span class="hljs-string">&#x27;i&#x27;</span>, <span class="hljs-string">&#x27;J&#x27;</span>, <span class="hljs-string">&#x27;j&#x27;</span>, <span class="hljs-string">&#x27;K&#x27;</span>, <span class="hljs-string">&#x27;k&#x27;</span>, <span class="hljs-string">&#x27;L&#x27;</span>, <span class="hljs-string">&#x27;l&#x27;</span>, <span class="hljs-string">&#x27;M&#x27;</span>, <span class="hljs-string">&#x27;m&#x27;</span>, <span class="hljs-string">&#x27;N&#x27;</span>, <span class="hljs-string">&#x27;n&#x27;</span>, <span class="hljs-string">&#x27;O&#x27;</span>, <span class="hljs-string">&#x27;o&#x27;</span>, <span class="hljs-string">&#x27;P&#x27;</span>, <span class="hljs-string">&#x27;p&#x27;</span>, <span class="hljs-string">&#x27;Q&#x27;</span>, <span class="hljs-string">&#x27;q&#x27;</span>, <span class="hljs-string">&#x27;R&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>, <span class="hljs-string">&#x27;S&#x27;</span>, <span class="hljs-string">&#x27;s&#x27;</span>, <span class="hljs-string">&#x27;T&#x27;</span>, <span class="hljs-string">&#x27;t&#x27;</span>, <span class="hljs-string">&#x27;U&#x27;</span>, <span class="hljs-string">&#x27;u&#x27;</span>, <span class="hljs-string">&#x27;V&#x27;</span>, <span class="hljs-string">&#x27;v&#x27;</span>, <span class="hljs-string">&#x27;W&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>, <span class="hljs-string">&#x27;X&#x27;</span>, <span class="hljs-string">&#x27;x&#x27;</span>, <span class="hljs-string">&#x27;Y&#x27;</span>, <span class="hljs-string">&#x27;y&#x27;</span>, <span class="hljs-string">&#x27;Z&#x27;</span>, <span class="hljs-string">&#x27;z&#x27;</span>,<span class="hljs-string">&#x27;@&#x27;</span>,<span class="hljs-string">&#x27;!&#x27;</span>,<span class="hljs-string">&#x27;_&#x27;</span>,<span class="hljs-string">&#x27;%&#x27;</span>,<span class="hljs-string">&#x27;~&#x27;</span>,<span class="hljs-string">&#x27;1&#x27;</span>,<span class="hljs-string">&#x27;2&#x27;</span>,<span class="hljs-string">&#x27;3&#x27;</span>,<span class="hljs-string">&#x27;4&#x27;</span>,<span class="hljs-string">&#x27;5&#x27;</span>,<span class="hljs-string">&#x27;6&#x27;</span>,<span class="hljs-string">&#x27;7&#x27;</span>,<span class="hljs-string">&#x27;8&#x27;</span>,<span class="hljs-string">&#x27;9&#x27;</span>,<span class="hljs-string">&#x27;0&#x27;</span>]<br> <br>    <span class="hljs-keyword">return</span> set_group, set_labels<br> <br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">classify0</span>(<span class="hljs-params">input_data, data_set, labels_set, k</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    函数作用：使用k-近邻算法将每组数据划分到某个类中</span><br><span class="hljs-string">    :param input_data:用于分类的输入数据(测试集)</span><br><span class="hljs-string">    :param data_set:输入的训练样本集</span><br><span class="hljs-string">    :param labels_set:训练样本标签</span><br><span class="hljs-string">    :param k:用于选择最近邻居的数目，即kNN算法参数,选择距离最小的k个点</span><br><span class="hljs-string">    :return:返回分类结果</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-comment"># data_set.shape[0]返回训练样本集的行数</span><br>    data_set_size = data_set.shape[<span class="hljs-number">0</span>]<br>    <span class="hljs-comment"># 在列方向上重复input_data，1次，行方向上重复input_data，data_set_size次</span><br>    diff_mat = np.tile(input_data, (data_set_size, <span class="hljs-number">1</span>)) - data_set<br>    <span class="hljs-comment"># diff_mat：输入样本与每个训练样本的差值,然后对其每个x和y的差值进行平方运算</span><br>    sq_diff_mat = diff_mat ** <span class="hljs-number">2</span><br>    <span class="hljs-comment"># 按行进行累加，axis=1表示按行。</span><br>    sq_distances = sq_diff_mat.<span class="hljs-built_in">sum</span>(axis=<span class="hljs-number">1</span>)<br>    <span class="hljs-comment"># 开方运算，求出距离</span><br>    distances = sq_distances ** <span class="hljs-number">0.5</span><br>    <span class="hljs-comment"># 返回distances中元素从小到大排序后的索引值</span><br>    sorted_dist_indices = distances.argsort()<br>    <span class="hljs-comment"># 定一个字典:统计类别次数</span><br>    class_count = &#123;&#125;<br> <br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(k):<br>        <span class="hljs-comment"># 取出前k个元素的类别</span><br>        vote_index_label = labels_set[sorted_dist_indices[i]]<br>        <span class="hljs-comment"># 统计类别次数</span><br>        class_count[vote_index_label] = class_count.get(vote_index_label, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span><br>        <span class="hljs-comment"># 把分类结果进行降序排序，然后返回得票数最多的分类结果</span><br>        sorted_class_count = <span class="hljs-built_in">sorted</span>(class_count.items(), key=operator.itemgetter(<span class="hljs-number">1</span>), reverse=<span class="hljs-literal">True</span>)<br>        <span class="hljs-keyword">return</span> sorted_class_count[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br> <br> <br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># 创建数据集</span><br>    group, labels = create_data_set()<br>    <span class="hljs-comment"># 测试集</span><br>    data = [[<span class="hljs-number">20</span>,<span class="hljs-number">13</span>],[<span class="hljs-number">9</span>,<span class="hljs-number">5</span>],[<span class="hljs-number">47</span>,<span class="hljs-number">73</span>],[<span class="hljs-number">11</span>,<span class="hljs-number">54</span>],[<span class="hljs-number">36</span>,<span class="hljs-number">34</span>],[<span class="hljs-number">90</span>,<span class="hljs-number">60</span>],[<span class="hljs-number">69</span>,<span class="hljs-number">26</span>],[<span class="hljs-number">69</span>,<span class="hljs-number">59</span>],[<span class="hljs-number">8</span>,<span class="hljs-number">75</span>],[<span class="hljs-number">44</span>,<span class="hljs-number">18</span>],[<span class="hljs-number">18</span>,<span class="hljs-number">90</span>],[<span class="hljs-number">68</span>,<span class="hljs-number">71</span>],[<span class="hljs-number">37</span>,<span class="hljs-number">88</span>],[<span class="hljs-number">16</span>,<span class="hljs-number">21</span>],[<span class="hljs-number">58</span>,<span class="hljs-number">9</span>],[<span class="hljs-number">96</span>,<span class="hljs-number">77</span>],[<span class="hljs-number">35</span>,<span class="hljs-number">54</span>],[<span class="hljs-number">23</span>,<span class="hljs-number">33</span>],[<span class="hljs-number">97</span>,<span class="hljs-number">77</span>],[<span class="hljs-number">76</span>,<span class="hljs-number">47</span>],[<span class="hljs-number">67</span>,<span class="hljs-number">16</span>],[<span class="hljs-number">28</span>,<span class="hljs-number">13</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">93</span>],[<span class="hljs-number">45</span>,<span class="hljs-number">12</span>],[<span class="hljs-number">66</span>,<span class="hljs-number">87</span>],[<span class="hljs-number">15</span>,<span class="hljs-number">74</span>],[<span class="hljs-number">28</span>,<span class="hljs-number">39</span>],[<span class="hljs-number">99</span>,<span class="hljs-number">1</span>],[<span class="hljs-number">82</span>,<span class="hljs-number">17</span>],[<span class="hljs-number">99</span>,<span class="hljs-number">42</span>],[<span class="hljs-number">17</span>,<span class="hljs-number">46</span>],[<span class="hljs-number">75</span>,<span class="hljs-number">21</span>],[<span class="hljs-number">42</span>,<span class="hljs-number">24</span>],[<span class="hljs-number">97</span>,<span class="hljs-number">15</span>],[<span class="hljs-number">60</span>,<span class="hljs-number">27</span>],[<span class="hljs-number">60</span>,<span class="hljs-number">35</span>],[<span class="hljs-number">70</span>,<span class="hljs-number">75</span>],[<span class="hljs-number">18</span>,<span class="hljs-number">89</span>],[<span class="hljs-number">65</span>,<span class="hljs-number">74</span>],[<span class="hljs-number">73</span>,<span class="hljs-number">30</span>],[<span class="hljs-number">47</span>,<span class="hljs-number">13</span>],[<span class="hljs-number">93</span>,<span class="hljs-number">39</span>],[<span class="hljs-number">25</span>,<span class="hljs-number">63</span>]]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(data)):<br>        test = data[i]<br>        <span class="hljs-comment"># kNN算法进行分类</span><br>        test_class = classify0(test, group, labels, <span class="hljs-number">3</span>)<br>        <span class="hljs-comment"># 显示分类结果</span><br>        <span class="hljs-built_in">print</span>(test_class,end=<span class="hljs-string">&quot;&quot;</span>)<br></code></pre></td></tr></table></figure>
+<h2 id="-4"><a href="#-4" class="headerlink" title="**"></a>**</h2><h3 id="-5"><a href="#-5" class="headerlink" title=""></a></h3><p><img src="https://img-blog.csdnimg.cn/49bc5bad0de74ff8ba26346847131944.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/deea99ec9bf44d09b5d5688b64ee0e38.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>显然OoK密文，解密得<br><img src="https://img-blog.csdnimg.cn/4a0e541e208d4b6c8b38adb2c453906b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>Base64解得：<br>flag{1_I0Ve_y0u_t0o}</p>
+<h3 id="-6"><a href="#-6" class="headerlink" title=""></a></h3><p><img src="https://img-blog.csdnimg.cn/0644b6e831c6424ea4cb849cbe991e59.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/c804f6cc3318479992a1c18665401fa3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>可以看到文件中藏有压缩包</p>
+<p><img src="https://img-blog.csdnimg.cn/11bf08a92e054e5d93f6f2acaa8eec48.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>分离出来</p>
+<p><img src="https://img-blog.csdnimg.cn/394aca89f5e5496da5bc3b94134f400e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>Base64解<br>ISCTF{huan_ying_lai_dao_CTF_de_shi_jie}</p>
+<h3 id="-7"><a href="#-7" class="headerlink" title=""></a></h3><p><img src="https://img-blog.csdnimg.cn/6c23091eda26442babec58abbf463d34.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>关注公众号得<br>ISCTF{WelC0me_2_ISCTF_ANd_Have_FuN}</p>
+<h3 id="-8"><a href="#-8" class="headerlink" title=""></a></h3><p><img src="https://img-blog.csdnimg.cn/5122e24096b34dae862327102a4776e3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>找到<br><img src="https://img-blog.csdnimg.cn/f3379e6b20d7402695c3316517d2c80b.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>追踪http流<br><img src="https://img-blog.csdnimg.cn/118c7881500d42749140ae36de034ab6.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>ISCTF{y723rt3132f88v4}</p>
+<h3 id="-9"><a href="#-9" class="headerlink" title="**"></a>**</h3><p><img src="https://img-blog.csdnimg.cn/299faa673a8140eda3ed759d1ce53bf6.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/ad5eb8853ded497287d855189ae8d31e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>百度识图<br><img src="https://img-blog.csdnimg.cn/a54093e6c9f84d91bb6ff6581e873200.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>ISCTF{金碧广场}</p>
+<h3 id="-10"><a href="#-10" class="headerlink" title=""></a></h3><p><img src="https://img-blog.csdnimg.cn/30035152316f4473b471ef510396b990.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>搜索ISCTF<br><img src="https://img-blog.csdnimg.cn/15abf4dff6374dbfb1210fb025ccdd36.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>ISCTF{chu_fa_cai_hong_hai}</p>
+<h3 id="Welcome-To-ISCTF-World"><a href="#Welcome-To-ISCTF-World" class="headerlink" title="Welcome To ISCTF World"></a>Welcome To ISCTF World</h3><p><img src="https://img-blog.csdnimg.cn/1432c32c03114b5787c60b20ef3f5274.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>这个题 要开启创造模式 👴活了20年 就没玩过这玩意 艹 花了好久才玩懂<br>&#x2F;gamemode 1 。。。<br>玩游戏，找到4个部分的flag<br><img src="https://img-blog.csdnimg.cn/f7a973fd1ab249c19745cde5f411a23c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/abcbbd01dff144e7a9560f073eb86de0.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>1、 ISCTF{e7c70265<br>2、 -6a76-4617-bc64<br>3、 <img src="https://img-blog.csdnimg.cn/d0be8205c8ec43e0b2ce70c1c1f25e9c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>4、 Base64解：73f5e3fdce60<br>ISCTF{e7c70265-6a76-4617-bc64-73f5e3fdce60}</p>
+<h3 id="-11"><a href="#-11" class="headerlink" title=""></a></h3><p><img src="https://img-blog.csdnimg.cn/e465bc3f06fa43be9691ff93192f0d8d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>受损的二维码 用pdf合成<br><img src="https://img-blog.csdnimg.cn/b4a19aabf9624cf9b585d85f39db1fcb.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>音频<br><img src="https://img-blog.csdnimg.cn/8be55367a6d84bd4a1a36eff5c9135e2.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>莫斯密码</p>
+<p>长的是_ 短的是.   摩斯密码  Y0U_FIND_ME  这里有一个小脑洞 是没有下划线的  根据前一半猜测有下划线<br>然后得到通过拼接得到flag</p>
+<h3 id="-12"><a href="#-12" class="headerlink" title=""></a></h3><p><img src="https://img-blog.csdnimg.cn/9811f5bd374a490c878c5bd5ce06cf8f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>010editor 发现jpg文件头尾逆序<br>反转的脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">input</span> = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;F://flag&#x27;</span>, <span class="hljs-string">&#x27;rb&#x27;</span>)<br>input_all = <span class="hljs-built_in">input</span>.read()<br>ss = input_all[ : : -<span class="hljs-number">1</span> ]<br>output = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;F://trueflag.jpg&#x27;</span>,<span class="hljs-string">&#x27;wb&#x27;</span>)<br>output.write(ss)<br><span class="hljs-built_in">input</span>.close()<br>output.close()<br></code></pre></td></tr></table></figure>
+<p>反转过后：打开</p>
+<p>图片经过binwalk分离出来压缩包<br><img src="https://img-blog.csdnimg.cn/475ac6ed3e6449b9aa1512090c03b4ac.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/f8e713cfc30c4087ad26a37e5f6ad2a8.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>弱口令爆破：admin123<br>ISCTF{5ecdfs-avcsefh-dhvldncmd}</p>
+<h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="-13"><a href="#-13" class="headerlink" title=""></a></h3><p><img src="https://img-blog.csdnimg.cn/24ad9c1cb4e64324a3cd7b1ff609606d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>name&#x3D;QNKCDZO<br>passwd&#x3D;240610708</p>
+<p><strong>ISCTF{acde1b6f-085d-4c5d-91f3-07ce8ff4ee95}</strong></p>
+<h3 id="Web签到"><a href="#Web签到" class="headerlink" title="Web签到"></a>Web签到</h3><p><img src="https://img-blog.csdnimg.cn/37c6f3a6c0c343e6aa39ea0d8d1c062e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>在url前面加上view source：<br><img src="https://img-blog.csdnimg.cn/956879b2f27c4931a99fb9da25df851f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h3 id="小蜘蛛"><a href="#小蜘蛛" class="headerlink" title="小蜘蛛"></a>小蜘蛛</h3><p><img src="https://img-blog.csdnimg.cn/5e591031eaf049d68c4f003437d2deae.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/8a33df96f1eb4af4960fc4fc7d908f3f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>看到robots 想到robot协议  robots.txt<br><img src="https://img-blog.csdnimg.cn/1a4cb27fe26344529a8f508852b71791.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/7206a840f594407db4dc2834f42ca2d4.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h3 id="Easy-flask"><a href="#Easy-flask" class="headerlink" title="Easy flask"></a>Easy flask</h3><p><img src="https://img-blog.csdnimg.cn/626ee7635a094231b33aae2af297fc47.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>根据提示  在&#x2F;W0w目录下 存在id的ssti模板注入<br><img src="https://img-blog.csdnimg.cn/ed8ab47f81be40358d2e6832c2201bfe.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/63782189415d43b5a5646c0b442b86a5.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>通过config命令看到flag</p>
+<h3 id="拼图"><a href="#拼图" class="headerlink" title="拼图"></a>拼图</h3><h3 id="pop-unserialize"><a href="#pop-unserialize" class="headerlink" title="pop_unserialize"></a>pop_unserialize</h3><p>简单的pop<br>Exp：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MF_is_cat</span></span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-variable">$pop</span> = <span class="hljs-string">&quot;f00001111&quot;</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-variable">$MF</span> = <span class="hljs-string">&quot;miao~ miao~ miao~&quot;</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-variable language_">$this</span>-&gt;pop =<span class="hljs-keyword">new</span> <span class="hljs-title class_">Show</span>();<br>    &#125;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Show</span></span>&#123;<br>    <span class="hljs-keyword">var</span> <span class="hljs-variable">$test2</span>=<span class="hljs-string">&#x27;la&#x27;</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">action</span>(<span class="hljs-params"></span>)</span>&#123;<br>       <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$this</span>-&gt;test2);<br>    &#125;<br>&#125;<br><span class="hljs-variable">$a</span>=<span class="hljs-keyword">new</span> <span class="hljs-title class_">MF_is_cat</span>();<br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">urlencode</span>(<span class="hljs-title function_ invoke__">serialize</span>(<span class="hljs-variable">$a</span>));<br>        <br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>ISCTF传参O:9:”MF_is_cat”:2:{s:14:”MF_is_catpop”;O:4:”Show”:1:{s:5:”test2”;s:2:”la”;}s:2:”MF”;s:17:”miao~ miao~ miao~”;}</p>
+<p>好了 👴 丢完人了  开溜</p>
+<p><img src="https://img-blog.csdnimg.cn/9533b461c1e94b619732105ca69f6be7.gif" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>接下来要赶紧搞新生演示和平台的搭建了 </p>
+<p><img src="https://img-blog.csdnimg.cn/11cb1a3a15ed4bee93d0833a792d4bf0.jpg" srcset="/img/loading.gif" lazyload alt="请添加图片描述"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ISCTF小记</div>
+      <div>http://example.com/2023/04/20/ISCTF小记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/Java-CC/" title="Java-CC">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java-CC</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/HTTP%E5%8D%8F%E8%AE%AE/" title="HTTP协议">
+                        <span class="hidden-mobile">HTTP协议</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

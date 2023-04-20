@@ -1,0 +1,686 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、HTTP协议超文本传输协议(HTTP)是一种通信协议，归属于应用层协议，主要解决如何包装数据。它允许将超文本标记语言(HTML)文档从Web服务器传送到客户端的浏览器。http协议是无状态的，同一个客户端的这次请求和上次请求是没有对应关系，对http服务器来说，它并不知道这两个请求来自同一个客户端。 为了解决这个问题， Web程序引入了Cookie机制来维护状态.超文本传输协议（HTTP，Hy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP协议">
+<meta property="og:url" content="http://example.com/2023/04/20/HTTP%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="一、HTTP协议超文本传输协议(HTTP)是一种通信协议，归属于应用层协议，主要解决如何包装数据。它允许将超文本标记语言(HTML)文档从Web服务器传送到客户端的浏览器。http协议是无状态的，同一个客户端的这次请求和上次请求是没有对应关系，对http服务器来说，它并不知道这两个请求来自同一个客户端。 为了解决这个问题， Web程序引入了Cookie机制来维护状态.超文本传输协议（HTTP，Hy">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428173049919.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021042817311519.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428172009911.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428172439945.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428173829131.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428174323348.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428174426669.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428174652238.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428174712380.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021042817480240.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2023-04-20T15:33:27.630Z">
+<meta property="article:modified_time" content="2023-04-20T15:14:37.397Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210428173049919.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+  
+  
+  
+  <title>HTTP协议 - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTTP协议"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          34 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HTTP协议</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、HTTP协议"><a href="#一、HTTP协议" class="headerlink" title="一、HTTP协议"></a>一、HTTP协议</h2><p>超文本传输协议(HTTP)是一种通信协议，归属于应用层协议，主要解决如何包装数据。它允许将超文本标记语言(HTML)文档从Web服务器传送到客户端的浏览器。http协议是无状态的，同一个客户端的这次请求和上次请求是没有对应关系，对http服务器来说，它并不知道这两个请求来自同一个客户端。 为了解决这个问题， Web程序引入了Cookie机制来维护状态.<br>超文本传输协议（HTTP，HyperText Transfer Protocol）时互联网上应用作为广泛的一种网络协议。所有的WWW文件都必须遵守这个标准。设计HTTP最初的目的是为了提供一中发布和接收HTML页面的方法。HTTP协议再网络OSI模型属于应用层协议，应用层协议除了HTTP还有：FTP，SMTP，DNS，RIP，Telnet等。</p>
+<p>HTTP协议工作与客户端——服务端架构上。浏览器作为HTTP客户端通过iuuoURL向HTTP服务端（即WEB服务器）发送请求。<br><font color=blue> 1. 超文本</font><br>超文本英文名叫做Hypertext，我们再浏览器里面看到的网页就是超文本链接解析而成的，期网页源代码是一系列HTML代码，里面包括了一系列标签，如img显示图片，p指定显示段落等，浏览器解析这些标签后便形成了我们平常看到的网页，这网页的源代码HTML就可以称为超文本。</p>
+<p>例如我们再Chrome浏览器里面打开百度首页，右键点击“查看源代码”，这些源代码都是超文本。<br><font color=blue> 2. URL</font><br>我们在浏览器地址栏里输入的而网址叫做URL(Uniform Resource Locator,统一资源定位符号)。就像每家每户都有一个门牌地址一样，每个网页也都有一个Internet地址（如：<a target="_blank" rel="noopener" href="https://www.baidu.com/%EF%BC%89%E3%80%82%E5%BD%93%E4%BD%A0%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E4%B8%AD%E8%BE%93%E5%85%A5%E4%B8%80%E4%B8%AAURL%E6%88%96%E6%98%AF%E5%8D%95%E5%87%BB%E4%B8%80%E4%B8%AA%E8%B6%85%E9%93%BE%E6%8E%A5%E6%97%B6%EF%BC%8CURL%E5%B0%B1%E7%A1%AE%E5%AE%9A%E4%BA%86%E8%A6%81%E6%B5%8F%E8%A7%88%E7%9A%84%E5%9C%B0%E5%9D%80%E3%80%82%E6%B5%8F%E8%A7%88%E5%99%A8%E9%80%9A%E8%BF%87%E8%B6%85%E6%96%87%E6%9C%AC%E9%98%90%E8%BF%B0%E5%8D%8F%E8%AE%AE(HTTP)%EF%BC%8C%E5%B0%86Web%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%AB%99%E7%82%B9%E7%9A%84%E7%BD%91%E9%A1%B5%E4%BB%A3%E7%A0%81%E6%8F%90%E5%8F%96%E5%87%BA%E6%9D%A5%EF%BC%8C%E5%B9%B6%E7%BF%BB%E8%AF%91%E6%88%90%E6%BC%82%E4%BA%AE%E7%9A%84%E7%BD%91%E9%A1%B5%E3%80%82">https://www.baidu.com/）。当你在浏览器的地址中输入一个URL或是单击一个超链接时，URL就确定了要浏览的地址。浏览器通过超文本阐述协议(HTTP)，将Web服务器上站点的网页代码提取出来，并翻译成漂亮的网页。</a><br><strong>基本格式如下</strong></p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-symbol">schema:</span>/<span class="hljs-regexp">/host[:port#]/path</span><span class="hljs-regexp">/…/</span>[<span class="hljs-string">?q</span>uery-string][<span class="hljs-comment">#anchor]</span><br></code></pre></td></tr></table></figure>
+<p>scheme 指定低层使用的协议(例如：http, https, ftp)<br>host HTTP服务器的IP地址或者域名<br>port# HTTP服务器的默认端口是80，这种情况下端口号可以省略。如果使用了别的端口，必须指明<br>path 访问资源的路径<br>query-string 发送给http服务器的数据<br>anchor- 锚</p>
+<p><font color=blue> 3. HTTP功能</font><br>HTTP协议（HTTP，HyperText Transfer Protocol，超文本传输协议）是用于从服务器传输文本到本地浏览器的传输协议。它可以是浏览器更加高效，使网络传输减少。它不仅保证计算机正确快速的传输超文本文档，还确定传输文档中的哪一部分，以及哪部分内容首先显示（如文本先于图像）等。<br><font color=blue>4. HTTP特点</font><br>（1）无连接：限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。<br>（2）媒体独立：这意味着，只要是客户端和服务器知道如何处理的数据内容，任何类型的数据都可以通过HTTP发送。客户端以及服务器指定的适合MIME-type来传输。<br>（3）无状态：HTTP协议是无状态协议。无状态是指协议对于事物处理没有记忆能力。如果服务器不需要先先前信息，那么它的应答就比较快。但是缺少状态就意味着如果后续的处理需要前面的信息，则必须重传，这样可能导致每次连接传送的数据量增大，此时可以设置缓存。<br><font color=blue>5. HTTP与HTTPS</font><br>现在浏览网站时，通过浏览器地址栏可以看到有的网站时https开头（<a target="_blank" rel="noopener" href="https://www.baidu.com),也有http开头(http//www.weather.com.cn%EF%BC%89%E3%80%82">https://www.baidu.com），也有http开头（http://www.weather.com.cn）。</a></p>
+<p>HTTPS的全称时Hyper Text Transfer Protocol  over  secure Sockt Layer,是以安全为目标的HTTP通道，简单讲是HTTP的安全版，即HTTP下加入SSL层（Secure Sockets Layer 安全套接层），简称HTTPS。s是Security单词的首字母。</p>
+<p>HTTPS的安全基础是SSL，因此通过它传输的额内容都是经过SSL加密的，它主要作用可以分为两种：</p>
+<ol>
+<li>建立一个信息安全通道，来保证数据传输的安全。</li>
+<li>确认网站的真实性，凡是使用了https的网站，都可以通过点击浏览器地址栏的锁头标志来查看网站认证之后的真实信息，也可以通过CA机构办法的安全签章来查询。</li>
+</ol>
+<p>HTTP通常承载在TCP协议之上,有时会承载在TLS、SSL之上，就是HTTPS<br><img src="https://img-blog.csdnimg.cn/20210428173049919.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>HTTPS加解密过程<br><img src="https://img-blog.csdnimg.cn/2021042817311519.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><font color=blue>6. HTTP与TCP&#x2F;IP的区别</font><br>1.TCP&#x2F;IP协议是传输层协议，主要解决数据如何在网络中传输，2.HTTP是应用层协议，主要解决如何包装数据。关于TCP&#x2F;IP和HTTP协议的关系，网络有一段比较容易理解的介绍：我们在传输数据时，可以只是用（传输层）TCP&#x2F;IP协议。但是那样的话，如果没有应用层，边无法识别数据内容，如果想要使传输的数据有意义，则必须使用到应用层协议，应用层协议有很多，比如HTTP、FTP、TRNLNET等，也可以自己定义应用层协议。WEB使用HTTP协议作为应用层协议，以封装HTTP文本信息，然后使用TCP&#x2F;IP文本信息，然后使用TCP&#x2F;IP做传输层协议将它发到网络上。<br><font color=blue>7. 什么是TCP&#x2F;IP</font><br>TCP&#x2F;IP是一个协议族，由底层的IP协议和TCP协议组成的；其全称为（Transmission Control Protocol&#x2F;Internet Protocol）即传输控制协议&#x2F;网间协议。<br>TCP协议：是一种面向连接的、可靠的、基于字节流的传输层通信协议；<br>IP协议：将多个包交换网络连接起来，它在源地址和目的地址之间传送一种称之为数据包的东西，它还提供对数据大小的重新组装功能，以适应不同网络对包大小的要求。<br>IP不提供可靠的传输服务，它不提供端到端的或（路由）结点到（路由）结点的确认，对数据没有差错控制，它只使用报头的校验码，它不提供重发和流量控制；</p>
+<p><font color=blue>8. HTTP请求过程</font><br>在浏览器输入百度首页的地址：<a target="_blank" rel="noopener" href="https://www.baidu.com/%E8%BE%93%E5%85%A5%E4%B9%8B%E5%90%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E4%BC%9A%E6%89%93%E5%BC%80%E7%99%BE%E5%BA%A6%E9%A6%96%E9%A1%B5%E3%80%82%E5%AE%9E%E9%99%85%E4%B8%8A%E8%BF%99%E4%B8%AA%E8%BF%87%E7%A8%8B%E6%98%AF%E6%B5%8F%E8%A7%88%E5%99%A8%E5%90%91%E7%BD%91%E7%AB%99%E6%89%80%E5%9C%A8%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%91%E9%80%81%E4%BA%86%E4%B8%80%E4%B8%AARequest%EF%BC%8C%E5%8D%B3%E8%AF%B7%E6%B1%82%EF%BC%8C%E7%BD%91%E7%AB%99%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%A7%90%E6%8E%A5%E6%94%B6%E5%88%B0%E8%BF%99%E4%B8%AARequest%E4%B9%8B%E5%90%8E%E8%BF%9B%E8%A1%8C%E5%A4%84%E7%90%86%E5%92%8C%E8%A7%A3%E6%9E%90%E3%80%82%E7%84%B6%E5%90%8E%E8%BF%94%E5%9B%9E%E5%AF%B9%E5%BA%94%E7%9A%84%E4%B8%80%E4%B8%AAResponse%EF%BC%8C%E8%AE%A1%E5%93%8D%E5%BA%94%EF%BC%8C%E7%84%B6%E5%90%8E%E4%BC%A0%E5%9B%9E%E7%BB%99%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%8CResponse%E9%87%8C%E9%9D%A2%E5%B0%B1%E5%8C%85%E5%90%AB%E4%BA%86%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%BA%8C%E6%BA%90%E4%BB%A3%E7%A0%81%E7%AD%89%E5%86%85%E5%AE%B9%EF%BC%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%8D%E5%AF%B9%E5%85%B6%E4%BB%96%E8%BF%9B%E8%A1%8C%E8%A7%A3%E6%9E%90%E4%BE%BF%E5%B0%86%E7%BD%91%E9%A1%B5%E5%91%88%E7%8E%B0%E5%87%BA%E6%9D%A5%E3%80%82">https://www.baidu.com/输入之后浏览器会打开百度首页。实际上这个过程是浏览器向网站所在的服务器发送了一个Request，即请求，网站服务器姐接收到这个Request之后进行处理和解析。然后返回对应的一个Response，计响应，然后传回给浏览器，Response里面就包含了页面的二源代码等内容，浏览器再对其他进行解析便将网页呈现出来。</a><br><img src="https://img-blog.csdnimg.cn/20210428172009911.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><font color=blue>9. 什么是OSI</font><br>OSI（Open System Interconnect），即开放式系统互联。 一般都叫OSI参考模型，是ISO（国际标准化组织）组织在1985年研究的网络互连模型<br>OSI参考模型和TCP&#x2F;IP网络模型<br><img src="https://img-blog.csdnimg.cn/20210428172439945.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h2 id="二、HTTP的消息类型"><a href="#二、HTTP的消息类型" class="headerlink" title="二、HTTP的消息类型"></a>二、HTTP的消息类型</h2><p><strong>1.请求(Request)消息</strong><br><img src="https://img-blog.csdnimg.cn/20210428173829131.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>HTTP版本：HTTP&#x2F;1.1，高版本的服务器接受低版本客户的请求，并向客户发送同样版本的应答；高版本的客户接受低版本服务器的应答。</p>
+<p><font color=blue> <strong>方法</strong>：</font></p>
+<p><img src="https://img-blog.csdnimg.cn/20210428174323348.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><font color=blue>GET&#x2F;POST 的区别</font>	<br>get是从服务器上获取数据，post是向服务器传送数据。</p>
+<p>get是把参数数据队列加到提交表单的ACTION属性所指的URL中，值和表单内各个字段一一对应，在URL中可以看到。post是通过HTTP post机制，将表单内各个字段与其内容放置在HTML HEADER内一起传送到ACTION属性所指的URL地址。用户看不到这个过程。</p>
+<p>对于get方式，服务器端用Request.QueryString获取变量的值，对于post方式，服务器端用Request.Form获取提交的数据。</p>
+<p>get传送的数据量较小，不能大于2KB。post传送的数据量较大</p>
+<p>get安全性非常低，post安全性较高。但是执行效率却比Post方法好。<br><img src="https://img-blog.csdnimg.cn/20210428174426669.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><font color=blue>1、Connection：close</font></p>
+<p>是在告知服务器本浏览器不想使用永久连接方式（HTTP&#x2F;1.0使用非永久连接，HTTP&#x2F;1.1默认使用永久连接）。</p>
+<p><font color=blue>2、User-agent：Mozilla&#x2F;4.0</font></p>
+<p>指定用户代理服务器的类型。</p>
+<p><font color=blue>3、Accept-Encoding：gzip,compress</font></p>
+<p>指出发送此请求的浏览器支持哪些压缩编码方式。</p>
+<p><font color=blue>4、Accept-languag：en</font></p>
+<p>指出客户浏览器支持的语言是英语（english）</p>
+<p>报文体(请求数据)</p>
+<p><strong>2.响应(Response)消息</strong><br><img src="https://img-blog.csdnimg.cn/20210428174652238.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>状态行<br>HTTP&#x2F;1.1 200 OK</p>
+<p>状态行由  协议版本、状态码、原因短语<br>3个元素组成，各个元素之间用空格分隔。状态码字段由三个数字组成，标识客户请求方法的结果。</p>
+<p>状态码5种可能的值：<br><img src="https://img-blog.csdnimg.cn/20210428174712380.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>报头行(报文头)<br><img src="https://img-blog.csdnimg.cn/2021042817480240.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><font color=blue>1、Date：Thu,13Oct200503:17:33GMT</p>
+<p>指出服务器创建并发送本响应消息的日期和时间。HTTP允许下面三种不同格式的日期&#x2F;时间，但必须是格林尼治标准时间：HTTP-date&#x3D;rfc1123-date|rfc-850-date| asctime-date</p>
+<p><font color=blue>2、Server：Apache&#x2F;2.0.54(Unix)</p>
+<p>指出本消息是由Apache服务器产生的，服务器版本为2.0.54</p>
+<p><font color=blue>3、Last—Nodified：Mon,22Jun199809;23;24GMT</p>
+<p>指出对象本身的创建或最后修改日期或时间。</p>
+<p><font color=blue>4、Last—Nodified:</p>
+<p>报头项对于对象的高速缓存至关重要，且不论这种高速缓存是发生在本地客户主机上还是发生在网络高速缓存服务器主机(也就是代理服务器主机)上。</p>
+<p><font color=blue>5、Content—Length：682l</p>
+<p>指出所发送对象的字节数。</p>
+<p><font color=blue>6、Content—Type：text&#x2F;html</p>
+<p>指出包含在实体中的对象是HTML文本。</p>
+<hr>
+<p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43625917/article/details/96158266?spm=1001.2014.3001.5501">博客</a><br>参考博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/youngleesin/p/11000433.html">博客</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTTP协议</div>
+      <div>http://example.com/2023/04/20/HTTP协议/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/ISCTF%E5%B0%8F%E8%AE%B0/" title="ISCTF小记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ISCTF小记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/HTTP%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81/" title="HTTP请求走私">
+                        <span class="hidden-mobile">HTTP请求走私</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

